@@ -1,0 +1,82 @@
+*{
+   margin: 0;
+   padding: 0;
+   font-family: 'Pacifico', cursive;;
+}
+.backofit {
+   width: 80%;
+   padding: 1% 10% 3% 10%;
+   background-color: #333333
+}
+
+.backofit img {
+   float: left;
+   font-size: 0.5cm,
+   margin: 0;
+   padding: 0;
+}
+.backofit .linkek {
+   float: right;
+   color: #ff0099;
+   padding: 0.5% 3% 0 0;
+   text-align: center;
+   
+}
+#test {
+   line-height: normal;
+   margin: 0;
+   padding: 0 10%;
+   background-image: url("assets/topography.png");
+
+}
+h1 {
+   margin: 0 ;
+   padding: 4cm 0cm 0cm 0cm;
+   font-size: 1.8cm;
+   
+}
+
+#mondat{
+   margin: 0 auto;
+   padding: 0.5cm 0;
+   font-size: 0.6cm;
+
+}
+
+#worktitle {
+   margin:0;
+   padding: 0.5cm 0 0 0;
+   color: #ff0099;
+   font-size: 0.9cm;
+
+}
+
+#definitions {
+   margin: 0 auto;
+   padding: 1cm 0;
+}
+
+dt{
+   
+   font-size-adjust: inherit;
+   font-size: 1cm;
+   padding: 0.2cm 0.2cm 0.2cm 0;
+   text-align: left;
+   line-height: 2cm;
+
+}
+
+hr {
+   padding: 1cm 0,
+   align: center;
+   margin-left: 49.3%;
+   margin-right: 49.3%;
+   border-style: dashed;
+   border-width: 0.04cm;
+}
+ h2 {
+    font-size: 1.2cm;
+    text-align: center;
+    margin: 0;
+    padding: 1.5cm 0 0 0;
+ }
