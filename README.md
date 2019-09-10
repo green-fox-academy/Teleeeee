@@ -1,6 +1,8 @@
 # Teleeeee
 LeventePaplogo
 my other repository from first day: 
+
+
 [My other repository from the first day](https://github.com/Teleeeee/git-lesson-repository)
 
 
