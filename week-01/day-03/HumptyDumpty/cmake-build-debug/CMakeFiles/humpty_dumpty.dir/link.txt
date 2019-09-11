@@ -1,0 +1,1 @@
+/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/humpty_dumpty.dir/main.cpp.o  -o humpty_dumpty.exe -Wl,--out-implib,libhumpty_dumpty.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
