@@ -11,14 +11,15 @@ int main() {
 
     int all = guys + girls;
 
-    if(girls > guys && all > 20) {
+    if(girls >= guys && all >= 20) {
         std::cout << "The party is excellent!" << std::endl;
-    } else if(girls != guys || all > 20){
+    } else if(girls != guys && all >= 20 && girls > 0){
         std::cout << "Quite cool party!" << std::endl;
+    } else if (girls == 0) {
+        std::cout << "Sausage party" << std::endl;
     } else if (all < 20) {
-            std::cout << "Average party..." << std::endl;
-    }else if (girls == 0) {
-            std::cout << "Sausage party" << std::endl;
+        std::cout << "Average party..." << std::endl;
+
     }
 
     return 0;

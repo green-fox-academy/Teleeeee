@@ -17,7 +17,7 @@ int main() {
         for(j= 1 ; j <= i ; j++)
         {
             std::cout << " *";
-        } //for steric
+        }
         std::cout <<std::endl;
     } //outer loop
 
@@ -37,3 +37,27 @@ int main() {
 
     }
 }
+
+
+/*
+    int input;
+    std::cout << "number here pls!\n";
+    std::cin >> input;
+
+    int lineWidth = input;
+    for (int i = 0; i < input ; ++i) {
+        int m = input / 2;
+        int k = abs(m-i);
+        for (int j = 0; j < input ; ++j) {
+            if(j >= k && j < input - k){
+                std::cout << "*";
+            }else{
+                std::cout << " ";
+            }
+
+        }
+        std::cout << std:: endl;
+    }
+
+    }
+*/

@@ -12,11 +12,13 @@ int main(int argc, char* args[]) {
 
     if(firstnumber >= secondnumber) {
         std::cout << "The second number should be bigger" << std::endl;
+
     }
-    do {
-        std::cout << firstnumber << std::endl;
+    while(firstnumber < secondnumber){
         firstnumber = firstnumber + 1;
-    } while(firstnumber < secondnumber);
+        std::cout << firstnumber << std::endl;
+
+    }
 
     return 0;
 }
