@@ -15,10 +15,10 @@ int main() {
     for( int k = 1; k <= i  ; ++k){
         for( int l = 1; l <= j  ; ++l){
             if(k == l){
-                myArray[k][l] = {1};
+                myArray[k][l] = 1;
                 cout << " " << myArray[k][l];
             } else {
-                myArray[k][l] = {0};
+                myArray[k][l] = 0;
                 cout << " " << myArray[k][l];
             }
         }
