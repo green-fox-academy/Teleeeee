@@ -1,1 +1,0 @@
-/usr/bin/c++.exe -g  -Wl,--enable-auto-import CMakeFiles/HelloOthers.dir/main.cpp.o  -o HelloOthers.exe -Wl,--out-implib,libHelloOthers.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
