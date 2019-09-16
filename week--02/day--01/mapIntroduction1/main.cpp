@@ -34,9 +34,9 @@ int main() {
 
 
 
-    first[68] = 'D';                                                        // add another key value pair
+    first[68] = 'D';                                                      // add another key value pair
 
-    cout << first.find(97)->first << first.find(97)->second << endl;  // check the result
+    cout << first.find(97)->first << first.find(97)->second << endl;       // check the result
     cout << first.find(98)->first << first.find(98)->second << endl;
     cout << first.find(99)->first << first.find(99)->second << endl;
     cout << first.find(65)->first << first.find(65)->second << endl;
@@ -46,12 +46,12 @@ int main() {
 
 
 
-    cout << "The value with 99 is " <<  first.find(99)->second << endl;                               // print out value associated with key 99
+    cout << "The value with 99 is " <<  first.find(99)->second << endl;    // print out value associated with key 99
 
     first.erase(97);                                                      // erase key value pair 97
 
 
-    if(first.count(100) > 0){
+    if(first.count(100) > 0){                                            //Print whether there is an associated value with key 100 or not
         cout << "there is a value with keyy 100";
 
     } else{
@@ -61,7 +61,7 @@ int main() {
 
 
 
-    for (int i = 0; i <= first.find(99)->first; ++i) {                     //erase all the elements of map
+    for (int i = 0; i <= first.find(99)->first; ++i) {                   //erase all the elements of map
         first.erase(i);
 
     }
@@ -76,8 +76,8 @@ int main() {
 
 
 
-//Print whether there is an associated value with key 100 or not
 
-//Remove all the key-value pairs
+
+
 
 }
