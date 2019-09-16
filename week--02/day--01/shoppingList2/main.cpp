@@ -95,29 +95,40 @@ int main() {
         } else {
             std::cout << "Alice bought bigger amount of product" << std::endl;
         }
-    std::string input;
-    std::cin >> input;
-    bool BobBoughtMore;
 
-    for (std::pair<std::string, double> priceList : firstList) {                                            //who bought more with input
-        for (std::pair<std::string, double> alicePay : aliceList) {
-            if (bobList.find(input)->second == aliceList.find(input)->second) {
-                break;
-            }
-            if (bobList.find(input)->second > aliceList.find(input)->second) {
-               BobBoughtMore == true;
-            }
-            if (bobList.find(input)->second < aliceList.find(input)->second) {
-                BobBoughtMore == false;
-            }
-        }
-    }if(BobBoughtMore){
-        std::cout << "Bob bought more of " << input << std::endl;
-    }else if(BobBoughtMore == false){
-        std::cout << "Alice bought more of " << input << std::endl;
-    }else{                                                                                                 // not possible that they bought the same amount :(
-        std::cout << "They bought the same amount " << input << std::endl;
+    //who bought more with input
+    std::string input;
+    getline(std::cin, input);
+    int c = 0;
+
+    int x = bobList.find(input)->second;
+    int y = aliceList.find(input)->second;
+
+    if (bobList.find(input)->second == aliceList.find(input)->second && bobList.find(input)->second != 0 + aliceList.find(input)->second != 0  ) {
+    c = 1;
     }
+    if (bobList.find(input)->second > aliceList.find(input)->second) {
+    c = 2;
+    }
+    if (bobList.find(input)->second < aliceList.find(input)->second) {
+    c = 3;
+    }
+    switch(c){
+        case 0:
+            std::cout << input << " was not on the list" << std::endl;
+            break;
+        case 1:
+            std::cout << "They have bought the same amount of " << input << std::endl;
+            break;
+        case 2:
+            std::cout << "Bob bought more " << input << std::endl;
+            break;
+        case 3:
+            std::cout << "Alice bought more " << input << std::endl;
+            break;
+    }
+
+
 }
 
 
