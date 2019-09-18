@@ -1,5 +1,6 @@
-
 #include <SDL.h>
- void draw(SDL_Renderer* gRenderer) {
 
- }
+
+void draw(SDL_Renderer* gRenderer) {
+
+}

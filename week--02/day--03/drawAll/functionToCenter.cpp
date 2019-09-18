@@ -7,13 +7,13 @@ void toTheCenter(SDL_Renderer* renderer, int a, int b){
     b = 0;
     int a1 = 640;
     int b1 = 480;
-    for (int i = 0; i <= 480 ; i = i + 20) {
+    for (int i = 0; i <= 480 ; i = i + 40) {
 
             SDL_SetRenderDrawColor(renderer, 0xFF /*R*/, 0x00 /*G*/, 0x00 /*B*/, 0xFF /*A*/);
-            SDL_RenderDrawLine(renderer, i, 0, b1, i);
+            SDL_RenderDrawLine(renderer, i, 0,  b1, i);
 
     }
-    for (int i = 0; i <= 640 ; i = i + 20) {
+    for (int i = 0; i <= 480 ; i = i + 40) {
 
         SDL_SetRenderDrawColor(renderer, 0xFF /*R*/, 0x00 /*G*/, 0x00 /*B*/, 0xFF /*A*/);
         SDL_RenderDrawLine(renderer, 0, i, i, b1);
