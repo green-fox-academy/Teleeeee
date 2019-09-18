@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
-project(diagonals)
+project(drawAll)
 
 set(CMAKE_CXX_STANDARD 14)
 
 
 set(SDL2_ROOT_PATH C:/SDL2_windows)
 
-set(EXECUTABLES "draw")
+set(EXECUTABLES "draw;diagonals;horizontalline;coloredBox;goToCenter;horizontal;square;fillWithRectangels;squarepositioning")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 IF(WIN32)

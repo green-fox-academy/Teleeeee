@@ -1,12 +1,15 @@
+// Exercise:
+// draw four different size and color rectangles.
+// avoid code duplication.
 #include <iostream>
 #include <SDL.h>
+#include <random>
+#include <cstdlib>
+#include <time.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-
-//Draws geometry on the canvas
-void draw();
 
 //Starts up SDL and creates window
 bool init();
@@ -20,30 +23,6 @@ SDL_Window* gWindow = nullptr;
 //The window renderer
 SDL_Renderer* gRenderer = nullptr;
 
-void goToTheCenter(int x, int y){
-
-    SDL_SetRenderDrawColor(gRenderer, 0xFF /*R*/, 0x00 /*G*/, 0x00 /*B*/, 0xFF /*A*/);
-    SDL_RenderDrawLine(gRenderer, SCREEN_HEIGHT/2, SCREEN_WIDTH/2, x, y);
-
-}
-
-void draw()
-{
-
-    for (int i = 0; i < 3; i++) {
-        int x = 56 + (i * 20);
-        int y = 34 + (i * 50);
-        SDL_SetRenderDrawColor(gRenderer, x /*R*/, 0x00 /*G*/, y /*B*/, 0xFF /*A*/);
-        SDL_RenderDrawLine(gRenderer, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, x, y);
-    }
-    // Create a function that draws a single line and takes 2 parameters:
-    // The x and y coordinates of the line's starting point
-    // and draws a line from that point to the center of the canvas.
-    // Draw at least 3 lines with that function using a loop.
-
-
-}
-
 bool init()
 {
     //Initialize SDL
@@ -54,7 +33,7 @@ bool init()
     }
 
     //Create window
-    gWindow = SDL_CreateWindow( "Line in the middle", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    gWindow = SDL_CreateWindow( "Four rectangles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
     if( gWindow == nullptr )
     {
         std::cout << "Window could not be created! SDL Error: " << SDL_GetError() << std::endl;
@@ -115,10 +94,21 @@ int main( int argc, char* args[] )
         //Clear screen
         SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(gRenderer);
+        //choose color
 
-        draw();
+        for (int i = 1; i < 5 ; i++) {
 
-        //Update screen
+            srand(time(NULL));
+            int x = rand()%200;
+            int y = rand()%150;
+
+             SDL_SetRenderDrawColor(gRenderer, rand(), rand(), rand(), rand());
+             //create a rectangle
+             SDL_Rect fillRect = { rand()%abs(640 -x), rand()%abs(480 - y), x, y};
+             //draw rectangle
+             SDL_RenderDrawRect( gRenderer, &fillRect );
+        }
+
         SDL_RenderPresent(gRenderer);
     }
 

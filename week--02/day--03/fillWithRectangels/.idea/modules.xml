@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/goToCenter.iml" filepath="$PROJECT_DIR$/.idea/goToCenter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/fillWithRectangels.iml" filepath="$PROJECT_DIR$/.idea/fillWithRectangels.iml" />
     </modules>
   </component>
 </project>
