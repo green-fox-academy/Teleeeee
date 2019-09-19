@@ -5,7 +5,7 @@ void draw(SDL_Renderer* gRenderer) {
     int b = 0;
     int a1 = 480;
     double b1 = 480;
-    int arany = 8;
+    int arany = 2;                                  // how many in a row
     for (int k = 0; k < 128 ; k++) {
         for (int j = 0; j < 128; j++) {
 
