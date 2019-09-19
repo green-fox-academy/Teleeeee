@@ -26,9 +26,9 @@ void draw(SDL_Renderer* gRenderer) {
     double size = 5;
     double pos = 1;
 
-    for (int i = 1; i < 6 ; ++i) {
+    for (int i = 0; i < 5 ; ++i) {
         size = 2 * size;
-        pos = size;
+        pos = size ;
         squareInTheMiddle(gRenderer, size, pos);
     }
 

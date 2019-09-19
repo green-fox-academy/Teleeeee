@@ -5,9 +5,9 @@ void draw(SDL_Renderer* gRenderer) {
     int b = 0;
     int a1 = 480;
     double b1 = 480;
-    int arany = 16;
-    for (int k = 0; k < 64 ; k++) {
-        for (int j = 0; j < 64; j++) {
+    int arany = 8;
+    for (int k = 0; k < 128 ; k++) {
+        for (int j = 0; j < 128; j++) {
 
             for (double i = 0; i <= 480 / arany; i = i + 40 / arany) {
 
