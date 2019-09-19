@@ -80,6 +80,7 @@ void draw(SDL_Renderer* gRenderer) {
                                 startPoint1 = shiftTheWholeThingHorizontal + (j + k + l + m + n + i1) * height * 0.9 ;  // every cycle shifts it to the right
                                 startPoint2 = shiftTheWholeThingVertical - (j + k + l) * (height /2) + (i * height) + (m+ n + i1) * (height /2); // (j + k + l) shifts upper way; (m+ n + i1) shifts it downer way
                                 drawHexagon(gRenderer, height, startPoint1, startPoint2);
+
                             }
                         }
                     }
@@ -88,3 +89,4 @@ void draw(SDL_Renderer* gRenderer) {
         }
     }
 }
+
