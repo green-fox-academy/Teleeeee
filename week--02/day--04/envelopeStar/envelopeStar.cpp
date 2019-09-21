@@ -3,7 +3,8 @@
 
 
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
         int a = 0;
         int b = 0;
         int a1 = 480;
