@@ -3,7 +3,8 @@
 //
 #include "draw.h"
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     SDL_SetRenderDrawColor(gRenderer, 0x00, 0xff, 0x00, 0x00);
     //create a rectangle
     SDL_Rect fillRect = { (SCREEN_WIDTH- 100) / 2, (SCREEN_HEIGHT-100)/2, 100, 100};

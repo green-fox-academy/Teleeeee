@@ -7,7 +7,8 @@
 
 
 
-void drawSquare(SDL_Renderer* renderer, const int arrx[], const int arry[] ){
+void drawSquare(SDL_Renderer* renderer, const int arrx[], const int arry[] )
+{
     for (int i = 0; i < 3 ; ++i) {
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         SDL_Rect r;
@@ -20,7 +21,8 @@ void drawSquare(SDL_Renderer* renderer, const int arrx[], const int arry[] ){
 
 }
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     // create a function that draws one square and takes 2 parameters:
     // the x and y coordinates of the square's top left corner
     // and draws a 50x50 square from that point.

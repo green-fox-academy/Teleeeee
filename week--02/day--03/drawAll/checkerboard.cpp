@@ -1,7 +1,8 @@
 #include "draw.h"
 #include <SDL.h>
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     double size = 50;
     int chessBoardSide = 400;
     int chessBoardStartPoint = 0;

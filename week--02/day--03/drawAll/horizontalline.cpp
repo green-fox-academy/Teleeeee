@@ -4,7 +4,8 @@
 
 #include "draw.h"
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     // draw a red horizontal line to the canvas' middle.
     // draw a green vertical line to the canvas' middle.
 

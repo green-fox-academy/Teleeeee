@@ -3,7 +3,8 @@
 
 
 
-void squareInTheMiddle(SDL_Renderer* renderer, int size ){
+void squareInTheMiddle(SDL_Renderer* renderer, int size )
+{
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_Rect r;

@@ -5,7 +5,8 @@
 #include <time.h>
 
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     int arrx[4] = {45, 90, 345, 230};
     int arry[4] = {12, 400, 332, 223};
     int arrw[4] = {23, 45, 63, 11};

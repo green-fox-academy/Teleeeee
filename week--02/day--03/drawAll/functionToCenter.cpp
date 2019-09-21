@@ -2,7 +2,8 @@
 #include <SDL.h>
 
 
-void toTheCenter(SDL_Renderer* renderer, int a, int b){
+void toTheCenter(SDL_Renderer* renderer, int a, int b)
+{
     a = 0;
     b = 0;
     int a1 = 640;
@@ -23,7 +24,8 @@ void toTheCenter(SDL_Renderer* renderer, int a, int b){
 }
 
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     int a = 0;
     int b = 0;
     toTheCenter(gRenderer, a, b);

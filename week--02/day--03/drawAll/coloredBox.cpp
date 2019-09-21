@@ -4,7 +4,8 @@
 
 #include "draw.h"
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
 
     SDL_SetRenderDrawColor(gRenderer, 0xff /*R*/, 0x00 /*G*/, 0x00 /*B*/, 0x45 /*A*/);
     SDL_RenderDrawLine(gRenderer, 255, 210, 255, 270);

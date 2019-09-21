@@ -5,13 +5,15 @@
 #include <random>
 #include <cstdlib>
 
-void goToThecenter(SDL_Renderer* renderer, int x, int y){
+void goToThecenter(SDL_Renderer* renderer, int x, int y)
+{
     SDL_SetRenderDrawColor(renderer, x /*R*/, 0x00 /*G*/, y /*B*/, 0xFF /*A*/);
     SDL_RenderDrawLine(renderer, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, x, y);
 
 }
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     int x;
     int y;
     for (int i = 0; i < 3; i++) {

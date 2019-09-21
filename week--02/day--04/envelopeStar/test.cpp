@@ -1,9 +1,5 @@
 #include "draw.h"
 
-
-
-
-//draws a moveable hexagon
 void drawHexagon(SDL_Renderer* gRenderer, int height , int shiftingPoint, int  shiftingPoint2) 
 {
 
@@ -56,8 +52,7 @@ void drawHexagon(SDL_Renderer* gRenderer, int height , int shiftingPoint, int  s
 }
 
 
-
-void draw(SDL_Renderer* gRenderer)
+void draw(SDL_Renderer* gRenderer) 
 {
 
     int height = 60;
@@ -65,27 +60,21 @@ void draw(SDL_Renderer* gRenderer)
     int startPoint2 = 0; // shift to bottom
     int shiftTheWholeThingHorizontal = 42;
     int shiftTheWholeThingVertical = 120;
+    for (int n = 0; n <= 1; ++n) {
 
-    for (int i1 = 0; i1 <=1 ; ++i1) { // every for cycle is an column
+        for (int m = 0; m <= 1; ++m) {
 
-        for (int n = 0; n <= 1; ++n) {
+            for (int l = 0; l <= 1; ++l) {
 
-            for (int m = 0; m <= 1; ++m) {
+                for (int k = 0; k <= 1; ++k) {
 
-                for (int l = 0; l <= 1; ++l) {
+                    for (int j = 0; j <= 1; ++j) {
+                        /*every cycle needs to change the number of hexagons in a coloumn*/
+                        for (int i = 0; i < 4 ;  ++i) {
+                            startPoint1 = shiftTheWholeThingHorizontal ;
+                            startPoint2 = shiftTheWholeThingVertical + (i * height);
+                            drawHexagon(gRenderer, height, startPoint1, startPoint2);
 
-                    for (int k = 0; k <= 1; ++k) {
-
-                        for (int j = 0; j <= 1; ++j) {
-                            /*every cycle needs to change the number of hexagons in a column*/
-                            for (int i = 0; i < 4 + j + k + l - m - n - i1 ;  ++i) {                                                                 // ( m+ n + i1) * (height /2)
-                                // every cycle shifts it to the right
-                                startPoint1 = shiftTheWholeThingHorizontal + (j + k + l + m + n + i1) * height * 0.9 ;
-                                // (j + k + l) shifts upper way; (m+ n + i1) shifts it downer way
-                                startPoint2 = shiftTheWholeThingVertical - (j + k + l) * (height /2) + (i * height) + (m+ n + i1) * (height /2);
-                                drawHexagon(gRenderer, height, startPoint1, startPoint2);
-
-                            }
                         }
                     }
                 }
@@ -93,4 +82,3 @@ void draw(SDL_Renderer* gRenderer)
         }
     }
 }
-

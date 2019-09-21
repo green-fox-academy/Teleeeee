@@ -1,7 +1,8 @@
 #include "draw.h"
 #include <SDL.h>
 
-void draw(SDL_Renderer* renderer){
+void draw(SDL_Renderer* renderer)
+{
     int a = 0;
     int b = 0;
     int a1 = 640;

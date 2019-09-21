@@ -1,7 +1,8 @@
 #include "draw.h"
 #include <SDL.h>
 
-void squareInTheMiddle(SDL_Renderer* renderer, double size, double pos ){
+void squareInTheMiddle(SDL_Renderer* renderer, double size, double pos )
+{
 
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_Rect r;
@@ -22,7 +23,8 @@ void squareInTheMiddle(SDL_Renderer* renderer, double size, double pos ){
 
 }
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     double size = 18.67;
     double pos = 1;
 

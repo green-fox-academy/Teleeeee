@@ -1,7 +1,8 @@
 #include <SDL.h>
 #include "draw.h"
 
-void connectTheDots(SDL_Renderer* renderer, int arr[][2], int size){
+void connectTheDots(SDL_Renderer* renderer, int arr[][2], int size)
+{
     int x1= 0;
     int x2= 0;
     int y1= 0;
@@ -30,7 +31,8 @@ void connectTheDots(SDL_Renderer* renderer, int arr[][2], int size){
 
 }
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
 
 
     int arra[][2] = {{10, 10}, {290,  10}, {290, 290}, {10, 290}};

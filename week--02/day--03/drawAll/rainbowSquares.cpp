@@ -4,7 +4,8 @@
 #include "draw.h"
 #include <SDL.h>
 
-void rainbowSquares(SDL_Renderer* renderer, int size , int color){
+void rainbowSquares(SDL_Renderer* renderer, int size , int color)
+{
     if(color == 1){
         SDL_SetRenderDrawColor(renderer, 51, 61, 206, 20);
     }else if(color == 2){
@@ -26,7 +27,8 @@ void rainbowSquares(SDL_Renderer* renderer, int size , int color){
     SDL_RenderFillRect(renderer, &r);
 }
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_MOD);
     int size;
     int color;

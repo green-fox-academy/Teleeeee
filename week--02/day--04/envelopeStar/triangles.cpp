@@ -1,7 +1,8 @@
 #include "draw.h"
 #include <algorithm>
 
-void draw(SDL_Renderer* gRenderer) {
+void draw(SDL_Renderer* gRenderer) 
+{
     float shifItFromBottom  = 400;  // lower it is the further away from the bottom
     float  shiftItFromRight = 40;  // shifts it fromright to left
     float magassag =  17.33;
