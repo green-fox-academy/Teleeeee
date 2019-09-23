@@ -1,20 +1,16 @@
 #include <iostream>
 
-int findMinimum(const int *arr, int size){
+int* findMinimum(int *arr, int size){
     int temp;
-    int * ptrTemp = &temp;
     temp = *arr;
-    int flag;
+    int flag = 1;
     for (int i = 0; i < size; ++i) {
         if(temp > arr[i]){
             temp = arr[i];
             flag = i;
         }
     }
-
-
-    return *(arr + flag);
-
+    return (arr+flag);
 }
 
 
