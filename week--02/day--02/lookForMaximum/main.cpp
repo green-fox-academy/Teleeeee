@@ -15,12 +15,14 @@ int main(){
     }
 
     int biggestNumbIndex;
+    int absoluteHighest = 0;
 
     for (int j = 0; j < inputNumber ; ++j) {
-        if (*(myArray + j) >= *myArray) {
-            biggestNumbIndex = j;
+            if (*(myArray + j) >= absoluteHighest) {
+                absoluteHighest = *(myArray+j);
+                biggestNumbIndex = j;
+            }
         }
-    }
     std::cout << myArray[biggestNumbIndex] << "  " <<  &myArray[biggestNumbIndex] << std::endl;
 
 
