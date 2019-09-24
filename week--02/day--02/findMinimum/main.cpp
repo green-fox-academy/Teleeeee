@@ -4,13 +4,16 @@ int* findMinimum(int *arr, int size){
     int temp;
     temp = *arr;
     int flag = 1;
+    //int* minPtr = arr;
     for (int i = 0; i < size; ++i) {
         if(temp > arr[i]){
             temp = arr[i];
             flag = i;
+            //minPtr = &arr[i];
         }
     }
     return (arr+flag);
+    //return minPtr;
 }
 
 
