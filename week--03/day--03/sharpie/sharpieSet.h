@@ -14,8 +14,7 @@ class sharpieSet {
 public:
     sharpieSet();
     void removeTrash();
-
-
+    int countUseable();
     void addSharpie(sharpie& o);
 
 private:

@@ -10,16 +10,10 @@ int main() {
     sharpie little4("blue", 1.11);
     sharpie little5("blue", 1.11);
 
-    little3.use();
-    little3.use();
-    little3.use();
-    little3.use();
-    little3.use();
-    little1.use();
-    little1.use();
-    little1.use();
-    little1.use();
-    little1.use();
+    for(int k =0; k < 5; k++) {
+        little3.use();
+        little1.use();
+    }
 
     sharpieSet sharpies;
 
@@ -30,9 +24,9 @@ int main() {
     sharpies.addSharpie(little4);
     sharpies.addSharpie(little5);
 
+    std::cout <<sharpies.countUseable();
+
     sharpies.removeTrash();
-
-
 
     return 0;
 }

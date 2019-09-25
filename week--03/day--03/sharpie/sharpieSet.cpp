@@ -13,17 +13,22 @@ void sharpieSet::addSharpie(sharpie& o){
 
 sharpieSet::sharpieSet()= default;;
 
-bool countUseable(sharpie &sharpie){
-    return sharpie.haveInk();
+int sharpieSet::countUseable(){
+    int counter = 0;
+    for (int i = 0; i < _box.size() ; ++i) {
+        if( !_box[i].haveInk()){
+            counter++;
+        }
+    }
+    return counter;
 }
 
 void sharpieSet::removeTrash() {
-    for(int i = 0; i <  _box.size(); i++) {
-        if (! _box[i].haveInk()) {
-            _box.erase( _box.begin()+i);
-        }
+    for(int i = 0; i <  _box.size();) {
+            if ( !_box[i].haveInk()) {
+                _box.erase(_box.begin() + i);
+            }else{
+                i++;
+            }
     }
 }
-
-
-
