@@ -3,4 +3,4 @@ project(sharpie)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(sharpie main.cpp cmake-build-debug/sharpie.cpp cmake-build-debug/sharpie.h)
+add_executable(sharpie main.cpp cmake-build-debug/sharpie.cpp cmake-build-debug/sharpie.h sharpieSet.cpp sharpieSet.h)
