@@ -13,7 +13,6 @@
 double getPostRatio(std::vector<std::string> &allVector){
     double counterP = 0;
     double counterG = 0;
-    std::string substr = " POST";
     for(int i = 0; i < allVector.size(); i++) {
         if(allVector[i].length() == 47){
             counterP++;
@@ -31,7 +30,7 @@ std::vector<std::string> ipAddresses(std::vector<std::string> &allVector ){
     //cut out unnecessary parts
     for(int i = 0; i < allVector.size(); i++){
         allVector[i].erase(0, 27);
-        allVector[i].erase(13,allVector.size() - 1);
+        allVector[i].erase(13,allVector[i].length() - 1);
 
     }
 
@@ -40,12 +39,15 @@ std::vector<std::string> ipAddresses(std::vector<std::string> &allVector ){
     //delete duplicated addresses
 
     for(int k = 0; k < allVector.size(); k++){
-        for(int n = 0; n < allVector.size(); n++ ){
-            if(allVector[k] == allVector[n]){
-                allVector.erase(allVector.begin()+n);
+        for(int n = k + 1; n < allVector.size(); ){
+            if(allVector[k] == allVector[n] && k!=n){   //delete address which are same as k and
+                allVector.erase(allVector.begin()+n);   //doesn't step so it will check the same n allVector[n] is diff. after the deletion
+            }else{
+                n++;                                    //only steps if didn't delete anything
             }
         }
     }
+
 
     //should be only single addresses in Vector
 
