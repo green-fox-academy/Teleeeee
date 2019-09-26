@@ -6,10 +6,18 @@
 
 
 void  Pirate::drinkSomeRum() {
-    if(!_dead) {
+    if(!_dead || !_sleeping) {
     _intoxicationCounter++;
-    }else{
-        std::cout << "He's dead!" << std::endl;
+    }else if(_intoxicationCounter > 4){
+        _sleeping = true;
+        std::cout << "He is sleeping it off!" << std::endl;
+        _intoxicationCounter = 0;
+    }
+}
+
+void  Pirate::wakeHimUp(){
+    if(_sleeping) {
+        _sleeping = false;
     }
 }
 
@@ -17,6 +25,8 @@ Pirate::Pirate(std::string name) {
     _intoxicationCounter = 0;
     _dead = false;
     _parott = false;
+    _sleeping = false;
+    _isCaptain = false;
 }
 
 Pirate::Pirate(bool isCaptain) {
@@ -24,6 +34,7 @@ Pirate::Pirate(bool isCaptain) {
     _dead = false;
     _parott = false;
     _isCaptain = isCaptain;
+    _sleeping = false;
 }
 
 Pirate::Pirate(){
@@ -32,6 +43,7 @@ Pirate::Pirate(){
     _parott = false;
     _name = "filfthyMate";
     _isCaptain = false;
+    _sleeping= false;
 }
 
 void Pirate::howsItGoingMate(){
@@ -46,9 +58,6 @@ void Pirate::howsItGoingMate(){
     }
 }
 
-void Pirate::dead(){
-    _dead = true;
-}
 
 std::string Pirate::getName(){
     return _name;
@@ -56,14 +65,20 @@ std::string Pirate::getName(){
 
 void Pirate::brawl(Pirate* otherPirate){
     srand(time(0));
-    if(!otherPirate->_dead && !_dead){
+    if(!otherPirate->_dead && !_dead && !otherPirate->_sleeping && !_sleeping ){
         if(rand()%3 == 0){
-            _dead = true;
+            killHim();
         }else if(rand()%3 == 1){
-            otherPirate->_dead = true;
+            otherPirate->killHim();
         }else if (rand()%3 == 2){
+            otherPirate->_sleeping = true;
+            _sleeping = true;
         }
     }
+}
+
+void Pirate::soberHim(){
+    _intoxicationCounter = 0;
 }
 
 void Pirate::heIsNowCaptain(){

@@ -8,12 +8,13 @@ public:
     void addShipsToYourArmada(pirateShip * nextship);
     bool armadaWar(Armada*  otherArmada);
     void fillArmada();
-
-
+    std::string getTheNameOfArmada();
+    Armada(std::string name);
 
 private:
 
     std::vector<pirateShip*> _armadaOfShip;
+    std::string _nameOfArmada;
 
 };
 

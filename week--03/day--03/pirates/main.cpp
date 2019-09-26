@@ -3,26 +3,20 @@
 #include "pirateShip.h"
 #include "Armada.h"
 #include "ctime"
-#include "time.h"
 
 int main() {
     srand(time(0));
     Pirate jackSparrow("JackSparrow");
 
-    jackSparrow.drinkSomeRum();
-    jackSparrow.howsItGoingMate();
-    jackSparrow.howsItGoingMate();
-
     Pirate Hook("Hook");
 
-    jackSparrow.brawl(&Hook);
     jackSparrow.heIsNowCaptain();
 
 
-    Armada bigAssArmada;
+    Armada bigAssArmada("British Great Armada");
     bigAssArmada.fillArmada();
 
-    Armada otherBigAssArmada;
+    Armada otherBigAssArmada("Spanish Rulers of the world");
     otherBigAssArmada.fillArmada();
 
     std::cout << bigAssArmada.armadaWar( &otherBigAssArmada );

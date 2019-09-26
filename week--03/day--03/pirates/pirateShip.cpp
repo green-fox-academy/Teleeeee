@@ -48,6 +48,14 @@ double  pirateShip::numberOfAlivePirates(){
 bool pirateShip::battleOtherShip(pirateShip* otherShip){
     double scoreFirst = 0;
     double scoreSecond = 0;
+    for (int i = 0; i < rand()%_ship.size() ; ++i){
+        _ship[i]->wakeHimUp();
+        _ship[i]->soberHim();
+    }
+    for (int j = 0; j <rand()%otherShip->_ship.size() ; ++j) {
+        otherShip->_ship[j]->wakeHimUp();
+        otherShip->_ship[j]->soberHim();
+    }
     for (int i = 0; i < _ship.size() ; ++i) {
         _ship[i]->brawl(otherShip->_ship[i]);
         if(_ship[i]->isHeAlive()){
@@ -71,7 +79,7 @@ bool pirateShip::battleOtherShip(pirateShip* otherShip){
 void pirateShip::winnerHaveSomeRum(std::vector<Pirate *> drunkenShip){
     srand(time(0));
     for (int i = 0; i < drunkenShip.size() ; ++i) {
-        for(int k = 0; k < rand()%20; k++)
+        for(int k = 0; k < rand()%8; k++)
             drunkenShip[i]->drinkSomeRum();
     }
 }

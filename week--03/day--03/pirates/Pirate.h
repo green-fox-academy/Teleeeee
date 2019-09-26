@@ -11,7 +11,6 @@ public:
     Pirate(bool isCaptain);
     void howsItGoingMate();
     void drinkSomeRum();
-    void dead();
     void brawl(Pirate* otherPirate);
     bool isHeAlive();
     std::string getName();
@@ -19,6 +18,8 @@ public:
     bool isHeCaptain();
     int howDrunkIsHe();
     void killHim();
+    void wakeHimUp();
+    void soberHim();
 
 
 private:
@@ -27,6 +28,7 @@ private:
      std::string _name;
      bool _parott;
      bool _isCaptain;
+     bool _sleeping;
 
 };
 

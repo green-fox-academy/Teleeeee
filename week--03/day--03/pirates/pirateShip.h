@@ -7,7 +7,6 @@
 class pirateShip {
 public:
     pirateShip();
-
     void onBoardYouFilthyPirates(Pirate* newPirate);
     void fillShip();
     int captainConsumedRum();
