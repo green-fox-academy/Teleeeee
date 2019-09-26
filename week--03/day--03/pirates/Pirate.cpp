@@ -6,7 +6,7 @@
 
 
 void  Pirate::drinkSomeRum() {
-    if(!_dead || !_sleeping) {
+    if(!_dead && !_sleeping && _intoxicationCounter <= 4) {
     _intoxicationCounter++;
     }else if(_intoxicationCounter > 4){
         _sleeping = true;
