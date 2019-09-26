@@ -16,10 +16,12 @@ public:
     void removeTrash();
     int countUseable();
     void addSharpie(sharpie& o);
+    sharpie* getsharpie(sharpie& o);           //sharpie objecteket eri el
+    sharpie* getsfromsetharpie(int k);         //pointerrel ter vissza a vectorbol
 
 private:
 
-    std::vector<sharpie> _box;
+    std::vector<sharpie*> _box;               //sharpie pointereket tartalmazo vector a _box
 
 };
 

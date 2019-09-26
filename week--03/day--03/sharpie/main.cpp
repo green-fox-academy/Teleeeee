@@ -19,7 +19,6 @@ int main() {
 
     sharpies.getsharpie(little4)->use();
 
-
     sharpies.addSharpie(little);
     sharpies.addSharpie(little1);
     sharpies.addSharpie(little2);
@@ -27,14 +26,9 @@ int main() {
     sharpies.addSharpie(little4);
     sharpies.addSharpie(little5);
 
-
     for(int k =0; k < 5; k++) {
         sharpies.getsfromsetharpie(4)->use();
     }
-
-
-
-
 
     std::cout <<sharpies.countUseable();
 

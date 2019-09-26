@@ -32,5 +32,4 @@ void farm::breed(){
 
 void farm::addAnimal(Animals& o){
     _cattle.emplace_back(o);
-
 }
