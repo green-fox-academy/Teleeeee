@@ -7,7 +7,7 @@ void Armada::addShipsToYourArmada(pirateShip * nextship){
 }
 
 bool Armada::armadaWar(Armada* otherArmada){
-   int counterAtacker = 0;
+   int counterAttacker = 0;
    int counterDeffender = 0;
    int limit = 0;
    if(otherArmada->_armadaOfShip.size()>_armadaOfShip.size()){                                                        //sets the limit of the round to the armada which has less ships
@@ -17,27 +17,27 @@ bool Armada::armadaWar(Armada* otherArmada){
        limit = otherArmada->_armadaOfShip.size();
    }
    for (int j = 0; j < limit ; ++j) {                                                                                 //ships are fighting in order
-           if(_armadaOfShip[counterAtacker]->battleOtherShip(otherArmada->_armadaOfShip[counterDeffender])){
+           if(_armadaOfShip[counterAttacker]->battleOtherShip(otherArmada->_armadaOfShip[counterDeffender])){
                counterDeffender++;
-               if(otherArmada->_armadaOfShip.size() - 1 == counterAtacker){
+               if(otherArmada->_armadaOfShip.size() - 1 == counterAttacker){
                    break;
                }
            }
            else{
-               counterAtacker++;
+               counterAttacker++;
                if(_armadaOfShip.size() - 1 == counterDeffender ){
                    break;
                }
            }
        }
-   if(counterAtacker < counterDeffender ){
+   if(counterAttacker < counterDeffender ){
        std::cout << getTheNameOfArmada()  <<" has won"<< std::endl;
-   }else if(counterAtacker > counterDeffender){
+   }else if(counterAttacker > counterDeffender){
        std::cout << otherArmada->getTheNameOfArmada()  <<" has won"<< std::endl;
    }else{
        std::cout << "It's a draw everybody loose!" << std::endl;
    }
-    return counterAtacker <= counterDeffender;
+    return counterAttacker <= counterDeffender;
 
 }
 
