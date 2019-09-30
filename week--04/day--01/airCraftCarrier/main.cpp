@@ -20,7 +20,7 @@ int main() {
 
 
 
-    Carrier UssEnterprise(5000, 500);
+    Carrier UssEnterprise(5000, 0);
     Carrier UssMissouri(3000, 2000);
 
     UssMissouri.addAircraftF35(&g);
@@ -42,6 +42,9 @@ int main() {
     UssEnterprise.fight(&UssMissouri);
     UssMissouri.fill();
     UssMissouri.fight(&UssEnterprise);
+    UssEnterprise.fill();
+    UssMissouri.fill();
+
 
 
     std::cout << UssEnterprise.getStatus() << std::endl;

@@ -6,11 +6,12 @@ int Aircraft::fight(){
 
 }
 
-int Aircraft::refill(int needAmmo){
+int* Aircraft::refill(int* needAmmo){
     int needed = _maxAmmo - _ammo;
-    if(needAmmo > 0) {
+    if(*needAmmo > 0) {
         _ammo = _maxAmmo;
-        return needAmmo - needed;
+        *needAmmo = *needAmmo - needed;
+        return needAmmo ;
     }
     return 0;
 }

@@ -12,7 +12,7 @@ class Aircraft {
 public:
 
     int fight();
-    int refill(int needAmmo);
+    int* refill(int* needAmmo);
     std::string getType();
     std::string getStatus();
     int getAmmo();

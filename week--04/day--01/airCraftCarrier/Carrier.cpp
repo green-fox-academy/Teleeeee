@@ -19,7 +19,7 @@ void Carrier::addAircraftF35(F35* airplane){
 
 void Carrier::fill(){
     try {
-        if(_ammoStorage == 0){
+        if(_ammoStorage <= 0){
             throw "There is no ammo!";
         }
     int neededammo = 0;
@@ -35,18 +35,18 @@ void Carrier::fill(){
     }
     if(neededammo > _ammoStorage){
         for (int i = 0; i < _planesF35.size() ; ++i) {
-           _planesF35[i]->refill(_ammoStorage);
+           _planesF35[i]->refill(&_ammoStorage);
         }
         for (int i = 0; i < _planesF16.size() ; ++i) {
-            _planesF16[i]->refill(_ammoStorage);
+            _planesF16[i]->refill(&_ammoStorage);
         }
     }
     else{
         for (int i = 0; i < _planesF35.size() ; ++i) {
-            _planesF35[i]->refill(_ammoStorage);
+            _planesF35[i]->refill(&_ammoStorage);
         }
         for (int i = 0; i < _planesF16.size() ; ++i) {
-            _planesF16[i]->refill(_ammoStorage);
+            _planesF16[i]->refill(&_ammoStorage);
         }
     }
 
