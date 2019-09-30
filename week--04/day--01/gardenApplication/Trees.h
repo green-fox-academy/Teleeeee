@@ -17,6 +17,7 @@ public:
    Trees(std::string color);
    std::string getColor();
 
+
 protected:
 
     double _waterlevel;

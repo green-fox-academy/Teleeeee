@@ -14,6 +14,7 @@ void  Trees::setWaterlevel(double water){
 Trees::Trees(std::string color){
     _color = color;
     _waterlevel = 0;
+    std::string _type = "trees";
 }
 
 std::string Trees::getColor(){
