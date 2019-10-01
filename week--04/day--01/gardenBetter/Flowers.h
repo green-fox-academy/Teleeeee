@@ -11,7 +11,7 @@
 class Flowers : public Plant {
 public:
     Flowers(std::string color);
-    void virtual setWaterlevel(double water);
+    void setWaterlevel(double water) ;
 
 private:
 
