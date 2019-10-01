@@ -1,14 +1,14 @@
 #include <iostream>
 #include "Reptile.h"
 #include "Mammal.h"
-#include "Birds.h"
+#include "Bird.h"
 
 
 int main( int argc, char* args[] )
 {
     Reptile reptile("Crocodile");
     Mammal mammal("Koala");
-    Birds bird("Parrot");
+    Bird bird("Parrot");
 
     std::cout << "How do you breed?" << std::endl;
     std::cout << "A " << reptile.getName() << " is breeding by " << reptile.breed() << std::endl;

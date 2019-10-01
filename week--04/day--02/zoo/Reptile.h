@@ -2,9 +2,9 @@
 #define ZOO_REPTILE_H
 
 
-#include "Animals.h"
+#include "Animal.h"
 
-class Reptile : virtual public Animals {
+class Reptile : virtual public Animal {
 public:
     Reptile(std::string name);
     std::string breed();

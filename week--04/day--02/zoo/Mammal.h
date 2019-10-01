@@ -2,9 +2,9 @@
 #define ZOO_MAMMAL_H
 
 
-#include "Animals.h"
+#include "Animal.h"
 
-class Mammal : public Animals {
+class Mammal : public Animal {
 public:
     Mammal(std::string name);
     virtual std::string breed() override ;
