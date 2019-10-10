@@ -59,10 +59,10 @@ std::vector<std::vector<int>> Draw::generateMap(){
     std::vector<std::vector<int>> tiles  (5000, std::vector<int>(5000, 0));
     for (int i = 0; i < 5000 ; ++i) {
         for (int k = 0; k < 5000 ; ++k) {
-            if (rand()%5 == 1) {
+            if (rand()%10 == 1) {
                 tiles.at(i).at(k) = 1;
             }
-            if(rand()%10 == 1){
+            if(rand()%30 == 1){
                 tiles.at(i).at(k) = 2;
             }
         }
@@ -70,15 +70,20 @@ std::vector<std::vector<int>> Draw::generateMap(){
     return  tiles;
 }
 
-//TODO: animation
 void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure){
     int side = 50;
+    int lastTime = 0;
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
-    for (int i = 0; i < 3; ++i) {
-        SDL_Delay(100);
-        SDL_Rect cutrect = {74 + i * 38, 167, 38, 45};
-        SDL_RenderCopy(renderer, figure->getAnimation(), &cutrect, &dstrect);
-        SDL_RenderPresent(renderer);
+    int currentTime = 0;
+    int i = 0;
+    while(i < 2 ){
+        currentTime = SDL_GetTicks();
+        if (currentTime > lastTime + 100) {
+            lastTime = currentTime;
+            SDL_Rect cutrect = {0 + i * 110, 325, 110, 95};
+            SDL_RenderCopy(renderer, figure->getAnimation(), &cutrect, &dstrect);
+            SDL_RenderPresent(renderer);
+            i++;
+        }
     }
-
 }

@@ -85,7 +85,7 @@ int main(int argc, char *args[]) {
 
     Resources gResources(gRenderer);
     Movements move;
-    DrawableElement Cartmen(4,4, gResources.getTextures()[4], gResources.getTextures()[5]);
+    DrawableElement Cartmen(4,4, gResources.getTextures()[4], gResources.getTextures()[8]);
     DrawableElement Wall(0,0, gResources.getTextures()[6]);
     DrawableElement Floor(0,0, gResources.getTextures()[6]);
     DrawableElement KFC(0,0,gResources.getTextures()[7]);
@@ -96,6 +96,9 @@ int main(int argc, char *args[]) {
 
     //While application is running
     while (!quit) {
+
+        int mouseX;
+        int mouseY;
         //Handle events on queue
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
@@ -129,7 +132,6 @@ int main(int argc, char *args[]) {
                 case (SDLK_LEFT):
                     if(move.moveAble(&map , k, z - 1)){
                         z--;
-
                     }
                     break;
                 case(SDLK_ESCAPE):
@@ -137,10 +139,11 @@ int main(int argc, char *args[]) {
             }
         }
 
+
         ////DRAW HERE ////
         draw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen,  k, z,map);
-        draw.draw(gRenderer,&Cartmen);
-        //draw.animation(gRenderer,&Cartmen);
+        //draw.draw(gRenderer,&Cartmen);
+        draw.animation(gRenderer,&Cartmen);
 
 
         ////DRAW HERE ////
