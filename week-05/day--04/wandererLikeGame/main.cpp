@@ -2,7 +2,8 @@
 #include <SDL.h>
 #include "Resources.h"
 #include "Draw.h"
-#include "Movemnets.h"
+#include "Movements.h"
+#include "ctime"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 500;
@@ -69,18 +70,26 @@ int main(int argc, char *args[]) {
     //Main loop flag
     bool quit = false;
 
+    //ask for time for random
+    srand(time(0));
+
     //Event handler
     SDL_Event e;
 
-    int k = 0;
-    int z = 0;
+    Draw draw;
+
+    int k = 2050;
+    int z = 2050;
+    std::vector<std::vector<int>> map = draw.generateMap();
+
 
     Resources gResources(gRenderer);
-    DrawableElement Cartmen(5,5, gResources.getTextures()[4]);
+    Movements move;
+    DrawableElement Cartmen(4,4, gResources.getTextures()[4]);
     DrawableElement Wall(0,0, gResources.getTextures()[0]);
     DrawableElement Floor(0,0, gResources.getTextures()[1]);
-    Draw draw;
-    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z);
+
+    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z, map);
 
 
 
@@ -94,38 +103,39 @@ int main(int argc, char *args[]) {
             }
         }
 
-        ////DRAW HERE ////
 
+
+
+        //movements here
 
         if (e.type == SDL_KEYDOWN) {
             switch (e.key.keysym.sym) {
                 case (SDLK_UP):
-                    k--;
-                    SDL_Delay(100);
-                    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z);
+                    if(move.moveAble(&map , k - 1, z)){
+                        k--;
+                    }
                     break;
                 case (SDLK_DOWN):
-                    k++;
-                    SDL_Delay(100);
-                    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z);
+                    if(move.moveAble(&map , k + 1, z)){
+                        k++;
+                    }
                     break;
                 case (SDLK_RIGHT):
-                    z++;
-                    SDL_Delay(100);
-                    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z);
+                    if(move.moveAble(&map , k, z  + 1)){
+                        z++;
+                    }
                     break;
                 case (SDLK_LEFT):
-                    z--;
-                    SDL_Delay(100);
-                    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z);
+                    if(move.moveAble(&map , k, z - 1)){
+                        z--;
+                    }
                     break;
             }
         }
 
+        ////DRAW HERE ////
+        draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z,map);
         draw.draw(gRenderer,&Cartmen);
-
-
-
 
         ////DRAW HERE ////
 

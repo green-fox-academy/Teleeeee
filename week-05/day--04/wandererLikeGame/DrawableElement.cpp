@@ -27,11 +27,5 @@ void DrawableElement::setXOnDrawtable(int xOnDrawtable) {
 void DrawableElement::setYOnDrawtable(int yOnDrawtable) {
     _yOnDrawtable = yOnDrawtable;
 }
-void DrawableElement::changeXOnDrawtable(int change) {
-    _xOnDrawtable = _xOnDrawtable + change;
-}
 
-void DrawableElement::changeYOnDrawtable(int change) {
-    _yOnDrawtable = _yOnDrawtable + change;
-}
 

@@ -9,7 +9,8 @@ class Draw {
 public:
 
     void draw(SDL_Renderer* renderer,DrawableElement* figure);
-    void SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* Cartmen, int k, int z );
+    void SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* Cartmen, int k, int z, std::vector<std::vector<int>> tiles  );
+    std::vector<std::vector<int>> generateMap();
 
 private:
 

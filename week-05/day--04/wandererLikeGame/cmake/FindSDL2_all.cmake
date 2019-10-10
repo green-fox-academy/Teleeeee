@@ -30,6 +30,6 @@ IF(WIN32)
     endforeach()
 ENDIF()
 
-add_executable(draw main.cpp ${gfx_inc} ${gfx_src} ../Draw.cpp ../Draw.h ../DrawableElement.cpp ../DrawableElement.h ../Resources.cpp ../Resources.h ../Movemnets.cpp ../Movemnets.h)
+add_executable(draw main.cpp ${gfx_inc} ${gfx_src} ../Draw.cpp ../Draw.h ../DrawableElement.cpp ../DrawableElement.h ../Resources.cpp ../Resources.h ../Movements.cpp ../Movements.h)
 target_link_libraries(draw ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 

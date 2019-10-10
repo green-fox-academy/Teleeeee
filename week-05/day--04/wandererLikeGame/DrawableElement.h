@@ -18,13 +18,10 @@ public:
 
     void setYOnDrawtable(int yOnDrawtable);
 
-    void changeXOnDrawtable(int change);
-
-    void changeYOnDrawtable(int change);
-
 private:
 public:
-    SDL_Texture *getTexture() const;
+
+    [[nodiscard]] SDL_Texture *getTexture() const;
 
 private:
 
