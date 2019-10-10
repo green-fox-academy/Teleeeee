@@ -78,18 +78,19 @@ int main(int argc, char *args[]) {
 
     Draw draw;
 
-    int k = 2050;
-    int z = 2050;
+    int k = 2055;
+    int z = 2055;
     std::vector<std::vector<int>> map = draw.generateMap();
 
 
     Resources gResources(gRenderer);
     Movements move;
-    DrawableElement Cartmen(4,4, gResources.getTextures()[4]);
-    DrawableElement Wall(0,0, gResources.getTextures()[0]);
-    DrawableElement Floor(0,0, gResources.getTextures()[1]);
+    DrawableElement Cartmen(4,4, gResources.getTextures()[4], gResources.getTextures()[5]);
+    DrawableElement Wall(0,0, gResources.getTextures()[6]);
+    DrawableElement Floor(0,0, gResources.getTextures()[6]);
+    DrawableElement KFC(0,0,gResources.getTextures()[7]);
 
-    draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z, map);
+    draw.SetMap(gRenderer, &Wall, &Floor,&KFC, &Cartmen, k,z, map);
 
 
 
@@ -128,14 +129,19 @@ int main(int argc, char *args[]) {
                 case (SDLK_LEFT):
                     if(move.moveAble(&map , k, z - 1)){
                         z--;
+
                     }
                     break;
+                case(SDLK_ESCAPE):
+                    move.changeTile(&map,k,z);
             }
         }
 
         ////DRAW HERE ////
-        draw.SetMap(gRenderer, &Wall, &Floor, &Cartmen, k,z,map);
+        draw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen,  k, z,map);
         draw.draw(gRenderer,&Cartmen);
+        //draw.animation(gRenderer,&Cartmen);
+
 
         ////DRAW HERE ////
 

@@ -10,6 +10,8 @@ class Movements {
 public:
 
     bool moveAble(std::vector<std::vector<int>>* tiles, int k , int z);
+    void changeTile(std::vector<std::vector<int>>* tiles, int k, int z);
+
 
 private:
 

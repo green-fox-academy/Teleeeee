@@ -8,7 +8,8 @@ class DrawableElement {
 
 public:
 
-    DrawableElement(int xOnDrawtable, int yOnDrawtable, SDL_Texture* texture );
+    DrawableElement(int xOnDrawtable, int yOnDrawtable, SDL_Texture* texture,SDL_Texture* animation );
+    DrawableElement(int xOnDrawtable, int yOnDrawtable, SDL_Texture* texture);
 
     int getXOnDrawtable() const;
 
@@ -18,16 +19,18 @@ public:
 
     void setYOnDrawtable(int yOnDrawtable);
 
-private:
-public:
-
     [[nodiscard]] SDL_Texture *getTexture() const;
+
+    SDL_Texture *getAnimation() const;
+
 
 private:
 
     int _xOnDrawtable;
     int _yOnDrawtable;
     SDL_Texture* _texture;
+    SDL_Texture* _animation;
+
 
 };
 
