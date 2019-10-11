@@ -4,25 +4,23 @@
 
 
 
-void Draw::draw(SDL_Renderer *renderer, DrawableElement* figure) {
-    int side = 50;
+void Draw::draw(SDL_Renderer *renderer, DrawableElement* figure, int side) {
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
     SDL_RenderCopy(renderer, figure->getTexture(), NULL, &dstrect);
 
 }
-void Draw::drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height){
-    int side = 50;
+void Draw::drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side){
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
     SDL_Rect cutrect = {onTheSheetX, ontheSheetY, widht, height};
     SDL_RenderCopy(renderer, figure->getTexture(), &cutrect, &dstrect);
 }
-void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc,  DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles ){
+void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc,  DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles, int side ){
 
-    if(Cartmen->getXOnDrawtable() + z  > 0 && Cartmen->getYOnDrawtable() - 5 + k > 0 && Cartmen->getXOnDrawtable() - 5 + z  < 5000 && Cartmen->getYOnDrawtable() - 5 + k < 5000 ) {
+    if(Cartmen->getXOnDrawtable() + z  > 0 && Cartmen->getYOnDrawtable() - 5 + k > 0 && Cartmen->getXOnDrawtable() - 5 + z  < 500 && Cartmen->getYOnDrawtable() - 5 + k < 500 ) {
 
-        for ( int i = Cartmen->getXOnDrawtable() - 5  + z ; i < 7 + Cartmen->getXOnDrawtable() + z; ++i) {
+        for ( int i = Cartmen->getXOnDrawtable() - 5  + z ; i <7  + Cartmen->getXOnDrawtable() + z; ++i) {
 
-            for (int j = Cartmen->getYOnDrawtable() - 5 + k ; j < 7 + Cartmen->getYOnDrawtable() + k; ++j) {
+            for (int j = Cartmen->getYOnDrawtable() - 5 + k ; j < 7 + Cartmen->getYOnDrawtable() + k ; ++j) {
 
                 wall->setXOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5 );
                 wall->setYOnDrawtable(j -k + Cartmen->getYOnDrawtable() - 5 );
@@ -31,17 +29,17 @@ void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElemen
                 kfc->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
                 kfc->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
                 if (tiles[j][i] == 0) {
-                    drawFromSheet(renderer, floor, 107, 33, 31, 31);
+                    drawFromSheet(renderer, floor, 107, 33, 31, 31, side);
                 }
                 if(tiles[j][i] == 1){
-                    drawFromSheet(renderer, wall, 173, 0, 31, 31);
+                    drawFromSheet(renderer, wall, 173, 0, 31, 31, side);
                 }
                 if(tiles[j][i] == 2){
-                    drawFromSheet(renderer, wall, 371, 231, 31, 31);
+                    drawFromSheet(renderer, wall, 371, 231, 31, 31, side);
                 }
                 if(tiles[j][i] == 3){
-                    //drawFromSheet(renderer, wall, 107, 231, 31, 31);
-                    drawFromSheet(renderer, kfc, 0, 0, 440,337);
+                    //drawFromSheet(renderer, wall, 107, 231, 31, 31, side);
+                    drawFromSheet(renderer, kfc, 0, 0, 440,337, side);
                     //draw(renderer, kfc);
                 }
             }
@@ -56,9 +54,9 @@ void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElemen
 }
 
 std::vector<std::vector<int>> Draw::generateMap(){
-    std::vector<std::vector<int>> tiles  (5000, std::vector<int>(5000, 0));
-    for (int i = 0; i < 5000 ; ++i) {
-        for (int k = 0; k < 5000 ; ++k) {
+    std::vector<std::vector<int>> tiles  (500, std::vector<int>(500, 0));
+    for (int i = 0; i < 500 ; ++i) {
+        for (int k = 0; k < 500 ; ++k) {
             if (rand()%10 == 1) {
                 tiles.at(i).at(k) = 1;
             }
@@ -70,8 +68,7 @@ std::vector<std::vector<int>> Draw::generateMap(){
     return  tiles;
 }
 
-void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure){
-    int side = 50;
+void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure, int side){
     int lastTime = 0;
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
     int currentTime = 0;
@@ -80,10 +77,17 @@ void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure){
         currentTime = SDL_GetTicks();
         if (currentTime > lastTime + 100) {
             lastTime = currentTime;
-            SDL_Rect cutrect = {0 + i * 110, 325, 110, 95};
+            SDL_Rect cutrect = {0 + i * 38, 165, 38, 42};
             SDL_RenderCopy(renderer, figure->getAnimation(), &cutrect, &dstrect);
             SDL_RenderPresent(renderer);
             i++;
         }
     }
+}
+
+void Draw::menuBackground(SDL_Renderer* renderer){
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer,0,0,0,0x50);
+    SDL_Rect rect = {0,0,1000,1000};
+    SDL_RenderFillRect(renderer,&rect);
 }

@@ -19,7 +19,8 @@ Resources::Resources(SDL_Renderer* renderer) {
     _textures.emplace_back(IMG_LoadTexture(renderer, "spritestrans.png"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "mapElements.png"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "kfc.png"));
-    _textures.emplace_back(IMG_LoadTexture(renderer, "spriteSheetCartmen.png"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "sprites.png"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "zolibacsi.png"));
 }
 
 std::vector<SDL_Texture *> Resources::getTextures() {

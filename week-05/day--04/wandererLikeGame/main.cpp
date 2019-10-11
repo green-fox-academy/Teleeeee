@@ -1,13 +1,15 @@
 #include <iostream>
 #include <SDL.h>
+#include <fstream>
+#include <sstream>
 #include "Resources.h"
 #include "Draw.h"
 #include "Movements.h"
 #include "ctime"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 500;
-const int SCREEN_HEIGHT = 500;
+const int SCREEN_WIDTH = 1000;
+const int SCREEN_HEIGHT = 1000;
 
 //Starts up SDL and creates window
 bool init();
@@ -78,8 +80,29 @@ int main(int argc, char *args[]) {
 
     Draw draw;
 
-    int k = 2055;
-    int z = 2055;
+    int k = 255;
+    int z = 255;
+    int side = 100;
+
+    /*std::vector<std::vector<int>> map (500,std::vector<int>(500,0));
+
+    std::ifstream myFileIn;
+
+    while(!myFileIn.eof()) {
+        const char delim = ' ';
+        std::string mapElement;
+        std::string mapPiece;
+        myFileIn.open("map.txt");
+        getline(myFileIn, mapElement);
+        std::stringstream input_stringstream(mapElement);
+        for (int j = 0; j < 500 ; ++j) {
+            while (std::getline(input_stringstream, mapPiece, delim)) {
+                for (int i = 0; i < 500; ++i) {
+                }
+            }
+        }
+    }*/
+
     std::vector<std::vector<int>> map = draw.generateMap();
 
 
@@ -90,15 +113,13 @@ int main(int argc, char *args[]) {
     DrawableElement Floor(0,0, gResources.getTextures()[6]);
     DrawableElement KFC(0,0,gResources.getTextures()[7]);
 
-    draw.SetMap(gRenderer, &Wall, &Floor,&KFC, &Cartmen, k,z, map);
+    draw.SetMap(gRenderer, &Wall, &Floor,&KFC, &Cartmen, k,z, map, side);
 
 
 
     //While application is running
     while (!quit) {
 
-        int mouseX;
-        int mouseY;
         //Handle events on queue
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
@@ -135,25 +156,47 @@ int main(int argc, char *args[]) {
                     }
                     break;
                 case(SDLK_ESCAPE):
-                    move.changeTile(&map,k,z);
+                    //menu background start set up not done
+                    draw.menuBackground(gRenderer);
+                    SDL_RenderPresent(gRenderer);
             }
         }
 
+        //if(e.type == SDL_MOUSEBUTTONDOWN){
+        //   int mouseX, mouseY;
+        //    SDL_GetMouseState(&mouseX,&mouseY);
+        //    map[k + mouseY / side + 1][z + mouseX / side + 1] = 3;
+        //}
+        //if(e.type == SDL_MOUSEWHEEL){
+        //    side += 1;
+        //}
+        //if(e.type == SDL_MOUSEMOTION){
+        //    side -= 1;
+        //}
+
 
         ////DRAW HERE ////
-        draw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen,  k, z,map);
-        //draw.draw(gRenderer,&Cartmen);
-        draw.animation(gRenderer,&Cartmen);
+
+        draw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen,  k, z,map, side);
+        draw.draw(gRenderer,&Cartmen,side);
+        //draw.animation(gRenderer,&Cartmen);
 
 
         ////DRAW HERE ////
-
-
         SDL_RenderPresent(gRenderer);
     }
 
     //Free resources and close SDL
     close();
+
+
+    std::ofstream myFileOut;
+    myFileOut.open("map.txt");
+    for(int i = 0; i < map.size(); i++){
+        for (int j = 0; j < map[0].size() ; ++j) {
+            myFileOut << map[i][j];
+        }myFileOut << std::endl;
+    }
 
     return 0;
 }
