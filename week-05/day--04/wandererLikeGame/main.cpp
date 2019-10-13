@@ -5,6 +5,7 @@
 #include "Draw.h"
 #include "Movements.h"
 #include "ctime"
+#include <SDL_ttf.h>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1000;
@@ -43,6 +44,11 @@ bool init() {
         std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
         return false;
     }
+    TTF_Init();
+    if( TTF_Init() == -1 )
+    {
+        std::cout << "Failed to initialize TTF" << std::endl;
+    }
 
     //Initialize renderer color
     SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -70,6 +76,8 @@ int main(int argc, char *args[]) {
 
     //Main loop flag
     bool quit = false;
+    bool menu = true;
+    bool firstRun = true;
 
     //ask for time for random
     srand(time(0));
@@ -97,9 +105,6 @@ int main(int argc, char *args[]) {
     gResources.loadMap("map.txt", &map);
 
 
-
-
-
     DrawableElement Cartmen(4,4, gResources.getTextures()[4], gResources.getTextures()[8]);
     DrawableElement Wall(0,0, gResources.getTextures()[6]);
     DrawableElement Floor(0,0, gResources.getTextures()[6]);
@@ -112,6 +117,32 @@ int main(int argc, char *args[]) {
     //While application is running
     while (!quit) {
 
+
+        //menu is initialized here
+        while(menu){
+            if(firstRun) {
+                gDraw.menuBackground(gRenderer);
+                gDraw.mainMenu(gRenderer);
+                SDL_RenderPresent(gRenderer);
+                firstRun = false;
+            }
+            SDL_PollEvent(&e);
+            if(e.type == SDL_MOUSEBUTTONDOWN){
+                 int mouseX, mouseY;
+                  SDL_GetMouseState(&mouseX,&mouseY);
+                  if (400 < mouseX && mouseX < 520 && 100 < mouseY && mouseY < 200 ){
+                      menu = false;
+                      quit = true;
+                  }
+                  if(400 < mouseX && mouseX < 520 && 250 < mouseY && mouseY < 350){
+                      menu = false;
+                  }
+                  if(400 < mouseX && mouseX < 520 && 400 < mouseY && mouseY < 450){
+                      menu = false;
+                  }
+            }
+        }
+
         //Handle events on queue
         SDL_Event e;
         while (SDL_PollEvent(&e) != 0) {
@@ -119,6 +150,7 @@ int main(int argc, char *args[]) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
+            //movements here
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case (SDLK_UP):
@@ -142,38 +174,12 @@ int main(int argc, char *args[]) {
                         }
                         break;
                     case (SDLK_ESCAPE):
-                        gMove.changeTile(&map, k, z);
-                        //menu background start set up not done
-                        //gDraw.menuBackground(gRenderer);
-                        //SDL_RenderPresent(gRenderer);
+                        menu = true;
+                        firstRun = true;
+                        break;
                 }
             }
         }
-
-
-
-
-
-
-
-        //movements here
-
-        gMove.generalButtonMovements(&map, &k, &z, &quit);
-
-
-
-        //if(e.type == SDL_MOUSEBUTTONDOWN){
-        //   int mouseX, mouseY;
-        //    SDL_GetMouseState(&mouseX,&mouseY);
-        //    map[k + mouseY / side + 1][z + mouseX / side + 1] = 3;
-        //}
-        //if(e.type == SDL_MOUSEWHEEL){
-        //    side += 1;
-        //}
-        //if(e.type == SDL_MOUSEMOTION){
-        //    side -= 1;
-        //}
-
 
         ////DRAW HERE ////
 
@@ -188,7 +194,7 @@ int main(int argc, char *args[]) {
 
     //Free resources and close SDL
     close();
-    
+
     //save map
     gResources.saveMap(&map,"map.txt");
 

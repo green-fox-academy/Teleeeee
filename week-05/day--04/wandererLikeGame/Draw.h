@@ -3,6 +3,8 @@
 
 #include <SDL_render.h>
 #include "DrawableElement.h"
+#include "string"
+#include <SDL_ttf.h>
 
 class Draw {
 
@@ -14,6 +16,8 @@ public:
     void drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side );
     std::vector<std::vector<int>> generateMap();
     void menuBackground(SDL_Renderer* renderer);
+    void writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string text);
+    void mainMenu(SDL_Renderer* renderer);
 
 private:
 

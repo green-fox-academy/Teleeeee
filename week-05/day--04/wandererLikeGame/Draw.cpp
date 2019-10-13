@@ -87,7 +87,22 @@ void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure, int side){
 
 void Draw::menuBackground(SDL_Renderer* renderer){
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(renderer,0,0,0,0x50);
+    SDL_SetRenderDrawColor(renderer,0,0,0,255);
     SDL_Rect rect = {0,0,1000,1000};
     SDL_RenderFillRect(renderer,&rect);
+}
+
+void Draw::writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string text){
+    TTF_Font* font =TTF_OpenFont( "Laffayette_Comic_Pro.ttf", 50);
+    SDL_Color textColor = { 255, 255, 255 };
+    SDL_Surface* textSurface = TTF_RenderText_Blended( font, text.c_str(), textColor);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface( renderer, textSurface );
+    SDL_Rect dstrect = { x,  y, 120, 100};
+    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+}
+
+void Draw::mainMenu(SDL_Renderer* renderer){
+    writeOnTheScreen(renderer,400, 100, "quit");
+    writeOnTheScreen(renderer,400, 250, "new");
+    writeOnTheScreen(renderer,400, 400, "last");
 }
