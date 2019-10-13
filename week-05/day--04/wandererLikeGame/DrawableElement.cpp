@@ -38,3 +38,13 @@ SDL_Texture *DrawableElement::getAnimation() const {
 }
 
 
+void DrawableElement::changeByXOnDrawtable(int change){
+    _xOnDrawtable = _xOnDrawtable + change;
+}
+
+void DrawableElement::changeByYOnDrawtable(int change){
+    _yOnDrawtable = _yOnDrawtable + change;
+}
+
+
+

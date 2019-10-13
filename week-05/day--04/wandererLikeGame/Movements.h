@@ -5,13 +5,16 @@
 #include <vector>
 #include "DrawableElement.h"
 #include "SDL.h"
+#include "Draw.h"
 
 class Movements {
 public:
 
     bool moveAble(std::vector<std::vector<int>>* tiles, int k , int z);
     void changeTile(std::vector<std::vector<int>>* tiles, int k, int z);
-    void generalButtonMovements(std::vector<std::vector<int>>* tiles, int* k, int* z, bool* quit);
+    void generalButtonMovements(std::vector<std::vector<int>>* tiles, int* k, int* z, bool* menu,bool* firstRun , SDL_Event*e);
+    void changeTileWithMouseClick(int k, int z, std::vector<std::vector<int>>* map, SDL_Event* e);
+    void menuHandling(SDL_Renderer* renderer,bool* firstRun, bool* menu,bool* quit, SDL_Event* e);
 
 
 private:

@@ -23,6 +23,11 @@ public:
 
     SDL_Texture *getAnimation() const;
 
+    void changeByXOnDrawtable(int change);
+
+    void changeByYOnDrawtable(int change);
+
+
 
 private:
 

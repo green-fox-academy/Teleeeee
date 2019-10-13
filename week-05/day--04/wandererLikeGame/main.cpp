@@ -1,6 +1,5 @@
 #include <iostream>
 #include <SDL.h>
-#include <sstream>
 #include "Resources.h"
 #include "Draw.h"
 #include "Movements.h"
@@ -90,6 +89,7 @@ int main(int argc, char *args[]) {
     int k = 255;
     int z = 255;
     int side = 100;
+    int zoom = 0;
     Resources gResources(gRenderer);
     Movements gMove;
 
@@ -110,7 +110,7 @@ int main(int argc, char *args[]) {
     DrawableElement Floor(0,0, gResources.getTextures()[6]);
     DrawableElement KFC(0,0,gResources.getTextures()[7]);
 
-    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side);
+    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side,zoom);
 
 
 
@@ -119,6 +119,7 @@ int main(int argc, char *args[]) {
 
 
         //menu is initialized here
+
         while(menu){
             if(firstRun) {
                 gDraw.menuBackground(gRenderer);
@@ -128,28 +129,31 @@ int main(int argc, char *args[]) {
             }
             SDL_PollEvent(&e);
             if(e.type == SDL_MOUSEBUTTONDOWN){
-                 int mouseX, mouseY;
-                  SDL_GetMouseState(&mouseX,&mouseY);
-                  if (400 < mouseX && mouseX < 520 && 100 < mouseY && mouseY < 200 ){
-                      menu = false;
-                      quit = true;
-                  }
-                  if(400 < mouseX && mouseX < 520 && 250 < mouseY && mouseY < 350){
-                      menu = false;
-                  }
-                  if(400 < mouseX && mouseX < 520 && 400 < mouseY && mouseY < 450){
-                      menu = false;
-                  }
+                int mouseX, mouseY;
+                SDL_GetMouseState(&mouseX,&mouseY);
+                if (400 < mouseX && mouseX < 520 && 100 < mouseY && mouseY < 200 ){
+                    menu = false;
+                    quit = true;
+                }
+                if(400 < mouseX && mouseX < 520 && 250 < mouseY && mouseY < 350){
+                    menu = false;
+                }
+                if(400 < mouseX && mouseX < 520 && 400 < mouseY && mouseY < 450){
+                    menu = false;
+                }
             }
         }
 
+
         //Handle events on queue
+
         SDL_Event e;
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
+            gMove.changeTileWithMouseClick(k,z,&map, &e);
             //movements here
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
@@ -177,13 +181,30 @@ int main(int argc, char *args[]) {
                         menu = true;
                         firstRun = true;
                         break;
+                    case(SDLK_a):
+
+                        if(side > 5) {
+                            side -= 1;
+                        }
+                        if(zoom < 100){
+                        zoom +=1;
+                        }
+                        break;
+                    case(SDLK_b):
+                        if(side < 100) {
+                            side += 1;
+                        }
+                        if(zoom > 0) {
+                            zoom -= 1;
+                        }
                 }
             }
         }
 
+
         ////DRAW HERE ////
 
-        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side);
+        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side,zoom);
         gDraw.draw(gRenderer, &Cartmen, side);
         //gDraw.animation(gRenderer,&Cartmen);
 

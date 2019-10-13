@@ -14,13 +14,13 @@ void Draw::drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int on
     SDL_Rect cutrect = {onTheSheetX, ontheSheetY, widht, height};
     SDL_RenderCopy(renderer, figure->getTexture(), &cutrect, &dstrect);
 }
-void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc,  DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles, int side ){
+void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc,  DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles, int side, int zoom ){
 
     if(Cartmen->getXOnDrawtable() + z  > 0 && Cartmen->getYOnDrawtable() - 5 + k > 0 && Cartmen->getXOnDrawtable() - 5 + z  < 500 && Cartmen->getYOnDrawtable() - 5 + k < 500 ) {
 
-        for ( int i = Cartmen->getXOnDrawtable() - 5  + z ; i <7  + Cartmen->getXOnDrawtable() + z; ++i) {
+        for ( int i = -1  + z; i < 11 +  z + zoom; ++i) {
 
-            for (int j = Cartmen->getYOnDrawtable() - 5 + k ; j < 7 + Cartmen->getYOnDrawtable() + k ; ++j) {
+            for (int j = -1 + k; j < 11 + k + zoom ; ++j) {
 
                 wall->setXOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5 );
                 wall->setYOnDrawtable(j -k + Cartmen->getYOnDrawtable() - 5 );
