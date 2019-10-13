@@ -13,3 +13,7 @@ bool Movements::moveAble(std::vector<std::vector<int>>* tiles, int k, int z){
 void Movements::changeTile(std::vector<std::vector<int>>* tiles, int k, int z){
     (*tiles)[k + 4][z+ 5] = 3;
 }
+
+void Movements::generalButtonMovements(std::vector<std::vector<int>>* map, int* k, int* z, bool* quit){
+
+}

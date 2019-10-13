@@ -4,6 +4,7 @@
 #include <SDL_render.h>
 #include <vector>
 #include <string>
+#include <fstream>
 
 class Resources {
 public:
@@ -13,6 +14,10 @@ public:
     void loadImages(SDL_Renderer* renderer, const char* fileName);
 
     std::vector<SDL_Texture *> getTextures();
+
+    void loadMap(std::string fileName, std::vector<std::vector<int>>* map);
+
+    void saveMap(std::vector<std::vector<int>>* map,  std::string fileName);
 
 
 

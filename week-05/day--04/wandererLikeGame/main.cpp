@@ -1,6 +1,5 @@
 #include <iostream>
 #include <SDL.h>
-#include <fstream>
 #include <sstream>
 #include "Resources.h"
 #include "Draw.h"
@@ -78,37 +77,35 @@ int main(int argc, char *args[]) {
     //Event handler
     SDL_Event e;
 
-    Draw draw;
+    Draw gDraw;
 
     int k = 255;
     int z = 255;
     int side = 100;
-
-   std::vector<std::vector<int>> map (501,std::vector<int>(501,0));
-
-    std::ifstream myFileIn;
-    int sor = -1;
-    std::string mapElement;
-    myFileIn.open("map.txt");
-
-    while( getline(myFileIn, mapElement)) {
-        sor += 1;
-        for (int j = 0; j < 500 ; ++j) {
-                 map[sor][j] = mapElement[j] - '0';
-        }
-    }
-
-    //std::vector<std::vector<int>> map = draw.generateMap();
-
-
     Resources gResources(gRenderer);
-    Movements move;
+    Movements gMove;
+
+
+
+    //std::vector<std::vector<int>> map = gDraw.generateMap();
+    std::vector<std::vector<int>> map (520,std::vector<int>(520,1));
+
+    //generate new map
+    //map = gDraw.generateMap();
+
+    //load saved map
+    gResources.loadMap("map.txt", &map);
+
+
+
+
+
     DrawableElement Cartmen(4,4, gResources.getTextures()[4], gResources.getTextures()[8]);
     DrawableElement Wall(0,0, gResources.getTextures()[6]);
     DrawableElement Floor(0,0, gResources.getTextures()[6]);
     DrawableElement KFC(0,0,gResources.getTextures()[7]);
 
-    draw.SetMap(gRenderer, &Wall, &Floor,&KFC, &Cartmen, k,z, map, side);
+    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side);
 
 
 
@@ -116,47 +113,54 @@ int main(int argc, char *args[]) {
     while (!quit) {
 
         //Handle events on queue
+        SDL_Event e;
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
+            if (e.type == SDL_KEYDOWN) {
+                switch (e.key.keysym.sym) {
+                    case (SDLK_UP):
+                        if (gMove.moveAble(&map, k - 1, z)) {
+                            k--;
+                        }
+                        break;
+                    case (SDLK_DOWN):
+                        if (gMove.moveAble(&map, k + 1, z)) {
+                            k++;
+                        }
+                        break;
+                    case (SDLK_RIGHT):
+                        if (gMove.moveAble(&map, k, z + 1)) {
+                            z++;
+                        }
+                        break;
+                    case (SDLK_LEFT):
+                        if (gMove.moveAble(&map, k, z - 1)) {
+                            z--;
+                        }
+                        break;
+                    case (SDLK_ESCAPE):
+                        gMove.changeTile(&map, k, z);
+                        //menu background start set up not done
+                        //gDraw.menuBackground(gRenderer);
+                        //SDL_RenderPresent(gRenderer);
+                }
+            }
         }
+
+
+
 
 
 
 
         //movements here
 
-        if (e.type == SDL_KEYDOWN) {
-            switch (e.key.keysym.sym) {
-                case (SDLK_UP):
-                    if(move.moveAble(&map , k - 1, z)){
-                        k--;
-                    }
-                    break;
-                case (SDLK_DOWN):
-                    if(move.moveAble(&map , k + 1, z)){
-                        k++;
-                    }
-                    break;
-                case (SDLK_RIGHT):
-                    if(move.moveAble(&map , k, z  + 1)){
-                        z++;
-                    }
-                    break;
-                case (SDLK_LEFT):
-                    if(move.moveAble(&map , k, z - 1)){
-                        z--;
-                    }
-                    break;
-                case(SDLK_ESCAPE):
-                    move.changeTile(&map,k,z);
-                    //menu background start set up not done
-                    //draw.menuBackground(gRenderer);
-                    //SDL_RenderPresent(gRenderer);
-            }
-        }
+        gMove.generalButtonMovements(&map, &k, &z, &quit);
+
+
 
         //if(e.type == SDL_MOUSEBUTTONDOWN){
         //   int mouseX, mouseY;
@@ -173,9 +177,9 @@ int main(int argc, char *args[]) {
 
         ////DRAW HERE ////
 
-        draw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen,  k, z,map, side);
-        draw.draw(gRenderer,&Cartmen,side);
-        //draw.animation(gRenderer,&Cartmen);
+        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side);
+        gDraw.draw(gRenderer, &Cartmen, side);
+        //gDraw.animation(gRenderer,&Cartmen);
 
 
         ////DRAW HERE ////
@@ -184,15 +188,9 @@ int main(int argc, char *args[]) {
 
     //Free resources and close SDL
     close();
-
-
-    std::ofstream myFileOut;
-    myFileOut.open("map.txt");
-    for(int i = 0; i < map.size(); i++){
-        for (int j = 0; j < map[0].size() ; ++j) {
-            myFileOut << map[i][j];
-        }myFileOut << std::endl;
-    }
+    
+    //save map
+    gResources.saveMap(&map,"map.txt");
 
     return 0;
 }
