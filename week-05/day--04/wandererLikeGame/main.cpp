@@ -84,26 +84,21 @@ int main(int argc, char *args[]) {
     int z = 255;
     int side = 100;
 
-    /*std::vector<std::vector<int>> map (500,std::vector<int>(500,0));
+   std::vector<std::vector<int>> map (501,std::vector<int>(501,0));
 
     std::ifstream myFileIn;
+    int sor = -1;
+    std::string mapElement;
+    myFileIn.open("map.txt");
 
-    while(!myFileIn.eof()) {
-        const char delim = ' ';
-        std::string mapElement;
-        std::string mapPiece;
-        myFileIn.open("map.txt");
-        getline(myFileIn, mapElement);
-        std::stringstream input_stringstream(mapElement);
+    while( getline(myFileIn, mapElement)) {
+        sor += 1;
         for (int j = 0; j < 500 ; ++j) {
-            while (std::getline(input_stringstream, mapPiece, delim)) {
-                for (int i = 0; i < 500; ++i) {
-                }
-            }
+                 map[sor][j] = mapElement[j] - '0';
         }
-    }*/
+    }
 
-    std::vector<std::vector<int>> map = draw.generateMap();
+    //std::vector<std::vector<int>> map = draw.generateMap();
 
 
     Resources gResources(gRenderer);
@@ -156,9 +151,10 @@ int main(int argc, char *args[]) {
                     }
                     break;
                 case(SDLK_ESCAPE):
+                    move.changeTile(&map,k,z);
                     //menu background start set up not done
-                    draw.menuBackground(gRenderer);
-                    SDL_RenderPresent(gRenderer);
+                    //draw.menuBackground(gRenderer);
+                    //SDL_RenderPresent(gRenderer);
             }
         }
 
