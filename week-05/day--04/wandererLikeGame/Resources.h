@@ -8,6 +8,7 @@
 
 class Resources {
 public:
+    Resources();
 
     Resources(SDL_Renderer* renderer);
 
@@ -19,13 +20,9 @@ public:
 
     void saveMap(std::vector<std::vector<int>>* map,  std::string fileName);
 
-
-
 private:
 
     std::vector<SDL_Texture*> _textures;
-
-
 
 };
 

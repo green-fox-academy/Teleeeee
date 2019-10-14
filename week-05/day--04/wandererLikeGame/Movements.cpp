@@ -22,7 +22,9 @@ void Movements::changeTileWithMouseClick(int k, int z,std::vector<std::vector<in
     if (e->type == SDL_MOUSEBUTTONDOWN) {
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
-        (*map)[mouseY / 100 + k + 1][mouseX / 100 + z + 1] = 0;
+        if(mouseX > 200 || mouseY > 50) {
+            (*map)[mouseY / 100 + k + 1][mouseX / 100 + z + 1] = 4;
+        }
     }
 
 }

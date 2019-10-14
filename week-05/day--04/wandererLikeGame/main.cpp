@@ -105,12 +105,19 @@ int main(int argc, char *args[]) {
     gResources.loadMap("map.txt", &map);
 
 
-    DrawableElement Cartmen(4,4, gResources.getTextures()[4], gResources.getTextures()[8]);
-    DrawableElement Wall(0,0, gResources.getTextures()[6]);
-    DrawableElement Floor(0,0, gResources.getTextures()[6]);
+    DrawableElement zoliBacsi(4, 4, gResources.getTextures()[4], gResources.getTextures()[8]);
+    DrawableElement Wall(0,0, gResources.getTextures()[0]);
+    DrawableElement Floor(0,0, gResources.getTextures()[1]);
     DrawableElement KFC(0,0,gResources.getTextures()[7]);
+    DrawableElement senco(0,0,gResources.getTextures()[11]);
+    DrawableElement silverkratch(0, 0, gResources.getTextures()[12]);
+    DrawableElement inventoryFirst(0,0,gResources.getTextures()[11]);
+    DrawableElement inventorySecond(1,0,gResources.getTextures()[12]);
+    DrawableElement inventoryThird(2,0,gResources.getTextures()[13]);
+    DrawableElement inventoryFourth(3,0,gResources.getTextures()[9]);
+    DrawableElement menuBackGround(0,0,gResources.getTextures()[10]);
 
-    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side,zoom);
+    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &zoliBacsi, k, z, map, side, zoom);
 
 
 
@@ -122,7 +129,7 @@ int main(int argc, char *args[]) {
 
         while(menu){
             if(firstRun) {
-                gDraw.menuBackground(gRenderer);
+                gDraw.draw(gRenderer, &menuBackGround, 1000);
                 gDraw.mainMenu(gRenderer);
                 SDL_RenderPresent(gRenderer);
                 firstRun = false;
@@ -204,9 +211,12 @@ int main(int argc, char *args[]) {
 
         ////DRAW HERE ////
 
-        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &Cartmen, k, z, map, side,zoom);
-        gDraw.draw(gRenderer, &Cartmen, side);
-        //gDraw.animation(gRenderer,&Cartmen);
+
+
+        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &zoliBacsi, k, z, map, side, zoom);
+        gDraw.draw(gRenderer, &zoliBacsi, side);
+        gDraw.inventory(gRenderer,&inventoryFirst,&inventorySecond,&inventoryThird,&inventoryFourth);
+        //gDraw.animation(gRenderer,&zoliBacsi);
 
 
         ////DRAW HERE ////
