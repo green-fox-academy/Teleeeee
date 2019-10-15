@@ -13,8 +13,8 @@ public:
 
     void draw(SDL_Renderer* renderer,DrawableElement* figure, int side);
     void animation(SDL_Renderer* renderer, DrawableElement* figure, int side);
-    void SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor,DrawableElement* kfc, DrawableElement* senco,DrawableElement* kenwu,
-            DrawableElement* Cartmen, int k, int z, std::vector<std::vector<int>> tiles, int side,int zoom);
+    void SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor,DrawableElement* kfc, DrawableElement* senco,DrawableElement* silverkratch,
+                DrawableElement* kenwu, DrawableElement* tomlossajt, DrawableElement* zsir, DrawableElement* mustar, DrawableElement* Cartmen, int k, int z, std::vector<std::vector<int>> tiles, int side,int zoom);
     void drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side );
     std::vector<std::vector<int>> generateMap();
     void menuBackground(SDL_Renderer* renderer);

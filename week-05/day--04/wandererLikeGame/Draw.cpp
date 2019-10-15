@@ -14,7 +14,8 @@ void Draw::drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int on
     SDL_Rect cutrect = {onTheSheetX, ontheSheetY, widht, height};
     SDL_RenderCopy(renderer, figure->getTexture(), &cutrect, &dstrect);
 }
-void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc, DrawableElement* senco,DrawableElement* kenwu,  DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles, int side, int zoom ){
+void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc, DrawableElement* senco,DrawableElement* silverkratch,
+                  DrawableElement* kenwu, DrawableElement* tomlossajt, DrawableElement* zsir, DrawableElement* mustar, DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles, int side, int zoom ){
 
     if(Cartmen->getXOnDrawtable() + z  > 0 && Cartmen->getYOnDrawtable() - 5 + k > 0 && Cartmen->getXOnDrawtable() - 5 + z  < 500 && Cartmen->getYOnDrawtable() - 5 + k < 500 ) {
 
@@ -30,8 +31,16 @@ void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElemen
                 kfc->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
                 senco->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
                 senco->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
+                silverkratch->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
+                silverkratch->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
                 kenwu->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
                 kenwu->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
+                tomlossajt->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
+                tomlossajt->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
+                zsir->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
+                zsir->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
+                mustar->setXOnDrawtable(i - z  + Cartmen->getXOnDrawtable() - 5);
+                mustar->setYOnDrawtable(j - k + Cartmen->getYOnDrawtable() - 5);
                 if (tiles[j][i] == 0) {
                     draw(renderer, floor, side);
                 }
@@ -45,8 +54,21 @@ void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElemen
                     //drawFromSheet(renderer, wall, 107, 231, 31, 31, side);
                     drawFromSheet(renderer, kfc, 0, 0, 440,337, side);
                     //draw(renderer, kfc);
-                }if(tiles[j][i] == 4){
+                }
+                if(tiles[j][i] == 4){
+                    draw(renderer, silverkratch, side);
+                }
+                if(tiles[j][i] == 5){
                     draw(renderer, kenwu, side);
+                }
+                if(tiles[j][i] == 6){
+                    draw(renderer, tomlossajt, side);
+                }
+                if(tiles[j][i] == 7){
+                    draw(renderer, zsir, side);
+                }
+                if(tiles[j][i] == 8){
+                    draw(renderer, mustar, side);
                 }
             }
         }
@@ -59,8 +81,16 @@ void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElemen
     kfc->setYOnDrawtable(0);
     senco->setXOnDrawtable(0);
     senco->setYOnDrawtable(0);
+    silverkratch ->setXOnDrawtable(0);
+    silverkratch->setYOnDrawtable(0);
     kenwu ->setXOnDrawtable(0);
     kenwu->setYOnDrawtable(0);
+    tomlossajt ->setXOnDrawtable(0);
+    tomlossajt->setYOnDrawtable(0);
+    zsir ->setXOnDrawtable(0);
+    zsir->setYOnDrawtable(0);
+    mustar ->setXOnDrawtable(0);
+    mustar->setYOnDrawtable(0);
 }
 
 std::vector<std::vector<int>> Draw::generateMap(){
@@ -107,14 +137,15 @@ void Draw::writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string 
     SDL_Color textColor = { 0, 0, 0 };
     SDL_Surface* textSurface = TTF_RenderText_Blended( font, text.c_str(), textColor);
     SDL_Texture* texture = SDL_CreateTextureFromSurface( renderer, textSurface );
-    SDL_Rect dstrect = { x,  y, 120, 100};
+    SDL_Rect dstrect = { x,  y, 300, 100};
     SDL_RenderCopy(renderer, texture, NULL, &dstrect);
 }
 
 void Draw::mainMenu(SDL_Renderer* renderer){
-    writeOnTheScreen(renderer,400, 100, "quit");
-    writeOnTheScreen(renderer,400, 250, "new");
-    writeOnTheScreen(renderer,400, 400, "last");
+    writeOnTheScreen(renderer,350, 100, "Hello hello Sziasztok!");
+    writeOnTheScreen(renderer,350, 250, "Uj hogyishijjak");
+    writeOnTheScreen(renderer,350, 400, "Regi hogyishijjak");
+    writeOnTheScreen(renderer,350, 550, "Tedd el kesobbre!");
 }
 
 void Draw::inventory(SDL_Renderer* renderer, DrawableElement* first, DrawableElement* second, DrawableElement* third, DrawableElement* fourth){

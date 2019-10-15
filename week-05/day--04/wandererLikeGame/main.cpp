@@ -111,13 +111,13 @@ int main(int argc, char *args[]) {
     DrawableElement KFC(0,0,gResources.getTextures()[7]);
     DrawableElement senco(0,0,gResources.getTextures()[11]);
     DrawableElement silverkratch(0, 0, gResources.getTextures()[12]);
-    DrawableElement inventoryFirst(0,0,gResources.getTextures()[11]);
-    DrawableElement inventorySecond(1,0,gResources.getTextures()[12]);
-    DrawableElement inventoryThird(2,0,gResources.getTextures()[13]);
-    DrawableElement inventoryFourth(3,0,gResources.getTextures()[9]);
+    DrawableElement kenwu(0,0,gResources.getTextures()[13]);
+    DrawableElement tomlossajt(1,0,gResources.getTextures()[14]);
+    DrawableElement zsir(2,0,gResources.getTextures()[15]);
+    DrawableElement mustar(3,0,gResources.getTextures()[16]);
     DrawableElement menuBackGround(0,0,gResources.getTextures()[10]);
 
-    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &zoliBacsi, k, z, map, side, zoom);
+    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
 
 
 
@@ -138,14 +138,14 @@ int main(int argc, char *args[]) {
             if(e.type == SDL_MOUSEBUTTONDOWN){
                 int mouseX, mouseY;
                 SDL_GetMouseState(&mouseX,&mouseY);
-                if (400 < mouseX && mouseX < 520 && 100 < mouseY && mouseY < 200 ){
+                if (350 < mouseX && mouseX < 650 && 100 < mouseY && mouseY < 200 ){
                     menu = false;
                     quit = true;
                 }
-                if(400 < mouseX && mouseX < 520 && 250 < mouseY && mouseY < 350){
+                if(350 < mouseX && mouseX < 650 && 250 < mouseY && mouseY < 350){
                     menu = false;
                 }
-                if(400 < mouseX && mouseX < 520 && 400 < mouseY && mouseY < 450){
+                if(350 < mouseX && mouseX < 650 && 400 < mouseY && mouseY < 450){
                     menu = false;
                 }
             }
@@ -213,9 +213,9 @@ int main(int argc, char *args[]) {
 
 
 
-        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &zoliBacsi, k, z, map, side, zoom);
+        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch,&kenwu ,&tomlossajt , &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
         gDraw.draw(gRenderer, &zoliBacsi, side);
-        gDraw.inventory(gRenderer,&inventoryFirst,&inventorySecond,&inventoryThird,&inventoryFourth);
+        //gDraw.inventory(gRenderer,&inventoryFirst,&inventorySecond,&inventoryThird,&inventoryFourth);
         //gDraw.animation(gRenderer,&zoliBacsi);
 
 

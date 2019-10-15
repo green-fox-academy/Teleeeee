@@ -21,6 +21,9 @@ Resources::Resources(SDL_Renderer* renderer) {
     _textures.emplace_back(IMG_LoadTexture(renderer, "senco'.PNG"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "silverkratch.PNG"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "kenwu.PNG"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "tomlossajt.PNG"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "zsir.PNG"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "mustar.PNG"));
 }
 
 std::vector<SDL_Texture *> Resources::getTextures() {
