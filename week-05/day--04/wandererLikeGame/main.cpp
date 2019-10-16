@@ -104,6 +104,7 @@ int main(int argc, char *args[]) {
     DrawableElement zoliBacsi(4, 4, gResources.getTextures()[4], gResources.getTextures()[8]);
     DrawableElement Wall(1,0,0, gResources.getTextures()[0]);
     DrawableElement Floor(0,0,0, gResources.getTextures()[1]);
+    DrawableElement innerMapElements(97,0,0, gResources.getTextures()[6]);
     DrawableElement KFC(3,0,0,gResources.getTextures()[7]);
     DrawableElement senco(2,0,0,gResources.getTextures()[11]);
     DrawableElement silverkratch(4,0, 0, gResources.getTextures()[12]);
@@ -113,6 +114,10 @@ int main(int argc, char *args[]) {
     DrawableElement mustar(8,3,0,gResources.getTextures()[16]);
     DrawableElement pennyLogo(98,3,0,gResources.getTextures()[17]);
     DrawableElement menuBackGround(99,0,0,gResources.getTextures()[10]);
+    DrawableElement firstEnemy(97,0,0,gResources.getTextures()[18]);
+    DrawableElement secondEnemy(97,9,9,gResources.getTextures()[18]);
+    DrawableElement thirdEnemy(97,0,9,gResources.getTextures()[18]);
+
 
     //gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
 
@@ -143,14 +148,15 @@ int main(int argc, char *args[]) {
                     map = gDraw.generateMap(500);
                     menu = false;
                 }
-                if(350 < mouseX && mouseX < 650 && 400 < mouseY && mouseY < 450){
+                if(350 < mouseX && mouseX < 650 && 350 < mouseY && mouseY < 450){
                     //load saved map
                     gResources.loadMap("map.txt", &map);
                     menu = false;
                 }
-                if(350 < mouseX && mouseX < 650 && 450 < mouseY && mouseY < 500){
+                if(350 < mouseX && mouseX < 650 && 450 < mouseY && mouseY < 600){
                     //save map
                     gResources.saveMap(&map,"map.txt");
+                    menu = false;
                 }
             }
         }
@@ -197,8 +203,8 @@ int main(int argc, char *args[]) {
         gMove.goForInnerMap(zoliBacsi, &innerGame, k, z, &map);
 
         while(innerGame){
-            gDraw.generateInnerMap(gRenderer, &innerMap, &Floor, &Wall);
-            gMove.heroInnerMapMovement(gRenderer, &zoliBacsi, &innerMap, &innerGame);
+            gDraw.generateInnerMap(gRenderer, &innerMap, &innerMapElements, &innerMapElements);
+            gMove.heroInnerMapMovement(gRenderer, &zoliBacsi, &innerMap, &innerGame, &firstEnemy, &secondEnemy, &thirdEnemy);
             SDL_RenderPresent(gRenderer);
         }
 

@@ -16,7 +16,9 @@ public:
     void changeTileWithMouseClick(int k, int z, std::vector<std::vector<int>>* map, SDL_Event* e);
     void menuHandling(SDL_Renderer* renderer,bool* firstRun, bool* menu,bool* quit, SDL_Event* e);
     void goForInnerMap(DrawableElement ZoliBacsi, bool* innerGame, int k, int z,std::vector<std::vector<int>>* map);
-    void heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame);
+    void heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame, DrawableElement* firstEnemy, DrawableElement* secondEnemy,
+                              DrawableElement* thirdEnemy);
+    void innerMapEnemyMovement(std::vector<std::vector<int>>* innerMap, DrawableElement* enemy);
 
 
 private:

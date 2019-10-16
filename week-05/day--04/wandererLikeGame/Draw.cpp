@@ -126,7 +126,7 @@ void Draw::writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string 
 
 void Draw::mainMenu(SDL_Renderer* renderer){
     writeOnTheScreen(renderer,350, 100, "Hello hello Sziasztok!");
-    writeOnTheScreen(renderer,350, 250, "Uj hogyishijjak");
+    writeOnTheScreen(renderer,350, 250, "Uj jatek");
     writeOnTheScreen(renderer,350, 400, "Regi hogyishijjak");
     writeOnTheScreen(renderer,350, 550, "Tedd el kesobbre!");
 }
@@ -143,8 +143,8 @@ void Draw::generateInnerMap(SDL_Renderer* renderer, std::vector<std::vector<int>
         for (int j = 0; j < 10 ; ++j) {
             floor->setXAndYOnDrawtable(j,i);
             wall->setXAndYOnDrawtable(j,i);
-            if((*innerMap)[i][j] == 0) draw(renderer, floor, 100);
-            if((*innerMap)[i][j] == 1) draw(renderer, wall, 100);
+            if((*innerMap)[i][j] == 1) drawFromSheet(renderer, floor,470,297,31,31,100);
+            if((*innerMap)[i][j] == 0) drawFromSheet(renderer, floor, 173,231,31,31,100);
         }
     }
 }

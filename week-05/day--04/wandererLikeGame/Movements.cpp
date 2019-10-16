@@ -37,7 +37,8 @@ void Movements::goForInnerMap(DrawableElement ZoliBacsi, bool* innerGame, int k,
     }
 }
 
-void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame){
+void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame, DrawableElement* firstEnemy, DrawableElement* secondEnemy,
+        DrawableElement* thirdEnemy){
     SDL_Event e;
     if(SDL_PollEvent(&e)) {
         if (e.type == SDL_KEYDOWN) {
@@ -47,6 +48,9 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                         if ((*innerMap)[Zolibacsi->getYOnDrawtable() - 1][Zolibacsi->getXOnDrawtable()] == 0) {
                             Zolibacsi->changeByYOnDrawtable(-1);
                         }
+                        innerMapEnemyMovement(innerMap, firstEnemy);
+                        innerMapEnemyMovement(innerMap, secondEnemy);
+                        innerMapEnemyMovement(innerMap, thirdEnemy);
                     }
                     break;
                 case (SDLK_DOWN):
@@ -54,6 +58,9 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                         if ((*innerMap)[Zolibacsi->getYOnDrawtable() + 1][Zolibacsi->getXOnDrawtable()] == 0){
                             Zolibacsi->changeByYOnDrawtable(+1);
                         }
+                        innerMapEnemyMovement(innerMap,firstEnemy);
+                        innerMapEnemyMovement(innerMap, secondEnemy);
+                        innerMapEnemyMovement(innerMap, thirdEnemy);
                     }
                     break;
                 case (SDLK_RIGHT):
@@ -61,6 +68,9 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                         if ((*innerMap)[Zolibacsi->getYOnDrawtable()][Zolibacsi->getXOnDrawtable() + 1] == 0){
                             Zolibacsi->changeByXOnDrawtable(+1);
                         }
+                        innerMapEnemyMovement(innerMap, firstEnemy);
+                        innerMapEnemyMovement(innerMap, secondEnemy);
+                        innerMapEnemyMovement(innerMap, thirdEnemy);
                     }
                     break;
                 case (SDLK_LEFT):
@@ -68,6 +78,9 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                         if ((*innerMap)[Zolibacsi->getYOnDrawtable()][Zolibacsi->getXOnDrawtable() - 1] == 0){
                             Zolibacsi->changeByXOnDrawtable(-1);
                         }
+                        innerMapEnemyMovement(innerMap, firstEnemy);
+                        innerMapEnemyMovement(innerMap, secondEnemy);
+                        innerMapEnemyMovement(innerMap, thirdEnemy);
                     }
                     break;
                 case (SDLK_ESCAPE):
@@ -77,5 +90,41 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
             }
         }
     }
-    draw(renderer, Zolibacsi, 100);
+    draw(renderer, Zolibacsi,  100);
+    draw(renderer, firstEnemy, 100);
+    draw(renderer, secondEnemy,100);
+    draw(renderer, thirdEnemy, 100);
+}
+
+void Movements::innerMapEnemyMovement( std::vector<std::vector<int>>* innerMap, DrawableElement* enemy){
+    switch (rand()%4) {
+        case (0):
+            if (enemy->getYOnDrawtable() > 0) {
+                if ((*innerMap)[enemy->getYOnDrawtable() - 1][enemy->getXOnDrawtable()] == 0) {
+                    enemy->changeByYOnDrawtable(-1);
+                }
+            }
+            break;
+        case (1):
+            if (enemy->getYOnDrawtable() < 9) {
+                if ((*innerMap)[enemy->getYOnDrawtable() + 1][enemy->getXOnDrawtable()] == 0) {
+                    enemy->changeByYOnDrawtable(+1);
+                }
+            }
+            break;
+        case (2):
+            if (enemy->getXOnDrawtable() < 9) {
+                if ((*innerMap)[enemy->getYOnDrawtable()][enemy->getXOnDrawtable() + 1] == 0) {
+                    enemy->changeByXOnDrawtable(+1);
+                }
+            }
+            break;
+        case (3):
+            if (enemy->getXOnDrawtable() > 0) {
+                if ((*innerMap)[enemy->getYOnDrawtable()][enemy->getXOnDrawtable() - 1] == 0) {
+                    enemy->changeByXOnDrawtable(-1);
+                }
+            }
+            break;
+    }
 }
