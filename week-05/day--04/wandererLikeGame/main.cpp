@@ -47,6 +47,7 @@ bool init() {
     if( TTF_Init() == -1 )
     {
         std::cout << "Failed to initialize TTF" << std::endl;
+        return  false;
     }
 
     //Initialize renderer color
@@ -66,6 +67,7 @@ void close() {
 }
 
 int main(int argc, char *args[]) {
+
     //Start up SDL and create window
     if (!init()) {
         std::cout << "Failed to initialize!" << std::endl;
@@ -73,60 +75,53 @@ int main(int argc, char *args[]) {
         return -1;
     }
 
-    //Main loop flag
+    //loop flags
     bool quit = false;
     bool menu = true;
     bool firstRun = true;
+    bool innerGame = false;
 
-    //ask for time for random
+    //time for random
     srand(time(0));
 
     //Event handler
     SDL_Event e;
 
-    Draw gDraw;
-
+    //create necessary variables
     int k = 255;
     int z = 255;
     int side = 100;
     int zoom = 0;
     Resources gResources(gRenderer);
     Movements gMove;
-
-
-
-    //std::vector<std::vector<int>> map = gDraw.generateMap();
+    Draw gDraw;
     std::vector<std::vector<int>> map (520,std::vector<int>(520,1));
-
-    //generate new map
-    //map = gDraw.generateMap();
-
-    //load saved map
-    gResources.loadMap("map.txt", &map);
+    std::vector<std::vector<int>> innerMap (10,std::vector<int>(10,0));
+    innerMap = gDraw.generateMap(10);
 
 
+    //creates objects to work with
     DrawableElement zoliBacsi(4, 4, gResources.getTextures()[4], gResources.getTextures()[8]);
-    DrawableElement Wall(0,0, gResources.getTextures()[0]);
-    DrawableElement Floor(0,0, gResources.getTextures()[1]);
-    DrawableElement KFC(0,0,gResources.getTextures()[7]);
-    DrawableElement senco(0,0,gResources.getTextures()[11]);
-    DrawableElement silverkratch(0, 0, gResources.getTextures()[12]);
-    DrawableElement kenwu(0,0,gResources.getTextures()[13]);
-    DrawableElement tomlossajt(1,0,gResources.getTextures()[14]);
-    DrawableElement zsir(2,0,gResources.getTextures()[15]);
-    DrawableElement mustar(3,0,gResources.getTextures()[16]);
-    DrawableElement menuBackGround(0,0,gResources.getTextures()[10]);
+    DrawableElement Wall(1,0,0, gResources.getTextures()[0]);
+    DrawableElement Floor(0,0,0, gResources.getTextures()[1]);
+    DrawableElement KFC(3,0,0,gResources.getTextures()[7]);
+    DrawableElement senco(2,0,0,gResources.getTextures()[11]);
+    DrawableElement silverkratch(4,0, 0, gResources.getTextures()[12]);
+    DrawableElement kenwu(5,0,0,gResources.getTextures()[13]);
+    DrawableElement tomlossajt(6,1,0,gResources.getTextures()[14]);
+    DrawableElement zsir(7,2,0,gResources.getTextures()[15]);
+    DrawableElement mustar(8,3,0,gResources.getTextures()[16]);
+    DrawableElement pennyLogo(98,3,0,gResources.getTextures()[17]);
+    DrawableElement menuBackGround(99,0,0,gResources.getTextures()[10]);
 
-    gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
+    //gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
 
 
 
     //While application is running
     while (!quit) {
 
-
         //menu is initialized here
-
         while(menu){
             if(firstRun) {
                 gDraw.draw(gRenderer, &menuBackGround, 1000);
@@ -134,6 +129,7 @@ int main(int argc, char *args[]) {
                 SDL_RenderPresent(gRenderer);
                 firstRun = false;
             }
+            //makes menu interactive
             SDL_PollEvent(&e);
             if(e.type == SDL_MOUSEBUTTONDOWN){
                 int mouseX, mouseY;
@@ -143,91 +139,84 @@ int main(int argc, char *args[]) {
                     quit = true;
                 }
                 if(350 < mouseX && mouseX < 650 && 250 < mouseY && mouseY < 350){
+                    //generate new map
+                    map = gDraw.generateMap(500);
                     menu = false;
                 }
                 if(350 < mouseX && mouseX < 650 && 400 < mouseY && mouseY < 450){
+                    //load saved map
+                    gResources.loadMap("map.txt", &map);
                     menu = false;
+                }
+                if(350 < mouseX && mouseX < 650 && 450 < mouseY && mouseY < 500){
+                    //save map
+                    gResources.saveMap(&map,"map.txt");
                 }
             }
         }
 
-
-        //Handle events on queue
-
-        SDL_Event e;
         while (SDL_PollEvent(&e) != 0) {
             //User requests quit
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
+            //handle clicks on map
             gMove.changeTileWithMouseClick(k,z,&map, &e);
-            //movements here
+            //handle movements
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case (SDLK_UP):
-                        if (gMove.moveAble(&map, k - 1, z)) {
-                            k--;
-                        }
+                        if (gMove.moveAble(&map, k - 1, z)) k--;
                         break;
                     case (SDLK_DOWN):
-                        if (gMove.moveAble(&map, k + 1, z)) {
-                            k++;
-                        }
+                        if (gMove.moveAble(&map, k + 1, z)) k++;
                         break;
                     case (SDLK_RIGHT):
-                        if (gMove.moveAble(&map, k, z + 1)) {
-                            z++;
-                        }
+                        if (gMove.moveAble(&map, k, z + 1)) z++;
                         break;
                     case (SDLK_LEFT):
-                        if (gMove.moveAble(&map, k, z - 1)) {
-                            z--;
-                        }
+                        if (gMove.moveAble(&map, k, z - 1)) z--;
                         break;
                     case (SDLK_ESCAPE):
                         menu = true;
                         firstRun = true;
                         break;
                     case(SDLK_a):
-
-                        if(side > 5) {
-                            side -= 1;
-                        }
-                        if(zoom < 100){
-                        zoom +=1;
-                        }
+                        //if(side > 5)   side -= 1;
+                        //if(zoom < 100) zoom +=1;
+                        innerGame = true;
                         break;
                     case(SDLK_b):
-                        if(side < 100) {
-                            side += 1;
-                        }
-                        if(zoom > 0) {
-                            zoom -= 1;
-                        }
+                        //if(side < 100) side += 1;
+                        //if(zoom > 0)   zoom -= 1;
+                        break;
                 }
             }
+        }
+
+        gMove.goForInnerMap(zoliBacsi, &innerGame, k, z, &map);
+
+        while(innerGame){
+            gDraw.generateInnerMap(gRenderer, &innerMap, &Floor, &Wall);
+            gMove.heroInnerMapMovement(gRenderer, &zoliBacsi, &innerMap, &innerGame);
+            SDL_RenderPresent(gRenderer);
         }
 
 
         ////DRAW HERE ////
 
-
-
-        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch,&kenwu ,&tomlossajt , &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
+        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch,&kenwu ,&tomlossajt , &zsir, &mustar, &pennyLogo, &zoliBacsi, k, z, map, side, zoom);
         gDraw.draw(gRenderer, &zoliBacsi, side);
         //gDraw.inventory(gRenderer,&inventoryFirst,&inventorySecond,&inventoryThird,&inventoryFourth);
         //gDraw.animation(gRenderer,&zoliBacsi);
 
-
         ////DRAW HERE ////
+
         SDL_RenderPresent(gRenderer);
     }
 
     //Free resources and close SDL
     close();
-
-    //save map
-    gResources.saveMap(&map,"map.txt");
 
     return 0;
 }

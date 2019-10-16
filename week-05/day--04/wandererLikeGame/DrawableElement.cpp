@@ -9,9 +9,10 @@ DrawableElement::DrawableElement(int xOnDrawtable, int yOnDrawtable, SDL_Texture
                                                                        _texture(texture),
                                                                        _animation(animation){}
 
-DrawableElement::DrawableElement(int xOnDrawtable, int yOnDrawtable, SDL_Texture* texture) : _xOnDrawtable(xOnDrawtable),
+DrawableElement::DrawableElement(int inventoryId, int xOnDrawtable, int yOnDrawtable, SDL_Texture* texture) :        _xOnDrawtable(xOnDrawtable),
                                                                                                                      _yOnDrawtable(yOnDrawtable),
-                                                                                                                     _texture(texture){}
+                                                                                                                     _texture(texture),
+                                                                                                                     _inventoryId(inventoryId){}
 
 int DrawableElement::getXOnDrawtable() const {
     return _xOnDrawtable;
@@ -25,13 +26,11 @@ SDL_Texture *DrawableElement::getTexture() const {
     return _texture;
 }
 
-void DrawableElement::setXOnDrawtable(int xOnDrawtable) {
+void DrawableElement::setXAndYOnDrawtable(int xOnDrawtable,int yOnDrawtable) {
     _xOnDrawtable = xOnDrawtable;
-}
-
-void DrawableElement::setYOnDrawtable(int yOnDrawtable) {
     _yOnDrawtable = yOnDrawtable;
 }
+
 
 SDL_Texture *DrawableElement::getAnimation() const {
     return _animation;
@@ -44,6 +43,19 @@ void DrawableElement::changeByXOnDrawtable(int change){
 
 void DrawableElement::changeByYOnDrawtable(int change){
     _yOnDrawtable = _yOnDrawtable + change;
+}
+
+void DrawableElement::setInventoryId(int inventoryId) {
+    _inventoryId = inventoryId;
+}
+
+int DrawableElement::getInventoryId(){
+    return _inventoryId;
+}
+
+void DrawableElement::resetXandYtoZero(){
+    _xOnDrawtable = 0;
+    _yOnDrawtable = 0;
 }
 
 
