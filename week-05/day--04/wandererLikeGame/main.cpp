@@ -5,6 +5,7 @@
 #include "Movements.h"
 #include "ctime"
 #include <SDL_ttf.h>
+#include <map>
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1000;
@@ -92,6 +93,9 @@ int main(int argc, char *args[]) {
     int z = 255;
     int side = 100;
     int zoom = 0;
+    int timer = 0;
+    std::map<DrawableElement* , int> inventory;
+    std::vector<DrawableElement*> allObeject;
     Resources gResources(gRenderer);
     Movements gMove;
     Draw gDraw;
@@ -117,6 +121,9 @@ int main(int argc, char *args[]) {
     DrawableElement firstEnemy(97,0,0,gResources.getTextures()[18]);
     DrawableElement secondEnemy(97,9,9,gResources.getTextures()[18]);
     DrawableElement thirdEnemy(97,0,9,gResources.getTextures()[18]);
+    DrawableElement bomb(96,0,0,gResources.getTextures()[19]);
+
+    allObeject.emplace_back(&Wall);
 
 
     //gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
@@ -203,10 +210,14 @@ int main(int argc, char *args[]) {
         gMove.goForInnerMap(zoliBacsi, &innerGame, k, z, &map);
 
         while(innerGame){
-            gDraw.generateInnerMap(gRenderer, &innerMap, &innerMapElements, &innerMapElements);
-            gMove.heroInnerMapMovement(gRenderer, &zoliBacsi, &innerMap, &innerGame, &firstEnemy, &secondEnemy, &thirdEnemy);
+            //timer required for inner map extra features
+            if(timer == 2) timer = 0;
+            gDraw.generateInnerMap(gRenderer, &innerMap, &innerMapElements, &innerMapElements, &bomb);
+            //moveable hero and 3 random moving enemies
+            gMove.heroInnerMapMovement(gRenderer, &zoliBacsi, &innerMap, &innerGame, &firstEnemy, &secondEnemy, &thirdEnemy, &timer, &inventory, &allObeject);
             SDL_RenderPresent(gRenderer);
         }
+
 
 
         ////DRAW HERE ////

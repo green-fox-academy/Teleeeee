@@ -32,6 +32,8 @@ public:
     int getInventoryId();
 
 
+
+
 private:
 
     int _xOnDrawtable;

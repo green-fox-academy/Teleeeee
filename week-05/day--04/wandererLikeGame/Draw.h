@@ -21,7 +21,7 @@ public:
     void writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string text);
     void mainMenu(SDL_Renderer* renderer);
     void inventory(SDL_Renderer* renderer, DrawableElement* first, DrawableElement* second, DrawableElement* third, DrawableElement* fourth);
-    void generateInnerMap(SDL_Renderer* renderer, std::vector<std::vector<int>>* innerMap, DrawableElement* floor, DrawableElement* wall);
+    void generateInnerMap(SDL_Renderer* renderer, std::vector<std::vector<int>>* innerMap, DrawableElement* floor, DrawableElement* wall, DrawableElement* bomb);
 
 private:
 

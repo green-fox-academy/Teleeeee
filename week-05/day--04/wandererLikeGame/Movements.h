@@ -6,6 +6,7 @@
 #include "DrawableElement.h"
 #include "SDL.h"
 #include "Draw.h"
+#include "map"
 
 class Movements : public Draw {
 public:
@@ -17,8 +18,10 @@ public:
     void menuHandling(SDL_Renderer* renderer,bool* firstRun, bool* menu,bool* quit, SDL_Event* e);
     void goForInnerMap(DrawableElement ZoliBacsi, bool* innerGame, int k, int z,std::vector<std::vector<int>>* map);
     void heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame, DrawableElement* firstEnemy, DrawableElement* secondEnemy,
-                              DrawableElement* thirdEnemy);
+                              DrawableElement* thirdEnemy, int* timer,  std::map<DrawableElement* , int>* inventory, std::vector<DrawableElement*>* allObject);
     void innerMapEnemyMovement(std::vector<std::vector<int>>* innerMap, DrawableElement* enemy);
+    void timerBomb(std::vector<std::vector<int>>* innerMap, int timer);
+    void changeTileInnerMap(std::vector<std::vector<int>>* innerMap, std::map<DrawableElement* , int>* inventory, std::vector<DrawableElement*>* allObject, SDL_Event* e);
 
 
 private:
