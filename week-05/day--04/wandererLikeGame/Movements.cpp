@@ -3,6 +3,8 @@
 
 
 
+Movements::Movements(SDL_Renderer *renderer) : Draw(renderer) {}
+
 bool Movements::moveAble(std::vector<std::vector<int>>* tiles, int k, int z){
     if((*tiles)[k + 5][z + 5] == 98){
         return true;
@@ -28,7 +30,7 @@ void Movements::changeTileWithMouseClick(int k, int z,std::vector<std::vector<in
     }
 
 }
-void Movements::menuHandling(SDL_Renderer* renderer, bool* firstRun, bool* menu, bool* quit, SDL_Event* e){
+void Movements::menuHandling(bool* firstRun, bool* menu, bool* quit, SDL_Event* e){
 
 }
 
@@ -38,7 +40,7 @@ void Movements::goForInnerMap(DrawableElement ZoliBacsi, bool* innerGame, int k,
     }
 }
 
-void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame, DrawableElement* firstEnemy, DrawableElement* secondEnemy,
+void Movements::heroInnerMapMovement(DrawableElement* Zolibacsi, std::vector<std::vector<int>>* innerMap, bool* innerGame, DrawableElement* firstEnemy, DrawableElement* secondEnemy,
         DrawableElement* thirdEnemy, int* timer,  std::map<DrawableElement* , int>* inventory, std::vector<DrawableElement*>* allObject){
     SDL_Event e;
     if(SDL_PollEvent(&e)) {
@@ -46,7 +48,7 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
             switch (e.key.keysym.sym) {
                 case (SDLK_UP):
                     if(Zolibacsi->getYOnDrawtable() > 0){
-                        if ((*innerMap)[Zolibacsi->getYOnDrawtable() - 1][Zolibacsi->getXOnDrawtable()] == 0) {
+                        if ((*innerMap)[Zolibacsi->getYOnDrawtable() - 1][Zolibacsi->getXOnDrawtable()] == 2) {
                             Zolibacsi->changeByYOnDrawtable(-1);
                             *timer += 1;
                         }
@@ -57,7 +59,7 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                     break;
                 case (SDLK_DOWN):
                     if(Zolibacsi->getYOnDrawtable() < 9) {
-                        if ((*innerMap)[Zolibacsi->getYOnDrawtable() + 1][Zolibacsi->getXOnDrawtable()] == 0){
+                        if ((*innerMap)[Zolibacsi->getYOnDrawtable() + 1][Zolibacsi->getXOnDrawtable()] == 2){
                             Zolibacsi->changeByYOnDrawtable(+1);
                             *timer += 1;
                         }
@@ -68,7 +70,7 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                     break;
                 case (SDLK_RIGHT):
                     if(Zolibacsi->getXOnDrawtable() < 9) {
-                        if ((*innerMap)[Zolibacsi->getYOnDrawtable()][Zolibacsi->getXOnDrawtable() + 1] == 0){
+                        if ((*innerMap)[Zolibacsi->getYOnDrawtable()][Zolibacsi->getXOnDrawtable() + 1] == 2){
                             Zolibacsi->changeByXOnDrawtable(+1);
                             *timer += 1;
                         }
@@ -79,7 +81,7 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
                     break;
                 case (SDLK_LEFT):
                     if(Zolibacsi->getXOnDrawtable() > 0) {
-                        if ((*innerMap)[Zolibacsi->getYOnDrawtable()][Zolibacsi->getXOnDrawtable() - 1] == 0){
+                        if ((*innerMap)[Zolibacsi->getYOnDrawtable()][Zolibacsi->getXOnDrawtable() - 1] == 2){
                             Zolibacsi->changeByXOnDrawtable(-1);
                             *timer += 1;
                         }
@@ -99,38 +101,38 @@ void Movements::heroInnerMapMovement(SDL_Renderer* renderer, DrawableElement* Zo
         timerBomb(innerMap, *timer);
     }
 
-    draw(renderer, Zolibacsi,  100);
-    draw(renderer, firstEnemy, 100);
-    draw(renderer, secondEnemy,100);
-    draw(renderer, thirdEnemy, 100);
+    draw( Zolibacsi,  100);
+    draw( firstEnemy, 100);
+    draw( secondEnemy,100);
+    draw( thirdEnemy, 100);
 }
 
 void Movements::innerMapEnemyMovement( std::vector<std::vector<int>>* innerMap, DrawableElement* enemy){
     switch (rand()%4) {
         case (0):
             if (enemy->getYOnDrawtable() > 0) {
-                if ((*innerMap)[enemy->getYOnDrawtable() - 1][enemy->getXOnDrawtable()] == 0) {
+                if ((*innerMap)[enemy->getYOnDrawtable() - 1][enemy->getXOnDrawtable()] == 2) {
                     enemy->changeByYOnDrawtable(-1);
                 }
             }
             break;
         case (1):
             if (enemy->getYOnDrawtable() < 9) {
-                if ((*innerMap)[enemy->getYOnDrawtable() + 1][enemy->getXOnDrawtable()] == 0) {
+                if ((*innerMap)[enemy->getYOnDrawtable() + 1][enemy->getXOnDrawtable()] == 2) {
                     enemy->changeByYOnDrawtable(+1);
                 }
             }
             break;
         case (2):
             if (enemy->getXOnDrawtable() < 9) {
-                if ((*innerMap)[enemy->getYOnDrawtable()][enemy->getXOnDrawtable() + 1] == 0) {
+                if ((*innerMap)[enemy->getYOnDrawtable()][enemy->getXOnDrawtable() + 1] == 2) {
                     enemy->changeByXOnDrawtable(+1);
                 }
             }
             break;
         case (3):
             if (enemy->getXOnDrawtable() > 0) {
-                if ((*innerMap)[enemy->getYOnDrawtable()][enemy->getXOnDrawtable() - 1] == 0) {
+                if ((*innerMap)[enemy->getYOnDrawtable()][enemy->getXOnDrawtable() - 1] == 2) {
                     enemy->changeByXOnDrawtable(-1);
                 }
             }
@@ -142,8 +144,8 @@ void Movements::timerBomb(std::vector<std::vector<int>>* innerMap, int timer){
     if(timer == 2) {
         for (int i = 0; i < 10 ; ++i) {
             for (int j = 0; j < 10; ++j) {
-                if ((*innerMap)[i][j] == 2) {
-                    (*innerMap)[i][j] = 0;
+                if ((*innerMap)[i][j] == 96) {
+                    (*innerMap)[i][j] = 2;
                 }
             }
         }
@@ -151,20 +153,20 @@ void Movements::timerBomb(std::vector<std::vector<int>>* innerMap, int timer){
 }
 
 void Movements::changeTileInnerMap(std::vector<std::vector<int>>* innerMap, std::map<DrawableElement* , int>* inventory, std::vector<DrawableElement*>* allObject, SDL_Event* e){
+    std::map<DrawableElement*, int>::iterator it;
     if (e->type == SDL_MOUSEBUTTONDOWN) {
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
         if (mouseX > 200 || mouseY > 50) {
             for (int j = 0; j < allObject->size() ; ++j) {
-                if((*innerMap)[mouseY / 100 ][mouseX / 100 ] == (*allObject)[j]->getInventoryId()){
-                      inventory->emplace(std::pair<DrawableElement*, int> ((*allObject)[j], 1));
+                if((*innerMap)[mouseY / 100 ][mouseX / 100 ] == (*allObject)[j]->getInventoryId() ) {
+                    it =(*inventory).find((*allObject)[j]);
+                    if (!it->second) {
+                        inventory->emplace(std::pair<DrawableElement *, int>((*allObject)[j], 1));
+                        (*innerMap)[mouseY / 100][mouseX / 100] = 2;
+                    }
                 }
             }
-            (*innerMap)[mouseY / 100 ][mouseX / 100 ] = 0;
         }
     }
-}
-
-void pickUpStuff(std::vector<DrawableElement*> inventory, std::vector<std::vector<int>> map, int k , int z){
-
 }

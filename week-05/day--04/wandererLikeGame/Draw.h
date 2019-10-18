@@ -6,24 +6,32 @@
 #include "string"
 #include <SDL_ttf.h>
 #include "Resources.h"
+#include "map"
 
 class Draw : public Resources {
 
 public:
+    Draw(SDL_Renderer *renderer);
 
-    void draw(SDL_Renderer* renderer,DrawableElement* figure, int side);
-    void animation(SDL_Renderer* renderer, DrawableElement* figure, int side);
-    void SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor,DrawableElement* kfc, DrawableElement* senco,DrawableElement* silverkratch,
-                DrawableElement* kenwu, DrawableElement* tomlossajt, DrawableElement* zsir, DrawableElement* mustar, DrawableElement* pennyLogo, DrawableElement* Cartmen, int k, int z, std::vector<std::vector<int>> tiles, int side,int zoom);
-    void drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side );
+    void draw(DrawableElement* figure, int side);
+    void animation( DrawableElement* figure, int side);
+    void SetMap( DrawableElement* Hero, std::vector<DrawableElement*>* allObject, int k, int z, std::vector<std::vector<int>> tiles, int side,int zoom);
+    void drawFromSheet( DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side );
     std::vector<std::vector<int>> generateMap(int size);
-    void menuBackground(SDL_Renderer* renderer);
-    void writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string text);
-    void mainMenu(SDL_Renderer* renderer);
-    void inventory(SDL_Renderer* renderer, DrawableElement* first, DrawableElement* second, DrawableElement* third, DrawableElement* fourth);
-    void generateInnerMap(SDL_Renderer* renderer, std::vector<std::vector<int>>* innerMap, DrawableElement* floor, DrawableElement* wall, DrawableElement* bomb);
+    void menuBackground();
+    void writeOnTheScreen( int x , int y, std::string text);
+    void mainMenu();
+    void inventory(std::map<DrawableElement*, int>* inventory);
+    void generateInnerMap( std::vector<std::vector<int>>* innerMap, std::vector<DrawableElement*>* allObject);
+
+
+protected:
+
+    SDL_Renderer* _renderer;
 
 private:
+
+
 
 
 

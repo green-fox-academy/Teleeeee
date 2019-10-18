@@ -97,10 +97,10 @@ int main(int argc, char *args[]) {
     std::map<DrawableElement* , int> inventory;
     std::vector<DrawableElement*> allObeject;
     Resources gResources(gRenderer);
-    Movements gMove;
-    Draw gDraw;
+    Movements gMove(gRenderer);
+    Draw gDraw(gRenderer);
     std::vector<std::vector<int>> map (520,std::vector<int>(520,1));
-    std::vector<std::vector<int>> innerMap (10,std::vector<int>(10,0));
+    std::vector<std::vector<int>> innerMap (10,std::vector<int>(10,2));
     innerMap = gDraw.generateMap(10);
 
 
@@ -108,9 +108,10 @@ int main(int argc, char *args[]) {
     DrawableElement zoliBacsi(4, 4, gResources.getTextures()[4], gResources.getTextures()[8]);
     DrawableElement Wall(1,0,0, gResources.getTextures()[0]);
     DrawableElement Floor(0,0,0, gResources.getTextures()[1]);
-    DrawableElement innerMapElements(97,0,0, gResources.getTextures()[6]);
-    DrawableElement KFC(3,0,0,gResources.getTextures()[7]);
-    DrawableElement senco(2,0,0,gResources.getTextures()[11]);
+    DrawableElement innerMapFloor(2,0,0, gResources.getTextures()[2]);
+    DrawableElement innerMapWall(3,0,0, gResources.getTextures()[3]);
+    DrawableElement KFC(9,0,0,gResources.getTextures()[7]);
+    DrawableElement senco(10,0,0,gResources.getTextures()[11]);
     DrawableElement silverkratch(4,0, 0, gResources.getTextures()[12]);
     DrawableElement kenwu(5,0,0,gResources.getTextures()[13]);
     DrawableElement tomlossajt(6,1,0,gResources.getTextures()[14]);
@@ -121,9 +122,15 @@ int main(int argc, char *args[]) {
     DrawableElement firstEnemy(97,0,0,gResources.getTextures()[18]);
     DrawableElement secondEnemy(97,9,9,gResources.getTextures()[18]);
     DrawableElement thirdEnemy(97,0,9,gResources.getTextures()[18]);
+    DrawableElement innerMapElements(97,0,0, gResources.getTextures()[6]);
     DrawableElement bomb(96,0,0,gResources.getTextures()[19]);
 
     allObeject.emplace_back(&Wall);
+    allObeject.emplace_back(&Floor);
+    allObeject.emplace_back(&bomb);
+    allObeject.emplace_back(&pennyLogo);
+    allObeject.emplace_back(&innerMapFloor);
+    allObeject.emplace_back(&innerMapWall);
 
 
     //gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
@@ -136,8 +143,8 @@ int main(int argc, char *args[]) {
         //menu is initialized here
         while(menu){
             if(firstRun) {
-                gDraw.draw(gRenderer, &menuBackGround, 1000);
-                gDraw.mainMenu(gRenderer);
+                gDraw.draw( &menuBackGround, 1000);
+                gDraw.mainMenu();
                 SDL_RenderPresent(gRenderer);
                 firstRun = false;
             }
@@ -164,6 +171,7 @@ int main(int argc, char *args[]) {
                     //save map
                     gResources.saveMap(&map,"map.txt");
                     menu = false;
+                    quit = true;
                 }
             }
         }
@@ -212,9 +220,10 @@ int main(int argc, char *args[]) {
         while(innerGame){
             //timer required for inner map extra features
             if(timer == 2) timer = 0;
-            gDraw.generateInnerMap(gRenderer, &innerMap, &innerMapElements, &innerMapElements, &bomb);
+            gDraw.generateInnerMap(&innerMap, &allObeject);
             //moveable hero and 3 random moving enemies
-            gMove.heroInnerMapMovement(gRenderer, &zoliBacsi, &innerMap, &innerGame, &firstEnemy, &secondEnemy, &thirdEnemy, &timer, &inventory, &allObeject);
+            gMove.heroInnerMapMovement( &zoliBacsi, &innerMap, &innerGame, &firstEnemy, &secondEnemy, &thirdEnemy, &timer, &inventory, &allObeject);
+            gDraw.inventory(&inventory);
             SDL_RenderPresent(gRenderer);
         }
 
@@ -222,14 +231,16 @@ int main(int argc, char *args[]) {
 
         ////DRAW HERE ////
 
-        gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch,&kenwu ,&tomlossajt , &zsir, &mustar, &pennyLogo, &zoliBacsi, k, z, map, side, zoom);
-        gDraw.draw(gRenderer, &zoliBacsi, side);
+        gDraw.SetMap (&zoliBacsi, &allObeject, k, z, map, side, zoom);
+        gDraw.draw(&zoliBacsi, side);
+        gDraw.inventory(&inventory);
         //gDraw.inventory(gRenderer,&inventoryFirst,&inventorySecond,&inventoryThird,&inventoryFourth);
         //gDraw.animation(gRenderer,&zoliBacsi);
 
         ////DRAW HERE ////
 
         SDL_RenderPresent(gRenderer);
+
     }
 
     //Free resources and close SDL

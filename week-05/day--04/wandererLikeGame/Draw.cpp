@@ -3,74 +3,47 @@
 #include "Draw.h"
 
 
+Draw::Draw(SDL_Renderer *renderer) : _renderer(renderer) {}
 
-void Draw::draw(SDL_Renderer *renderer, DrawableElement* figure, int side) {
+void Draw::draw(DrawableElement* figure, int side) {
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
-    SDL_RenderCopy(renderer, figure->getTexture(), NULL, &dstrect);
+    SDL_RenderCopy(_renderer, figure->getTexture(), NULL, &dstrect);
 
 }
-void Draw::drawFromSheet(SDL_Renderer *renderer, DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side){
+void Draw::drawFromSheet(DrawableElement* figure, int onTheSheetX , int ontheSheetY, int widht, int height, int side){
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
     SDL_Rect cutrect = {onTheSheetX, ontheSheetY, widht, height};
-    SDL_RenderCopy(renderer, figure->getTexture(), &cutrect, &dstrect);
+    SDL_RenderCopy(_renderer, figure->getTexture(), &cutrect, &dstrect);
 }
-void Draw::SetMap(SDL_Renderer *renderer,  DrawableElement* wall, DrawableElement* floor, DrawableElement* kfc, DrawableElement* senco,DrawableElement* silverkratch,
-                  DrawableElement* kenwu, DrawableElement* tomlossajt, DrawableElement* zsir, DrawableElement* mustar, DrawableElement* pennyLogo, DrawableElement* Cartmen, int k , int z, std::vector<std::vector<int>> tiles, int side, int zoom ) {
+void Draw::SetMap( DrawableElement* Hero, std::vector<DrawableElement*>* allObject, int k , int z, std::vector<std::vector<int>> tiles, int side, int zoom ) {
 
-    if (Cartmen->getXOnDrawtable() + z > 0 && Cartmen->getYOnDrawtable() - 5 + k > 0 &&
-        Cartmen->getXOnDrawtable() - 5 + z < 500 && Cartmen->getYOnDrawtable() - 5 + k < 500) {
+    if (Hero->getXOnDrawtable() + z > 0 && Hero->getYOnDrawtable() - 5 + k > 0 &&
+            Hero->getXOnDrawtable() - 5 + z < 500 && Hero->getYOnDrawtable() - 5 + k < 500) {
 
         for (int i = -1 + z; i < 11 + z + zoom; ++i) {
 
             for (int j = -1 + k; j < 11 + k + zoom; ++j) {
+                for (int l = 0; l < (*allObject).size() ; ++l) {
+                    (*allObject)[l]->setXAndYOnDrawtable(i - z + Hero->getXOnDrawtable() - 5,
+                                                         j - k + Hero->getYOnDrawtable() - 5);
+                }
 
-                wall->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                          j - k + Cartmen->getYOnDrawtable() - 5);
-                floor->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                           j - k + Cartmen->getYOnDrawtable() - 5);
-                kfc->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                         j - k + Cartmen->getYOnDrawtable() - 5);
-                senco->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                           j - k + Cartmen->getYOnDrawtable() - 5);
-                silverkratch->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                                  j - k + Cartmen->getYOnDrawtable() - 5);
-                kenwu->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                           j - k + Cartmen->getYOnDrawtable() - 5);
-                tomlossajt->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                                j - k + Cartmen->getYOnDrawtable() - 5);
-                zsir->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                          j - k + Cartmen->getYOnDrawtable() - 5);
-                mustar->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                            j - k + Cartmen->getYOnDrawtable() - 5);
-                pennyLogo->setXAndYOnDrawtable(i - z + Cartmen->getXOnDrawtable() - 5,
-                                            j - k + Cartmen->getYOnDrawtable() - 5);
-                if (tiles[j][i] == 0) draw(renderer, floor, side);
-                if (tiles[j][i] == 1) draw(renderer, wall, side);
-                if (tiles[j][i] == 2) draw(renderer, senco, side);
-                if (tiles[j][i] == 3) drawFromSheet(renderer, kfc, 0, 0, 440, 337, side);
-                if (tiles[j][i] == 4) draw(renderer, silverkratch, side);
-                if (tiles[j][i] == 5) draw(renderer, kenwu, side);
-                if (tiles[j][i] == 6) draw(renderer, tomlossajt, side);
-                if (tiles[j][i] == 7) draw(renderer, zsir, side);
-                if (tiles[j][i] == 8) draw(renderer, mustar, side);
-                if (tiles[j][i] == 98) draw(renderer, pennyLogo, side);
+                for(int k = 0; k < (*allObject).size() ; k++ ) {
+                    if (tiles[j][i] == (*allObject)[k]->getInventoryId()) {
+                        draw((*allObject)[k], side);
+                    }
+                }
+
             }
         }
     }
-    wall->resetXandYtoZero();
-    floor->resetXandYtoZero();
-    kfc->resetXandYtoZero();
-    senco->resetXandYtoZero();
-    silverkratch->resetXandYtoZero();
-    kenwu->resetXandYtoZero();
-    tomlossajt->resetXandYtoZero();
-    zsir->resetXandYtoZero();
-    mustar->resetXandYtoZero();
-    pennyLogo->resetXandYtoZero();
+    for (int l = 0; l < (*allObject).size() ; ++l) {
+        (*allObject)[l]->resetXandYtoZero();
+    }
 }
 
 std::vector<std::vector<int>> Draw::generateMap(int size){
-    std::vector<std::vector<int>> tiles  (size, std::vector<int>(size, 0));
+    std::vector<std::vector<int>> tiles(size, std::vector<int>(size, 0));
     for (int i = 0; i < size ; ++i) {
         for (int k = 0; k < size ; ++k) {
             if(size > 10){
@@ -78,20 +51,25 @@ std::vector<std::vector<int>> Draw::generateMap(int size){
                 tiles.at(i).at(k) = 1;
                 }
                 if (rand() % 30 == 1) {
-                    tiles.at(i).at(k) = 2;
+                    tiles.at(i).at(k) = 3;
                 }
             }
             if(size == 10) {
                 if (rand() % 3 == 1) {
-                    tiles.at(i).at(k) = 1;
+                    tiles.at(i).at(k) = 3;
+                }else{
+                    tiles.at(i).at(k) = 2;
                 }
+                //if (rand() % 10 == 2) {
+                //    tiles.at(i).at(k) = 96;
+                //}
             }
         }
     }
     return  tiles;
 }
 
-void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure, int side){
+void Draw::animation( DrawableElement* figure, int side){
     int lastTime = 0;
     SDL_Rect dstrect = {figure->getXOnDrawtable() * side, figure->getYOnDrawtable() * side, side, side};
     int currentTime = 0;
@@ -101,52 +79,56 @@ void Draw::animation(SDL_Renderer* renderer, DrawableElement* figure, int side){
         if (currentTime > lastTime + 100) {
             lastTime = currentTime;
             SDL_Rect cutrect = {0 + i * 38, 165, 38, 42};
-            SDL_RenderCopy(renderer, figure->getAnimation(), &cutrect, &dstrect);
-            SDL_RenderPresent(renderer);
+            SDL_RenderCopy(_renderer, figure->getAnimation(), &cutrect, &dstrect);
+            SDL_RenderPresent(_renderer);
             i++;
         }
     }
 }
 
-void Draw::menuBackground(SDL_Renderer* renderer){
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(renderer,0,0,0,255);
+void Draw::menuBackground(){
+    SDL_SetRenderDrawBlendMode(_renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(_renderer,0,0,0,255);
     SDL_Rect rect = {0,0,1000,1000};
-    SDL_RenderFillRect(renderer,&rect);
+    SDL_RenderFillRect(_renderer,&rect);
 }
 
-void Draw::writeOnTheScreen(SDL_Renderer* renderer , int x , int y, std::string text){
+void Draw::writeOnTheScreen(int x , int y, std::string text){
     TTF_Font* font =TTF_OpenFont( "Laffayette_Comic_Pro.ttf", 40);
     SDL_Color textColor = { 0, 0, 0 };
     SDL_Surface* textSurface = TTF_RenderText_Blended( font, text.c_str(), textColor);
-    SDL_Texture* texture = SDL_CreateTextureFromSurface( renderer, textSurface );
+    SDL_Texture* texture = SDL_CreateTextureFromSurface( _renderer, textSurface );
     SDL_Rect dstrect = { x,  y, 200, 100};
-    SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+    SDL_RenderCopy(_renderer, texture, NULL, &dstrect);
 }
 
-void Draw::mainMenu(SDL_Renderer* renderer){
-    writeOnTheScreen(renderer,350, 100, "Close");
-    writeOnTheScreen(renderer,350, 250, "New game");
-    writeOnTheScreen(renderer,350, 400, "Load last");
-    writeOnTheScreen(renderer,350, 550, "Save");
+void Draw::mainMenu(){
+    writeOnTheScreen(350, 100, "Close");
+    writeOnTheScreen(350, 250, "New game");
+    writeOnTheScreen(350, 400, "Load last");
+    writeOnTheScreen(350, 550, "Save");
 }
 
-void Draw::inventory(SDL_Renderer* renderer, DrawableElement* first, DrawableElement* second, DrawableElement* third, DrawableElement* fourth){
-    draw(renderer, first, 50);
-    draw(renderer, second, 50);
-    draw(renderer, third, 50);
-    drawFromSheet(renderer, fourth, 320, 1, 69, 49, 50);
+void Draw::inventory(std::map<DrawableElement*, int>* inventory){
+    int counter = 0;
+    for (std::pair<DrawableElement*, int> it : *inventory) {
+        it.first->setXAndYOnDrawtable(counter, 0);
+        draw(it.first, 50);
+        counter++;
+    }
 }
 
-void Draw::generateInnerMap(SDL_Renderer* renderer, std::vector<std::vector<int>>* innerMap, DrawableElement* floor, DrawableElement* wall, DrawableElement* bomb){
+void Draw::generateInnerMap(std::vector<std::vector<int>>* innerMap, std::vector<DrawableElement*>* allObject){
     for(int i = 0; i < 10; i++){
         for (int j = 0; j < 10 ; ++j) {
-            floor->setXAndYOnDrawtable(j,i);
-            wall->setXAndYOnDrawtable(j,i);
-            bomb->setXAndYOnDrawtable(j,i);
-            if((*innerMap)[i][j] == 1) drawFromSheet(renderer, floor,470,297,31,31,100);
-            if((*innerMap)[i][j] == 0) drawFromSheet(renderer, floor, 173,231,31,31,100);
-            if((*innerMap)[i][j] == 2) draw(renderer, bomb, 100);
+            for(int k = 0; k < (*allObject).size() ; k++ ){
+                if((*innerMap)[i][j] == (*allObject)[k]->getInventoryId() ){
+                    (*allObject)[k]->setXAndYOnDrawtable(j,i);
+                    draw((*allObject)[k], 100);
+                }
+            }
         }
     }
 }
+
+

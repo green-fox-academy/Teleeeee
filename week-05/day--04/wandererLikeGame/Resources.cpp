@@ -9,8 +9,8 @@ void Resources::loadImages(SDL_Renderer* renderer, const char*fileName) {
 Resources::Resources(SDL_Renderer* renderer) {
     _textures.emplace_back(IMG_LoadTexture(renderer, "vagodeszka.PNG"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "asztal.PNG"));
-    _textures.emplace_back(IMG_LoadTexture(renderer, "Kyle.png"));
-    _textures.emplace_back(IMG_LoadTexture(renderer, "Timmy.png"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "innerMapFloor.png"));
+    _textures.emplace_back(IMG_LoadTexture(renderer, "innerMapWall.PNG"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "zolibacsi.PNG"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "spritestrans.png"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "mapElements.png"));
@@ -39,16 +39,24 @@ void Resources::loadMap(std::string fileName, std::vector<std::vector<int>>* map
     std::ifstream myFileIn;
     int sor = -1;
     std::string mapElement;
+    std::string number;
     myFileIn.open("map.txt");
 
-    while( getline(myFileIn, mapElement)) {
+    while(!myFileIn.eof()) {
+        getline(myFileIn, mapElement);
+        std::stringstream ss(mapElement);
         sor += 1;
-        for (int j = 0; j < 500 ; ++j) {
-            (*map)[sor][j] = mapElement[j] - '0';
+        for (int j = 0; j < 500; ++j) {
+            std::getline(ss, number, ' ');
+            if (number.length() == 2) {
+               (*map)[sor][j] = (number[0] - '0') * 10 + (number[1] - '0');
+            } else {
+                (*map)[sor][j] = number[0] - '0';
         }
-        if(sor > 500){break;}
     }
-
+        if (sor > 500) { break; }
+    }
+    myFileIn.close();
 }
 
 void Resources::saveMap(std::vector<std::vector<int>>* map, std::string fileName){
@@ -59,9 +67,10 @@ void Resources::saveMap(std::vector<std::vector<int>>* map, std::string fileName
     myFileOut.open("map.txt");
     for(int i = 0; i < map->size(); i++){
         for (int j = 0; j < map[0].size() ; ++j) {
-            myFileOut << (*map)[i][j];
+            myFileOut << (*map)[i][j] << ' ';
         }myFileOut << std::endl;
     }
+    myFileOut.close();
 }
 
 Resources::Resources() {}
