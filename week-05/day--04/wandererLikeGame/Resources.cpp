@@ -6,6 +6,7 @@ void Resources::loadImages(SDL_Renderer* renderer, const char*fileName) {
     _textures.emplace_back(texture);
 }
 
+//TODO: use map to store textures
 Resources::Resources(SDL_Renderer* renderer) {
     _textures.emplace_back(IMG_LoadTexture(renderer, "vagodeszka.PNG"));
     _textures.emplace_back(IMG_LoadTexture(renderer, "asztal.PNG"));

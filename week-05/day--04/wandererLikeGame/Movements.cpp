@@ -20,12 +20,13 @@ void Movements::generalButtonMovements(std::vector<std::vector<int>>* map, int* 
 
 }
 
+//TODO:make it changeable to what to put down or pick up
 void Movements::changeTileWithMouseClick(int k, int z,std::vector<std::vector<int>>* map, SDL_Event* e){
     if (e->type == SDL_MOUSEBUTTONDOWN) {
         int mouseX, mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
         if(mouseX > 200 || mouseY > 50) {
-            (*map)[mouseY / 100 + k + 1 ][mouseX / 100 + z + 1 ] = 98;
+            (*map)[mouseY / 100 + k + 1  ][mouseX / 100 + z + 1 ] = 98;
         }
     }
 

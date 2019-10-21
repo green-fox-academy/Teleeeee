@@ -51,7 +51,7 @@ std::vector<std::vector<int>> Draw::generateMap(int size){
                 tiles.at(i).at(k) = 1;
                 }
                 if (rand() % 30 == 1) {
-                    tiles.at(i).at(k) = 3;
+                    tiles.at(i).at(k) = 5;
                 }
             }
             if(size == 10) {

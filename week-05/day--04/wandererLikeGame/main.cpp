@@ -131,6 +131,13 @@ int main(int argc, char *args[]) {
     allObeject.emplace_back(&pennyLogo);
     allObeject.emplace_back(&innerMapFloor);
     allObeject.emplace_back(&innerMapWall);
+    allObeject.emplace_back(&KFC);
+    allObeject.emplace_back(&senco);
+    allObeject.emplace_back(&silverkratch);
+    allObeject.emplace_back(&kenwu);
+    allObeject.emplace_back(&tomlossajt);
+    allObeject.emplace_back(&zsir);
+    allObeject.emplace_back(&mustar);
 
 
     //gDraw.SetMap(gRenderer, &Wall, &Floor, &KFC, &senco, &silverkratch, &kenwu, &tomlossajt, &zsir, &mustar, &zoliBacsi, k, z, map, side, zoom);
