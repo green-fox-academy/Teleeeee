@@ -43,10 +43,23 @@ int length_of_string_with_loop(char str[]){
 }
 
 int same_strings(char first_str[], char second_str[]){
-    if (strcasecmp(first_str, second_str) == 0){
-        return 1;
-    }
-    else{
-        return  0;
+    if(strlen(first_str) != strlen(second_str) ) return 0;
+    int temp = 0;
+    for (int i = 0; i <= strlen(first_str) ; ++i) {
+        temp = i;
+        if (first_str[i] == second_str[0] || abs(first_str[i] - second_str[0]) == 32) {
+            for (int j = 0; j <= strlen(second_str) ; ++j) {
+                if (second_str[j] == '\0'){
+                    return 1;
+                }
+                if(first_str[i] != second_str[j] && abs(first_str[i] - second_str[j]) != 32) {
+                    break;
+                }
+                if(first_str[i] == second_str[j] || abs(first_str[i] - second_str[j]) == 32){
+                    i++;
+                }
+            }
+        }
+        i = temp;
     }
 }
