@@ -38,7 +38,7 @@ int main() {
 
     uint8_t byte = 0b1100;
     PrintBinary(byte);
-    PrintBinary(toggle_a_bit(byte, 1));
+    PrintBinary(toggle_a_bit(byte, 2));
 
     return 0;
 }
