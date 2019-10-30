@@ -81,5 +81,7 @@ int main() {
     printf("%f\n", (*(float*)element_at_generic_vec(&float_vector, 4)));
     printf("%f\n", (*(float*)element_at_generic_vec(&float_vector, 5)));
 
+    destroy_generic_vec(&float_vector);
+
     return 0;
 }
