@@ -98,3 +98,29 @@ void delete_elemet_at_index_linked_list(linked_list_t* list,  int index){
 size_t get_size_linked_list(linked_list_t* list){
     return list->size;
 }
+
+void insert_at_beginning_linked_list(linked_list_t* list, void* data ){
+    uint8_t* data_new = (uint8_t*)malloc(list->element_size_in_byte);
+    for (size_t i = 0; i < list->element_size_in_byte ; ++i) {
+        ((uint8_t*)data_new)[i] = ((uint8_t*)data)[i];
+    }
+    node_t* new = calloc(sizeof(node_t), 1);
+    new->next = list->head;
+    list->head = new;
+    new->data = data_new;
+    list->size++;
+}
+
+int empty_linked_list(linked_list_t* list){
+    return list->size == 0 ? 1 : 0;
+}
+
+
+void delete_at_beginning_linked_list(linked_list_t* list){
+    node_t* temp = list->head;
+    if(list->size > 0 ){
+        list->head = list->head->next;
+    }
+    free(temp);
+}
+
