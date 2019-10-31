@@ -54,11 +54,11 @@ char* generate_new_name(char* name_of_bmp, int size){
     for (int i = 0; i < size - 3 ; ++i) {
         new_name[i] = name_of_bmp[i];
     }
-    new_name[ size - 3 ] = '.';
-    new_name[ size - 2 ] = 't';
-    new_name[ size - 1 ] = 'x';
-    new_name[ size - 0 ] = 't';
-    new_name[ size + 1 ] = '\0';
+    new_name[ size - 4 ] = '.';
+    new_name[ size - 3 ] = 't';
+    new_name[ size - 2 ] = 'x';
+    new_name[ size - 1 ] = 't';
+    new_name[ size + 0 ] = '\0';
     return new_name;
 }
 
