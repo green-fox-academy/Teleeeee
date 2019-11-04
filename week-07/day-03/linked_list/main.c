@@ -38,6 +38,10 @@ int main() {
     delete_at_beginning_linked_list(list);
     printf("%d\n", (*((phone_t*)data_at_linked_list(list, 0))).number);
     printf("%d\n", (*((phone_t*)data_at_linked_list(list, 1))).number);
+    delete_at_beginning_linked_list(list);
+    delete_at_beginning_linked_list(list);
+    printf("%d\n", get_size_linked_list(list));
+    printf("%d\n", empty_linked_list(list));
 
 
     return 0;

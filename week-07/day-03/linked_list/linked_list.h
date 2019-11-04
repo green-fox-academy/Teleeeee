@@ -24,6 +24,7 @@ void* data_at_linked_list(linked_list_t* list, int index);
 void insert_at_beginning_linked_list(linked_list_t* list, void* data );
 int empty_linked_list(linked_list_t* list);
 void delete_at_beginning_linked_list(linked_list_t* list);
+size_t get_size_linked_list(linked_list_t* list);
 
 
 

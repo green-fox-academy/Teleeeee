@@ -112,7 +112,7 @@ void insert_at_beginning_linked_list(linked_list_t* list, void* data ){
 }
 
 int empty_linked_list(linked_list_t* list){
-    return list->size == 0 ? 1 : 0;
+    return list->size == 0;
 }
 
 
@@ -122,5 +122,6 @@ void delete_at_beginning_linked_list(linked_list_t* list){
         list->head = list->head->next;
     }
     free(temp);
+    list->size--;
 }
 
