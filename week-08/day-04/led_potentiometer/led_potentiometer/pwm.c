@@ -14,7 +14,7 @@ void init_fast_pwm_second_channel(){
 	
 	DDRB |= 1 << 1;
 	TCCR1A = 0b10000001;
-	TCCR1B = 0b00001111;
+	TCCR1B = 0b00001011;
 	
 }
 

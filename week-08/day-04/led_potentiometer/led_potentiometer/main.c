@@ -45,16 +45,16 @@ int main(void)
 	
     while (1) 
     {
-		volatile float x =  (((float)all_result_x - 512.0)) / 512.0; 
-		volatile float y =  (((float)all_result_y - 512.0)) / 512.0;
+		volatile float x =  (((float)all_result_x - 512.0)) / 512; 
+		volatile float y =  (((float)all_result_y - 512.0)) / 512;
 		float T = sqrtf((x * x) + (y * y));
 		float pszi = atan((y/x));
-		struct HSV data = {pszi, 0, T};
-		struct RGB value = HSVToRGB(data);
+		struct HsvColor data = {pszi * 255, T * 255 , 255 };
+		struct RgbColor value = HsvToRgb(data);
 		
-		volatile uint8_t R = value.R;
-		volatile uint8_t B = value.B;
-		volatile uint8_t G = value.G;
+		volatile uint8_t R = value.r;
+		volatile uint8_t B = value.b;
+		volatile uint8_t G = value.g;
 			
 		set_duty_R(R);
 		set_duty_B(B);
