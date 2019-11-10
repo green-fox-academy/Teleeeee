@@ -1,93 +1,100 @@
 #include <math.h>
 
-typedef struct RgbColor
+//radians = atan2(y, x);
+//
+//degrees = radians * 180.0 / M_PI;
+//
+//max = sqrt(xmax*xmax + ymax*ymax);
+//distance = sqrt(x*x + y*y) / max;
+//
+//
+//hue = degrees;
+//sat = distance;
+//
+//
+//RGB <-  HSV(hue, sat, 1.0);
+//
+
+unsigned int rgbColor(unsigned int red, unsigned int green, unsigned int blue)
 {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-} RgbColor;
+    red   = (red   & 0xFF) << 16;
+    green = (green & 0xFF) << 8;
+    blue  = (blue  & 0xFF) << 0;
 
-typedef struct HsvColor
-{
-	unsigned char h;
-	unsigned char s;
-	unsigned char v;
-} HsvColor;
-
-RgbColor HsvToRgb(HsvColor hsv)
-{
-	RgbColor rgb;
-	unsigned char region, remainder, p, q, t;
-
-	if (hsv.s == 0)
-	{
-		rgb.r = hsv.v;
-		rgb.g = hsv.v;
-		rgb.b = hsv.v;
-		return rgb;
-	}
-
-	region = hsv.h / 43;
-	remainder = (hsv.h - (region * 43)) * 6;
-
-	p = (hsv.v * (255 - hsv.s)) >> 8;
-	q = (hsv.v * (255 - ((hsv.s * remainder) >> 8))) >> 8;
-	t = (hsv.v * (255 - ((hsv.s * (255 - remainder)) >> 8))) >> 8;
-
-	switch (region)
-	{
-		case 0:
-		rgb.r = hsv.v; rgb.g = t; rgb.b = p;
-		break;
-		case 1:
-		rgb.r = q; rgb.g = hsv.v; rgb.b = p;
-		break;
-		case 2:
-		rgb.r = p; rgb.g = hsv.v; rgb.b = t;
-		break;
-		case 3:
-		rgb.r = p; rgb.g = q; rgb.b = hsv.v;
-		break;
-		case 4:
-		rgb.r = t; rgb.g = p; rgb.b = hsv.v;
-		break;
-		default:
-		rgb.r = hsv.v; rgb.g = p; rgb.b = q;
-		break;
-	}
-
-	return rgb;
+    return (red | green | blue);
 }
 
-HsvColor RgbToHsv(RgbColor rgb)
+double crop(double value, double min, double max){
+    if(value < min) return min;
+    if(value > max) return max;
+    return value;
+}
+
+
+unsigned int hsvColor(double hue, double saturation, double value)
 {
-	HsvColor hsv;
-	unsigned char rgbMin, rgbMax;
+/*
+HSV to RGB conversion formula
+When 0 ? H < 360, 0 ? S ? 1 and 0 ? V ? 1:
+C = V * S
+X = C * (1 - |(H / 60°) mod 2 - 1|)
+m = V - C
+R', G', B' -> depending on which 60deg section hue is in
+(R,G,B) = ((R'+m)*255, (G'+m)*255, (B'+m)*255)
+*/
+    double H, S, V;
+    double C, X, m;
+    double R_, G_, B_;
+    double R, G, B;
 
-	rgbMin = rgb.r < rgb.g ? (rgb.r < rgb.b ? rgb.r : rgb.b) : (rgb.g < rgb.b ? rgb.g : rgb.b);
-	rgbMax = rgb.r > rgb.g ? (rgb.r > rgb.b ? rgb.r : rgb.b) : (rgb.g > rgb.b ? rgb.g : rgb.b);
+    H = fmod(hue, 360.0);
+    S = crop(saturation, 0.0, 1.0);
+    V = crop(value, 0.0, 1.0);
 
-	hsv.v = rgbMax;
-	if (hsv.v == 0)
-	{
-		hsv.h = 0;
-		hsv.s = 0;
-		return hsv;
-	}
+    C = V * S;
+    X = C * (1 - fabs( fmod( (H/60.0), 2.0 ) - 1 ) );
+    m = V - C;
 
-	hsv.s = 255 * (long)(rgbMax - rgbMin) / hsv.v;
-	if (hsv.s == 0)
-	{
-		hsv.h = 0;
-		return hsv;
-	}
+    if( H >= 0.0 && H < 60.0 )
+    {
+        R_ = C;
+        G_ = X;
+        B_ = 0.0;
+    }
+    else if( H >= 60.0 && H < 120.0 )
+    {
+        R_ = X;
+        G_ = C;
+        B_ = 0.0;
+    }
+    else if( H >= 120.0 && H < 180.0 )
+    {
+        R_ = 0.0;
+        G_ = C;
+        B_ = X;
+    }
+    else if( H >= 180.0 && H < 240.0 )
+    {
+        R_ = 0.0;
+        G_ = X;
+        B_ = C;
+    }
+    else if( H >= 240.0 && H < 300.0 )
+    {
+        R_ = X;
+        G_ = 0.0;
+        B_ = C;
+    }
+    else
+    {
+        R_ = C;
+        G_ = 0.0;
+        B_ = X;
+    }
 
-	if (rgbMax == rgb.r)
-	hsv.h = 0 + 43 * (rgb.g - rgb.b) / (rgbMax - rgbMin);
-	else if (rgbMax == rgb.g)
-	hsv.h = 85 + 43 * (rgb.b - rgb.r) / (rgbMax - rgbMin);
-	else
-	hsv.h = 171 + 43 * (rgb.r - rgb.g) / (rgbMax - rgbMin);
+    R = (R_ + m) * 255;
+    G = (G_ + m) * 255;
+    B = (B_ + m) * 255;
 
-	return hsv;
+    return rgbColor( (unsigned int)R, (unsigned int)G, (unsigned int)B );
 }

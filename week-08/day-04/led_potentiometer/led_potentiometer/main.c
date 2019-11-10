@@ -11,7 +11,6 @@ uint16_t all_result_y = 0;
 void init_ADC(){
 	sei();
 	ADMUX = 0b00000000;
-	
 	ADCSRA = 0b11101111;
 	ADCSRB = 0b00000000;
 }
@@ -45,16 +44,19 @@ int main(void)
 	
     while (1) 
     {
-		volatile float x =  (((float)all_result_x - 512.0)) / 512; 
-		volatile float y =  (((float)all_result_y - 512.0)) / 512;
-		float T = sqrtf((x * x) + (y * y));
-		float pszi = atan((y/x));
-		struct HsvColor data = {pszi * 255, T * 255 , 255 };
-		struct RgbColor value = HsvToRgb(data);
+		volatile float x =  (((float)all_result_x - 512.0)) / 512.0;
+		volatile float y =  (((float)all_result_y - 512.0)) / 512.0;
+		float T = (sqrtf((x * x) + (y * y)))/ 1.414;
+		float fi = atan2( y, x);
+		float degree = (fi/M_PI) * 180.0;
 		
-		volatile uint8_t R = value.r;
-		volatile uint8_t B = value.b;
-		volatile uint8_t G = value.g;
+		uint32_t RGB = hsvColor(degree, T, 1.0);
+		
+		uint8_t R = 0 | (RGB >> 16);
+		uint8_t G = 0 | (RGB >> 8);
+		uint8_t B = 0 | (RGB >> 0);
+		
+		
 			
 		set_duty_R(R);
 		set_duty_B(B);

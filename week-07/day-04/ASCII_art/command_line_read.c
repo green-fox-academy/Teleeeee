@@ -37,11 +37,15 @@ void input_read(int argc, char *argv[]) {
 
         }
         if(strcmp(argv[3], "-mono") == 0){
+
             uint8_t* buffer_file =  read_file(argv[2], get_size_bmp(header));
+
             FILE* ascii_gen;
+
             ascii_gen = fopen(generate_new_name(argv[2], strlen(argv[2])), "w");
-            //works with 256 color bmp
+
             for (int i = get_size_bmp(header); i > get_size_bmp(header)-get_img_size_bmp(header);) {
+
                 for (int j = get_width_bmp(header); j >= 0 ; --j) {
                     if (buffer_file[i - j] == 0) {
                         fprintf(ascii_gen, "%s", "1");
@@ -51,8 +55,10 @@ void input_read(int argc, char *argv[]) {
 
                 }
                 fprintf(ascii_gen, "\n");
+
                 i = i - get_width_bmp(header);
             }
+
             fclose(ascii_gen);
         }
         if(strcmp(argv[3], "-regular") == 0){

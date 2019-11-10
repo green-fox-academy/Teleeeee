@@ -35,14 +35,14 @@ void init_phase_correct_pwm(){
 }
 
 void set_duty_R(uint8_t duty){
-	OCR0A = ((duty/2.0) * 255)/100;
+	OCR0A = duty;
 }
 
 void set_duty_B(uint8_t duty){
-	OCR1A = ((duty/2.0) * 255)/100;
+	OCR1A = duty;
 }
 
 void set_duty_G(uint8_t duty){
-	OCR2A = ((duty/2.0) * 255)/100;
+	OCR2A = duty ;
 }
 
