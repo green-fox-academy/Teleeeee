@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1573543729 source:c:\github\teleeeee\hobby\led\fuse.c
+	<avr/io.h>
+
+1573543729 source:c:\github\teleeeee\hobby\led\main.c
+	<avr/io.h>
+

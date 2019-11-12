@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1573496231 source:c:\github\teleeeee\hobby\test_code_blocks\fuse.c
+	<avr/io.h>
+
