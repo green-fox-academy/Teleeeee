@@ -2,6 +2,9 @@
 #ifndef _TC74_DRIVER_H
 #define _TC74_DRIVER_H
 
+#define F_CPU 16000000UL
+#include <avr/delay.h>
+
 #include <stdint.h>
 
 #define TC_WRITE	0
@@ -16,7 +19,8 @@ void TWI_write(uint8_t u8data);
 void TWI_stop(void);
 uint8_t TWI_read_nack(void);
 uint8_t TWI_read_ack(void);
-uint8_t read_temperature(void);
+int8_t read_temperature(void);
 int8_t read_data(void);
+void reset();
 
 #endif // _TC74_DRIVER_H

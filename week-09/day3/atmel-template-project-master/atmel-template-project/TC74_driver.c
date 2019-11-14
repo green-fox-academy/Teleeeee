@@ -22,33 +22,13 @@ void TWI_init(void)
 
 void TWI_start(void)
 {
-	//TODO
-	//Send start signal
-	TWCR |= 1 << 7;
-	TWCR |= 1 << 5;
-
-	// TODO:
-	// Wait for TWINT Flag set. This indicates that
-	//the START condition has been transmitted.
-	uint8_t counter = 0;
-	TWCR ^= 1 << 5;
-	while(!(TWCR & (1 << TWINT))){
-		counter++;
-		if(counter > 50){
-			break;
-		}
-	}
-	TWCR |= 1 << 7;
-	
+	TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
+	while(!(TWCR & 1 << TWINT));
 }
 
 void TWI_stop(void)
 {
-	//TODO
-	//Send stop signal
-	TWCR |= 1 << 4;
-	TWCR |= 1 << 7;
-	
+	TWCR = (1 << TWINT) | (1 << TWEN) | ( 1 << TWSTO);
 }
 
 uint8_t TWI_read_ack(void)
@@ -70,47 +50,37 @@ uint8_t TWI_read_nack(void)
 
 void TWI_write(uint8_t u8data)
 {
-	//TODO
-	//Load DATA into TWDR Register. Clear TWINT
-	
 	TWDR = u8data;
-	TWCR |= 1 << TWEN;
-	TWCR ^= 1 << 7;
-	
-	
-	//TWCR |= 1 <<7;
-	//TWCR |= 1 << TWEN;
-	//bit in TWCR to start transmission of data.
-	//Wait for TWINT Flag set. This indicates that
-	//the DATA has been transmitted, and ACK/
-	//NACK has been received.
-	while(!(TWCR & (1 << 7)));
-	TWCR |= 1 << 7; 
+	TWCR = (1 << TWINT) | (1 << TWEN);
+	while(!(TWCR & 1 << TWINT));
 }
 
 int8_t read_data(){
 	while (!(TWCR & 1 << 7));
+	TWCR |= 1 << TWINT;
+	_delay_ms(100);
 	int8_t data = TWDR;
-	TWCR |= 1 << 7;
 	return data;
 }
 
-//TODO
-//Write a function that communicates with the TC74A0.
-//Thbe function need to be take the address of the ic as a parameter.
+void reset(){
+	TWSR = 0b11111001;
+	TWAR = 1111111110;
+	TWDR = 1111111111;
+	TWCR = 0100000100;
+}
+
 //datasheet: http://ww1.microchip.com/downloads/en/DeviceDoc/21462D.pdf
-//And returns with the temperature.
-uint8_t read_temperature(void){
-	uint8_t temprature = 180;
+int8_t read_temperature(void){
+	int8_t temprature = 0;
 	TWI_start();
 	TWI_write(0b10010000);
-	//if(TWI_read_ack() == 255 ) return 255 ;
 	TWI_write(0);
 	TWI_start();
 	TWI_write(0b10010001);
-	//if(TWI_read_ack() == 255 ) return 254 ;
 	temprature = read_data();
 	TWI_stop();
+	reset();
 	return temprature;
 }
 
