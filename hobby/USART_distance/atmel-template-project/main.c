@@ -24,7 +24,7 @@ ISR(INT0_vect){
 	counter = 0;
 }
 
-ISR(TIMER0_OVF_vect){
+ISR(TIMER0_COMPA_vect){
 	//every overflow interrupt increases the counter until external interrupt turns timer off
 	counter++;
 }
@@ -36,20 +36,21 @@ void setup(){
 	EICRA = 0b00000011;
 	// enable external interrupts
 	EIMSK |= 1 << 0;
+	OCR0A = 128;
 }
 
 void mesurement_start(){
 	// timer OVF interrpt enable
-	TIMSK0 = 0b00000001;
+	TIMSK0 = 0b00000010;
 	//genereal interrupt enabled
 	sei();
 	// output high
 	PIND = 1 << 1;
 	//start timer with 8 preascale
-	TCCR0A = 0b00000000;
+	TCCR0A = 0b11000000;
 	TCCR0B = 0b00000010;
 	// output low
-	PIND = 1 << 1; 
+	PIND = 1 << 1;
 }
 
 
@@ -57,14 +58,12 @@ int main(void)
 {
 	STDIO_init();
 	setup();
-    while (1) 
-    {
+	while (1)
+	{
 		if(counter == 0){
-		mesurement_start();
+			mesurement_start();
 		}
 		printf("%d \n", save_counter);
-		
-		
-    }
-}
 
+	}
+}
