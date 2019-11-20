@@ -1,20 +1,12 @@
 #define F_CPU 16000000
+#include <util/delay.h>
 
 #include <avr/io.h>
-#include <stdio.h>
-#include <util/delay.h>
-#include "STDIO_lib.h"
-#include <avr/interrupt.h>
 
 #define PIN0 0
 #define PIN1 1
 #define PIN2 2
 #define PIN3 3
-
-//counter unit
-uint8_t counter = 0;
-uint8_t save_counter = 0;
-int8_t _step = 0;
 
 enum STATE{
 	LOW,
@@ -32,65 +24,22 @@ void digitalWrite(uint8_t pin_number, enum STATE pin_state){
 		}
 	}
 }
-
-ISR(INT0_vect){
-	//disable timer
-	TCCR0B = 0;
-	//disable interrupts
-	cli();
-	//port D output set 0
-	PORTD = 0;
-	//save time in k
-	save_counter = counter;
-	//reset timer
-	counter = 0;
-}
-
-ISR(TIMER0_COMPA_vect){
-	//every overflow interrupt increases the counter until external interrupt turns timer off
-	counter++;
-}
-
 void setup(){
 	DDRB = 0b00001111;
 	PORTB = 0;
-	//set  PD1 on output
-	DDRD |= 1 << 1;
-	// enable INT0 external interrupt
-	EICRA = 0b00000011;
-	// enable external interrupts
-	EIMSK |= 1 << 0;
-	OCR0A = 128;
 }
 
-void mesurement_start(){
-	// timer OVF interrpt enable
-	TIMSK0 = 0b00000010;
-	//genereal interrupt enabled
-	sei();
-	// output high
-	PIND = 1 << 1;
-	//start timer with 8 preascale
-	TCCR0A = 0b11000000;
-	TCCR0B = 0b00000010;
-	// output low
-	PIND = 1 << 1;
-}
+int8_t _step = 0;
 
 
 int main(void)
 {
-	STDIO_init();
-	setup();
 	uint8_t dir = 1;
+	setup();
 	while (1)
 	{
-		if(counter == 0){
-			mesurement_start();
-		}
-		printf("%d \n", save_counter);
 		dir ^= 1;
-		for(uint32_t round = 0; round < 64 * 64 ; round++){
+		for(uint32_t round = 0; round < 64 * 32 ; round++){
 			switch(_step){
 				case 0:
 				digitalWrite(PIN0, LOW);
@@ -162,4 +111,5 @@ int main(void)
 		}
 		_delay_ms(1000);
 	}
+	
 }
