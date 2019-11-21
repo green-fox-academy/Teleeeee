@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>LED_dimming</AssemblyName>
-    <Name>LED_dimming</Name>
-    <RootNamespace>LED_dimming</RootNamespace>
+    <AssemblyName>utility</AssemblyName>
+    <Name>utility</Name>
+    <RootNamespace>utility</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -40,8 +40,9 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>com.atmel.avrdbg.tool.medbg</avrtool>
-    <avrtoolserialnumber>ATML2222050200010212</avrtoolserialnumber>
+    <avrtool>com.atmel.avrdbg.tool.simulator</avrtool>
+    <avrtoolserialnumber>
+    </avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x1E9415</avrdeviceexpectedsignature>
     <com_atmel_avrdbg_tool_medbg>
       <ToolOptions>
@@ -54,6 +55,17 @@
       <ToolName>mEDBG</ToolName>
     </com_atmel_avrdbg_tool_medbg>
     <avrtoolinterface>debugWIRE</avrtoolinterface>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>debugWIRE</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -135,6 +147,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="utility.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="utility.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
