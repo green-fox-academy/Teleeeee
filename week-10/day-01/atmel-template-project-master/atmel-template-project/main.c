@@ -41,9 +41,9 @@ int main(void)
 		// Generating an about 1Hz signal on the LED pin.
 		// The printf call will also take some time, so this won't be exactly 1Hz.
 		LED_PORT |= 1 << LED_PORT_POS;
-		_delay_ms(500);
+		_delay_ms(1000);
 		LED_PORT &= ~(1 << LED_PORT_POS);
-		_delay_ms(500);
+		_delay_ms(1000);
 		printf("%f Hz\n", get_freq());
 	}
 }
