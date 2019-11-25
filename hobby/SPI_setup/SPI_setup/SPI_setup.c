@@ -3,15 +3,12 @@
 
 void setup_SPI(){
 	
-	//set MISO output and SCK output
-	DDRC = DDRD = 0xFF; 
+	//set MISO output and SCK output 
 	DDRB |= 1 << 2;
 	DDRB |= 1 << 3;
 	DDRB |= 1 << 5;
 	//enable SPI
 	SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);
-	
-	PORTC = SPDR = 0x01;
 	
 	//select master SPI mode
 	//SPCR |= 1 << MSTR;
@@ -24,7 +21,6 @@ void end_SPI(){
 	if(PORTB & 1 << 2){
 		PORTB ^= 1 << 2;
 	}
-	
 }
 
 void start_SPI(){
