@@ -26,8 +26,13 @@ void system_init()
 	sei();
 }
 
+ISR(ANALOG_COMP_vect){
+	PINC =  1 << 0;
+}
+
 int main(void)
 {
+	DDRC |= 1 << 0;
 
 	// Don't forget to call the init function :)
 	system_init();

@@ -18,14 +18,15 @@ void ac_driver_init()
 	// Connect the AC output to the AC0 pin.
 	// The datasheet if screwed up. It says "Analog Comparator Control and Status Register C", meanwhile the name of this register is "ACSR0",
 	// but in the avr/io.g header this register can be reached with the "ACSRB" macro.
-	ACSRB |= 1 << 1;
+	ACSRB |= 1 << 0;
 
 	// TODO:
 	// Configure the rest settings properly :)
 	// AC output connected to TC1 input capture
-	ADCSRA = (1 << ADATE);
-	ACSR = (1 << ACO) |(1 << ACIC) | (1 << ACIS1);
-	ADCSRB = (1 << 6) | (1 << 1);
+	//ADCSRA = (1 << ADATE);
+	ACSR = (1 << ACO) | (1 << ACIE) | (1 << ACIC) | (1 << ACIS1);
+	//ADCSRB = (1 << 6) | (1 << 1);
+	
 	
 }
 
@@ -33,5 +34,5 @@ void ac_driver_init()
 // Write this function. It returns the measured rotation speed in RPM
 float get_rpm()
 {
-	return get_freq()/7.00;
+	return get_freq()/7 * 60;	
 }
