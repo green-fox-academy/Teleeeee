@@ -22,18 +22,27 @@ uint16_t all_result = 0;
 uint16_t ref = 0;
 
 void system_init(){
-	LED_DDR |= 1 << LED_DDR_POS;
 	ac_driver_init();
 	freq_meas_init();
 	STDIO_init();
+	init_ADC();
+	set_fast_PWM();
 	sei();
 }
 
+//need it to run for hardware to clean interrupt flag in the right time
 ISR(ANALOG_COMP_vect){}
 
 void init_ADC(){
+	//ADC0 is selected as input --> last 3 digits are 0
 	ADMUX = 0b00000000;
+	//ADC enable
+	//ADC conversion start
+	//ADC auto trigger
+	//ADC interrupt enable
+	//128 prescale
 	ADCSRA = 0b11101111;
+	//ADC free running mode
 	ADCSRB = 0b00000000;
 }
 
@@ -43,40 +52,42 @@ ISR(ADC_vect){
 	uint16_t all_result;
 	result_ADCL = ADCL;
 	result_ADCH = ADCH;
+	//set the reference rpm through potmeter
 	all_result = (((uint16_t)result_ADCH << 8) | result_ADCL);	
+	//will give a value between 0 and 1024 depending on the voltage between 0 to 5 V
 	ref = 7 * all_result;
 }
 
+//closed loop controller
 void P_controller(uint16_t disired_value_rpm, uint16_t actual_rpm){
+	//duty is set in percentage 0 to 100
 	if(disired_value_rpm > actual_rpm && duty < 100 ){
-		duty++;
+		//adjustable duty cycle jumps
+		duty += 5;
 	}
 	if (disired_value_rpm < actual_rpm && duty > 1){
-		duty--;
+		//adjustable duty cycle jumps
+		duty -= 5;
 	}
 };
 
 
 int main(void)
 {
-	char buffer[8];	
 	// Don't forget to call the init function :)
 	system_init();
-	init_ADC();
 
 	// Try printf
 	printf("Startup...\n");
 
 	// Infinite loop
 	while (1) {
-		// Generating an about 1Hz signal on the LED pin.
-		// The printf call will also take some time, so this won't be exactly 1Hz.
-		for (uint8_t i = 0; i < 100; i++ ){
-			P_controller(ref, get_rpm());
-			set_duty(duty);
-			printf("%f RPM\n", get_rpm());
-			_delay_ms(100);
-		}
-		printf("%f RPM\n", get_rpm());
+		//calculate the output signal
+		P_controller(ref, get_rpm());
+		//set duty cycle
+		set_duty(duty);
+		printf("         %f RPM\n", get_rpm());
+		printf("%d RPM\n", ref);
+		_delay_ms(10);
 	}
 }

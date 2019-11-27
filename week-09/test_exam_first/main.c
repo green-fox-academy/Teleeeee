@@ -3,7 +3,7 @@
 float GetTrickyAvg(int* matrix, int size){
     if(size == 0)return 0;
     int smallest_odd_number = matrix[0];
-    int largest_even_number = 0;
+    int largest_even_number = matrix[0];
     float  avarage = 0;
     for (int i = 0; i < size ; ++i) {
             if(matrix[i] > largest_even_number && matrix[i]%2 == 0){

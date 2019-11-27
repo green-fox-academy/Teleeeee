@@ -4,5 +4,6 @@
 
 void freq_meas_init();
 float get_freq();
+void timer_0_setup();
 
 #endif // _FREQ_MEAS_H
