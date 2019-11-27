@@ -9,6 +9,7 @@ uint8_t timer_capture_state = 0;
 double previous_frequency = 0;
 double steps = 0;
 
+
 // TODO:
 // Write the interrupt handlers
 

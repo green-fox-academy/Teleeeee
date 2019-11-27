@@ -17,8 +17,10 @@
 #define LED_PORT		PORTB
 #define LED_PORT_POS	PORTB5
 
-void system_init()
-{
+uint8_t duty = 0;
+uint16_t all_result = 0;
+
+void system_init(){
 	LED_DDR |= 1 << LED_DDR_POS;
 	ac_driver_init();
 	freq_meas_init();
@@ -30,12 +32,29 @@ ISR(ANALOG_COMP_vect){
 	PINC =  1 << 0;
 }
 
+void init_ADC(){
+	ADMUX = 0b00000000;
+	ADCSRA = 0b11101111;
+	ADCSRB = 0b00000000;
+}
+
+ISR(ADC_vect){
+	uint8_t result_ADCH;
+	uint8_t result_ADCL;
+	uint16_t all_result;
+	result_ADCL = ADCL;
+	result_ADCH = ADCH;
+	all_result = (((uint16_t)result_ADCH << 8) | result_ADCL);	
+	duty = (all_result/ 10) ;
+	set_duty(duty);
+}
+
 int main(void)
 {
-	DDRC |= 1 << 0;
-
+	
 	// Don't forget to call the init function :)
 	system_init();
+	init_ADC();
 
 	// Try printf
 	printf("Startup...\n");
@@ -44,11 +63,10 @@ int main(void)
 	while (1) {
 		// Generating an about 1Hz signal on the LED pin.
 		// The printf call will also take some time, so this won't be exactly 1Hz.
-		LED_PORT |= 1 << LED_PORT_POS;
-		_delay_ms(500);
-		LED_PORT &= ~(1 << LED_PORT_POS);
-		_delay_ms(500);
+		_delay_ms(1000);
 		printf("%f Hz\n", get_freq());
 		printf("%f RPM\n", get_rpm());
+		set_duty(50);
+		printf("%d \n", duty);
 	}
 }

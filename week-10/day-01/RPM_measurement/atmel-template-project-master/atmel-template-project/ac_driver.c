@@ -26,8 +26,20 @@ void ac_driver_init()
 	//ADCSRA = (1 << ADATE);
 	ACSR = (1 << ACO) | (1 << ACIE) | (1 << ACIC) | (1 << ACIS1);
 	//ADCSRB = (1 << 6) | (1 << 1);
+	set_fast_PWM();
 	
-	
+}
+void set_fast_PWM(){
+		//set fast PWM
+		TCCR2A  = (1 << 7) | (1 << 1) | (1 << 0);
+		//start timer with 8 prescaler
+		TCCR2B |= 1 << 1;
+		//set OCR2A output--> PB3
+		DDRB |= 1 << 3;
+}
+
+void set_duty(uint8_t duty){
+	OCR2A = (255 * duty)/ 100;
 }
 
 // TODO:
