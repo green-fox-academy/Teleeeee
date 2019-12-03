@@ -63,11 +63,11 @@ void P_controller(uint16_t disired_value_rpm, uint16_t actual_rpm){
 	//duty is set in percentage 0 to 100
 	if(disired_value_rpm > actual_rpm && duty < 100 ){
 		//adjustable duty cycle jumps
-		duty += 5;
+		duty += 1;
 	}
 	if (disired_value_rpm < actual_rpm && duty > 1){
 		//adjustable duty cycle jumps
-		duty -= 5;
+		duty -= 1;
 	}
 };
 
@@ -88,6 +88,6 @@ int main(void)
 		set_duty(duty);
 		printf("         %f RPM\n", get_rpm());
 		printf("%d RPM\n", ref);
-		_delay_ms(10);
+		//_delay_ms(100);
 	}
 }
