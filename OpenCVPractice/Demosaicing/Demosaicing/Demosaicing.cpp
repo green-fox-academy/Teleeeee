@@ -1,8 +1,8 @@
 ﻿#include "Demosaicing.h"
 #include <opencv2/opencv.hpp>
 
-cv::Mat demosaicing_with_blur(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums);
-cv::Mat demosaicing_nearest_neighbor(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums);
+cv::Mat demosaicing_with_blur(cv::Mat image);
+cv::Mat demosaicing_nearest_neighbor(cv::Mat image);
 cv::Mat demosaicing_edge_direct(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums);
 cv::Mat demosaicing_with_kernel(cv::Mat image, std::vector<cv::Mat> channels,int rows, int coloums);
 
@@ -17,16 +17,17 @@ int main()
 
 	std::vector<cv::Mat> channels(3);
 
-	//dst_with_blur = demosaicing_with_blur(image, channels, rows, coloums);
-	dst_nearest_neighbor = demosaicing_nearest_neighbor(image, channels, rows, coloums);
+	//dst_with_blur = demosaicing_with_blur(image);
+	dst_nearest_neighbor = demosaicing_nearest_neighbor(image);
+	//dst_with_kernel = demosaicing_with_kernel(image, channels, rows, coloums);
 	//dst_edge_direct = demosaicing_edge_direct(image, channels, rows, coloums);
-	demosaicing_with_kernel(image,  channels, rows, coloums);
+	//demosaicing_with_kernel(image,  channels, rows, coloums);
 	
 	//cv::imshow("blur", dst_with_blur);
 	cv::imshow("nearest_neighbor", dst_nearest_neighbor);
 	//cv::imshow("edge direct", dst_edge_direct);
-	cv::imshow("original", image);
-	cv::imshow("with_kernel", image);
+	//cv::imshow("original", image);
+	//cv::imshow("with_kernel", dst_with_kernel);
 
 	cv::waitKey(0);
 
@@ -34,10 +35,12 @@ int main()
 }
 
 
-cv::Mat demosaicing_nearest_neighbor(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums) {
+cv::Mat demosaicing_nearest_neighbor(cv::Mat image) {
 
+	std::vector<cv::Mat> channels;
 	cv::split(image, channels);
-
+	int rows = image.rows;
+	int coloums = image.cols;
 	cv::Mat ch1, ch2, ch3, dst;
 	ch1 = channels[0];
 	ch2 = channels[1]; //green
@@ -48,12 +51,11 @@ cv::Mat demosaicing_nearest_neighbor(cv::Mat image, std::vector<cv::Mat> channel
 			if (ch2.at<uchar>(i, j) == 0) {
 				ch2.at<uchar>(i, j) = ch2.at<uchar>(i , j - 1);
 			}
-		}
-	}
-	for (int i = 1; i < rows - 2; i++) {
-		for (int j = 1; j < coloums - 2; j++) {
 			if (ch1.at<uchar>(i, j) == 0) {
-				ch1.at<uchar>(i, j) = ch1.at<uchar>(i , j - 1);
+				ch1.at<uchar>(i, j) = ch1.at<uchar>(i, j - 1);
+			}
+			if (ch3.at<uchar>(i, j) == 0) {
+				ch3.at<uchar>(i, j) = ch3.at<uchar>(i, j - 1);
 			}
 		}
 	}
@@ -62,17 +64,6 @@ cv::Mat demosaicing_nearest_neighbor(cv::Mat image, std::vector<cv::Mat> channel
 			if (ch1.at<uchar>(i, j) == 0) {
 				ch1.at<uchar>(i, j) = (ch1.at<uchar>(i + 1, j) + ch1.at<uchar>(i - 1, j)) / 2;
 			}
-		}
-	}
-	for (int i = 1; i < rows - 2; i++) {
-		for (int j = 1; j < coloums - 2; j++) {
-			if (ch3.at<uchar>(i, j) == 0) {
-				ch3.at<uchar>(i, j) = ch3.at<uchar>(i , j - 1);
-			}
-		}
-	}
-	for (int i = 1; i < rows - 2; i++) {
-		for (int j = 1; j < coloums - 2; j++) {
 			if (ch3.at<uchar>(i, j) == 0) {
 				ch3.at<uchar>(i, j) = (ch3.at<uchar>(i + 1, j) + ch3.at<uchar>(i - 1, j)) / 2;
 			}
@@ -83,11 +74,12 @@ cv::Mat demosaicing_nearest_neighbor(cv::Mat image, std::vector<cv::Mat> channel
 	return dst;
 }
 
-cv::Mat demosaicing_with_blur(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums)
+cv::Mat demosaicing_with_blur(cv::Mat image)
 {
-
+	std::vector<cv::Mat> channels;
 	cv::split(image, channels);
-
+	int rows = image.rows;
+	int coloums = image.cols;
 	cv::Mat ch1, ch2, ch3, dst;
 	ch1 = channels[0];
 	ch2 = channels[1]; //green
@@ -98,12 +90,11 @@ cv::Mat demosaicing_with_blur(cv::Mat image, std::vector<cv::Mat> channels, int 
 			if (ch2.at<uchar>(i, j) == 0) {
 				ch2.at<uchar>(i, j) = (ch2.at<uchar>(i - 1, j) + ch2.at<uchar>(i, j + 1) + ch2.at<uchar>(i, j - 1) + ch2.at<uchar>(i + 1, j)) / 4;
 			}
-		}
-	}
-	for (int i = 1; i < rows - 2; i++) {
-		for (int j = 1; j < coloums - 2; j++) {
 			if (ch1.at<uchar>(i, j) == 0) {
 				ch1.at<uchar>(i, j) = (ch1.at<uchar>(i - 1, j) + ch1.at<uchar>(i, j + 1) + ch1.at<uchar>(i, j - 1) + ch1.at<uchar>(i + 1, j)) / 4;
+			}
+			if (ch3.at<uchar>(i, j) == 0) {
+				ch3.at<uchar>(i, j) = (ch3.at<uchar>(i - 1, j) + ch3.at<uchar>(i, j + 1) + ch3.at<uchar>(i, j - 1) + ch3.at<uchar>(i + 1, j)) / 4;
 			}
 		}
 	}
@@ -112,18 +103,6 @@ cv::Mat demosaicing_with_blur(cv::Mat image, std::vector<cv::Mat> channels, int 
 			if (ch1.at<uchar>(i, j) == 0 && ch1.at<uchar>(i + 1, j - 1) != 0 && ch1.at<uchar>(i - 1, j) != 0) {
 				ch1.at<uchar>(i, j) = (ch1.at<uchar>(i + 1, j) + ch1.at<uchar>(i - 1, j)) / 2;
 			}
-		}
-	}
-
-	for (int i = 1; i < rows - 2; i++) {
-		for (int j = 1; j < coloums - 2; j++) {
-			if (ch3.at<uchar>(i, j) == 0) {
-				ch3.at<uchar>(i, j) = (ch3.at<uchar>(i - 1, j) + ch3.at<uchar>(i, j + 1) + ch3.at<uchar>(i, j - 1) + ch3.at<uchar>(i + 1, j)) / 4;
-			}
-		}
-	}
-	for (int i = 1; i < rows - 2; i++) {
-		for (int j = 1; j < coloums - 2; j++) {
 			if (ch3.at<uchar>(i, j) == 0 && ch3.at<uchar>(i + 1, j - 1) != 0 && ch3.at<uchar>(i - 1, j) != 0) {
 				ch3.at<uchar>(i, j) = (ch3.at<uchar>(i + 1, j) + ch3.at<uchar>(i - 1, j)) / 2;
 			}
@@ -209,19 +188,20 @@ cv::Mat demosaicing_with_kernel(cv::Mat image, std::vector<cv::Mat> channels, in
 	cv::split(image, channels);
 
 	cv::Mat blue, green, red, dst;
+
 	blue = channels[0];
 	green = channels[1]; //green
 	red = channels[2];
 
-	float kdata_red_blue[] = { 1, 2, 1, 2, 4, 2, 1, 2, 1 };
-	cv::Mat kernel_red_blue(3, 3, CV_32F, kdata_red_blue);
+	float kdata_red_blue[] = { 0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625 };
+	cv::Mat kernel_red_blue(3, 3, CV_8U, kdata_red_blue);
 
-	float kdata_green[] = { 0, 1, 0 , 1, 4, 1, 0, 1, 0 };
-	cv::Mat kernel_green(3, 3, CV_32F, kdata_green);
+	float kdata_green[] = { 0, 0.12, 0 , 0.12, 0.5, 0.12, 0, 0.12, 0 };
+	cv::Mat kernel_green(3, 3, CV_8U, kdata_green);
 
 	cv::filter2D(blue, blue, depth, kernel_red_blue, anchor, delta, cv::BORDER_DEFAULT);
-	cv::filter2D(green, green, depth, kernel_red_blue, anchor, delta, cv::BORDER_DEFAULT);
-	cv::filter2D(red, red, depth, kernel_green, anchor, delta, cv::BORDER_DEFAULT);
+	cv::filter2D(green, green, depth, kernel_green, anchor, delta, cv::BORDER_DEFAULT);
+	cv::filter2D(red, red, depth, kernel_red_blue, anchor, delta, cv::BORDER_DEFAULT);
 
 	cv::merge(channels, dst);
 

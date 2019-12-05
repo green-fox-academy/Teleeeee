@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-project ("demosaicing_google_test")
+project ("MeasureAngle")
 
 # Include sub-projects.
-add_subdirectory ("demosaicing_google_test")
+add_subdirectory ("MeasureAngle")

@@ -1,9 +1,10 @@
 ﻿#include "test.h"
 #include "MyApp_lib/myClass.h"
+#include <vector>
 
 
 int main()
 {
-	std::cout << getApple() << std::endl;
+	
 	return 0;
 }

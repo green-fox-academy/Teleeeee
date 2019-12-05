@@ -1,4 +1,4 @@
-﻿// demosaicing_google_test.h : Include file for standard system include files,
+﻿// MeasureAngle.h : Include file for standard system include files,
 // or project specific include files.
 
 #pragma once

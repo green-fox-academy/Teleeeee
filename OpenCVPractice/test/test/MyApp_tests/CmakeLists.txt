@@ -2,6 +2,8 @@
 #add_compile_definitions(WINVER=0x0500)
 
 find_package( GTest REQUIRED )
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 include_directories( ${GTEST_INCLUDE_DIRS} )
 
 # Add all your .cpp files here (separated by spaces)
@@ -10,3 +12,4 @@ add_executable(${PROJECT_TESTS_NAME} myAppTest.cpp)
 # These lines include and link the GoogleTest libraries and your own library to the test executable
 target_link_libraries(${PROJECT_TESTS_NAME} ${GTEST_BOTH_LIBRARIES})
 target_link_libraries(${PROJECT_TESTS_NAME} ${PROJECT_LIB_NAME})
+target_link_libraries(${PROJECT_TESTS_NAME} ${OpenCV_LIBS} )
