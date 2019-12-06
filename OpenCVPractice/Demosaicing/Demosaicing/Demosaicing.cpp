@@ -1,5 +1,6 @@
 ﻿#include "Demosaicing.h"
 #include <opencv2/opencv.hpp>
+#include <omp.h>
 
 cv::Mat demosaicing_with_blur(cv::Mat image);
 cv::Mat demosaicing_nearest_neighbor(cv::Mat image);
@@ -16,13 +17,11 @@ int main()
 	int channel_count = image.channels();
 
 	std::vector<cv::Mat> channels(3);
-
 	//dst_with_blur = demosaicing_with_blur(image);
 	dst_nearest_neighbor = demosaicing_nearest_neighbor(image);
 	//dst_with_kernel = demosaicing_with_kernel(image, channels, rows, coloums);
 	//dst_edge_direct = demosaicing_edge_direct(image, channels, rows, coloums);
 	//demosaicing_with_kernel(image,  channels, rows, coloums);
-	
 	//cv::imshow("blur", dst_with_blur);
 	cv::imshow("nearest_neighbor", dst_nearest_neighbor);
 	//cv::imshow("edge direct", dst_edge_direct);
@@ -45,6 +44,8 @@ cv::Mat demosaicing_nearest_neighbor(cv::Mat image) {
 	ch1 = channels[0];
 	ch2 = channels[1]; //green
 	ch3 = channels[2];
+
+
 
 	for (int i = 1; i < rows - 2; i++) {
 		for (int j = 1; j < coloums - 2; j++) {
