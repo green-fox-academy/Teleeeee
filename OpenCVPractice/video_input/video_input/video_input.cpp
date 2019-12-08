@@ -14,9 +14,8 @@ int main()
 		std::cerr << "ERROR: Could not open camera" << std::endl;
 		return 1;
 	}
-
+	
 	cv::namedWindow("Webcam", cv::WINDOW_AUTOSIZE);
-
 	cv::Mat frame;
 	cv::Mat gray;
 	cv::Mat hist;
@@ -30,7 +29,7 @@ int main()
 		
 		//cv::blur(gray, gray, cv::Size(3, 3));
 
-		const int max_thresh = 200;
+		const int max_thresh = 100;
 
 		cv::Mat canny_output;
 		cv::Canny(gray, canny_output, thresh, thresh * 2);
@@ -44,10 +43,8 @@ int main()
 			drawContours(drawing, contours, (int)i, color, 2, cv::LINE_8, hierarchy, 0);
 		}
 		cv::pyrUp(drawing, drawing, cv::Size(drawing.cols * 2, drawing.rows * 2));
-		imshow("Webcam", drawing);
-
+		cv::imshow("Webcam", drawing);
 		cv::waitKey(1);
 	}
-
 	return 0;
 }

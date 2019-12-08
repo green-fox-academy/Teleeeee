@@ -22,7 +22,7 @@ int main()
 			break;
 		pBackSub->apply(frame, fgMask);
 
-		imshow("Frame", frame);
+		//imshow("Frame", frame);
 		imshow("FG Mask", fgMask);
 
 		cv::waitKey(10);

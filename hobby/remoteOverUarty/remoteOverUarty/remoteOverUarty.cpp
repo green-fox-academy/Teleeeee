@@ -49,7 +49,7 @@ HANDLE setSerialPortCommunicationBasic(char* comnumber, int baudrate, int stopbi
 void read(HANDLE serialHandle, char* buffer ) {
 	DWORD nRead = 1;
 	if (!ReadFile(serialHandle, buffer, 99, &nRead, NULL)) {
-		std::cout << "NOOOO" << std::endl;
+		std::cout << "Read File Error" << std::endl;
 	}
 }
 
@@ -59,7 +59,7 @@ int main()
 	HANDLE serialHandle = setSerialPortCommunicationBasic("COM9", 9600, 1);
 	while (1) {
 		read(serialHandle, buffer);
-		std::cout << buffer << std::endl;
+		std::cout << buffer;
 		for (int i = 0; i < 100; i++) {
 			buffer[i] = 0;
 		}
