@@ -29,10 +29,10 @@ HANDLE setSerialPortCommunicationBasic(char* comnumber, int baudrate, int stopbi
 	// Set timeouts
 	//TODO: maybe should set the timeouts for faster processing
 	COMMTIMEOUTS timeout = { 0 };
-	timeout.ReadIntervalTimeout = 50;
-	timeout.ReadTotalTimeoutConstant = 50;
-	timeout.ReadTotalTimeoutMultiplier = 50;
-	timeout.WriteTotalTimeoutConstant = 50;
+	timeout.ReadIntervalTimeout = 20;
+	timeout.ReadTotalTimeoutConstant = 20;
+	timeout.ReadTotalTimeoutMultiplier = 20;
+	timeout.WriteTotalTimeoutConstant = 20;
 	timeout.WriteTotalTimeoutMultiplier = 10;
 
 	if (!SetCommTimeouts(serialHandle, &timeout)) {
@@ -55,7 +55,6 @@ void closeSerialPort(HANDLE serialHandle) {
 
 void decideIncomingInfo( uint8_t* general_flag, char* buffer)
 {
-	std::cout << buffer << std::endl;
 	switch (atoi(buffer)) {
 	case 0: {*general_flag = 0;
 		break;

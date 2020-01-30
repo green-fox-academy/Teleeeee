@@ -2,13 +2,13 @@
 //
 
 #include <windows.h>
-#include "remoteOverUarty.h"
+#include <iostream>
 
 using namespace std;
 
 HANDLE setSerialPortCommunicationBasic(char* comnumber, int baudrate, int stopbit) {
 	HANDLE serialHandle;
-	serialHandle = CreateFile(comnumber,
+	serialHandle = CreateFile("\\\\.\\COM12",
 		GENERIC_READ | GENERIC_WRITE,
 		0,
 		0,
@@ -16,7 +16,7 @@ HANDLE setSerialPortCommunicationBasic(char* comnumber, int baudrate, int stopbi
 		0);
 	if (serialHandle == INVALID_HANDLE_VALUE) {
 		if (GetLastError() == ERROR_FILE_NOT_FOUND) {
-			//serial port does not exist. Inform user.
+			std::cout << "lol, you thought so" << std::endl;
 		}
 		//some other error occurred. Inform user.
 	}
@@ -52,18 +52,22 @@ void read(HANDLE serialHandle, char* buffer ) {
 		std::cout << "Read File Error" << std::endl;
 	}
 }
+void writeLol() {
+	std::cout << "LOL" << std::endl;
+}
 
 int main()
 {
 	char buffer[100] = {0};
-	HANDLE serialHandle = setSerialPortCommunicationBasic("COM9", 9600, 1);
-	while (1) {
-		read(serialHandle, buffer);
-		std::cout << buffer;
-		for (int i = 0; i < 100; i++) {
-			buffer[i] = 0;
-		}
-	}
+	HANDLE serialHandle;
+	serialHandle =  setSerialPortCommunicationBasic("\\.\COM12", 9600, 1);
+	
+	//while (1) {
+	//	read(serialHandle, buffer);
+	//	for (int i = 0; i < 100; i++) {
+	//		buffer[i] = 0;
+	//	}
+	//}
 	CloseHandle(serialHandle);
 	return 0;
 }

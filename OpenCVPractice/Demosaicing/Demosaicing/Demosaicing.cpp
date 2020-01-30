@@ -1,33 +1,76 @@
 ﻿#include "Demosaicing.h"
 #include <opencv2/opencv.hpp>
 #include <omp.h>
+#include <vector>
 
 cv::Mat demosaicing_with_blur(cv::Mat image);
 cv::Mat demosaicing_nearest_neighbor(cv::Mat image);
 cv::Mat demosaicing_edge_direct(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums);
 cv::Mat demosaicing_with_kernel(cv::Mat image, std::vector<cv::Mat> channels,int rows, int coloums);
 
+std::vector<cv::Mat> singleImageSeparate(cv::InputArray image) {
+	cv::Mat emptyImage = cv::Mat::zeros(image.rows(), image.cols(), CV_8UC3);	
+	cv::Mat blue;
+	cv::Mat green;
+	cv::Mat red;
+	std::vector<cv::Mat> tempVect(3);
+	std::vector<cv::Mat> tempVect1(3);
+	std::vector<cv::Mat> tempVect2(3);
+	std::vector<cv::Mat> colorVector;
+	std::vector<cv::Mat> emptyImageChannelVector;
+	cv::split(image, colorVector);
+	cv::split(emptyImage, emptyImageChannelVector);
+
+	tempVect[0] = colorVector[0].clone();
+	tempVect[1] = emptyImageChannelVector[1].clone();
+	tempVect[2] = emptyImageChannelVector[1].clone();
+	cv::merge(tempVect, blue);
+	
+	tempVect1[1] = colorVector[1].clone();
+	tempVect1[0] = emptyImageChannelVector[1].clone();
+	tempVect1[2] = emptyImageChannelVector[1].clone();
+	cv::merge(tempVect1, green);
+
+	tempVect2[2] = colorVector[2].clone();
+	tempVect2[0] = emptyImageChannelVector[1].clone();
+	tempVect2[1] = emptyImageChannelVector[1].clone();
+	cv::merge(tempVect2, red);
+
+	std::vector<cv::Mat> outputVector = { blue, green, red};
+	return outputVector;
+	
+}
 int main()
 {
 	cv::Mat image, dst_with_blur, dst_nearest_neighbor, dst_edge_direct, dst_with_kernel;
-	image = cv::imread("C:\\github\\Teleeeee\\OpenCVPractice\\Demosaicing\\parrot-raw.png", 1);
+	image = cv::imread("C:\\github\\Teleeeee\\OpenCVPractice\\smoothing_filter\\accord_test.bmp", 1);
 
 	int rows = image.rows;
 	int coloums = image.cols;
 	int channel_count = image.channels();
 
-	std::vector<cv::Mat> channels(3);
+	//std::vector<cv::Mat> channels(3);
 	//dst_with_blur = demosaicing_with_blur(image);
-	dst_nearest_neighbor = demosaicing_nearest_neighbor(image);
+	//dst_nearest_neighbor = demosaicing_nearest_neighbor(image);
 	//dst_with_kernel = demosaicing_with_kernel(image, channels, rows, coloums);
 	//dst_edge_direct = demosaicing_edge_direct(image, channels, rows, coloums);
 	//demosaicing_with_kernel(image,  channels, rows, coloums);
 	//cv::imshow("blur", dst_with_blur);
-	cv::imshow("nearest_neighbor", dst_nearest_neighbor);
+	//cv::OutputArray dstAtrr = dstVecc;
+	std::vector<cv::Mat> dstVec = singleImageSeparate(image);
+	//std::cout << dstAtrr.getSz().height << std::endl;
+	//std::cout << dstAtrr.getSz().area << std::endl;
+	//std::cout << dstAtrr.getSz().width << std::endl;
+	//std::cout << dstAtrr.getSz().empty << std::endl;
+	//std::cout << dstVec.size();
+	//cv::imshow("nearest_neighbor", dstVec);
 	//cv::imshow("edge direct", dst_edge_direct);
 	//cv::imshow("original", image);
 	//cv::imshow("with_kernel", dst_with_kernel);
-
+	
+	for (int i = 0; i < dstVec.size(); i++) {
+		cv::imshow(std::to_string(i)  + ". picture", dstVec[i]);
+	}
 	cv::waitKey(0);
 
 	return 0;
@@ -116,6 +159,8 @@ cv::Mat demosaicing_with_blur(cv::Mat image)
 
 	return dst;
 }
+
+
 
 cv::Mat demosaicing_edge_direct(cv::Mat image, std::vector<cv::Mat> channels, int rows, int coloums) {
 
